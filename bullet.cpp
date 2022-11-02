@@ -63,9 +63,14 @@ void UpdateBullet()
 					g_Bullet[i].pos.x >(pEnemy->pos.x - pEnemy->size.x / 2)
 					)
 				{
-					pEnemy->hp -= 10;
-					g_Bullet[i].use = false;
-
+					if (GetEnemyNum() > 0) {
+						pEnemy->hp -= 90 / (GetEnemyNum() * 1.5);
+						g_Bullet[i].use = false;
+					}
+					else {
+						pEnemy->hp -= 90;
+						g_Bullet[i].use = false;
+					}
 					//if (pEnemy->hp <= 0)
 					//{
 					//	pEnemy->use = false;

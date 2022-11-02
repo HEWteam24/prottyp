@@ -88,6 +88,10 @@
 #define		SCORE_POS_Y		(SCREEN_HEIGHT/2-200.0f)
 #define		SCOER_DIGIT		(6)
 
+#define		SCORETEXT_POS_X				(1470.0f)
+#define		SCORETEXT_POS_Y				(SCREEN_HEIGHT/2-280.0f)
+#define		SCORETEXT_SIZE_X			(100)
+#define		SCORETEXT_SIZE_Y			(50)
 
 #define		COMBO_SIZE_X	(150.0f)						//プレイヤーの幅
 #define		COMBO_SIZE_Y	(220.0f)						//プレイヤーの高さ
@@ -98,10 +102,10 @@
 #define		COMBO_POS_X		(1780 - (i * COMBO_SIZE_X))
 #define		COMBO_POS_Y		(SCREEN_HEIGHT/2+250.0f)
 
-#define		SCORETEXT_POS_X				(1470.0f)
-#define		SCORETEXT_POS_Y				(SCREEN_HEIGHT/2-280.0f)
-#define		SCORETEXT_SIZE_X				(100)
-#define		SCORETEXT_SIZE_Y				(50)
+#define		COMBOTEXT_POS_X				(1610.0f)
+#define		COMBOTEXT_POS_Y				(SCREEN_HEIGHT/2+100)
+#define		COMBOTEXT_SIZE_X			(200)
+#define		COMBOTEXT_SIZE_Y			(100)
 
 //レーンの初期値
 #define		LANE_MAX			(5)				//レーン数

@@ -57,6 +57,7 @@ void		UninitEnemy();
 void		UpdateEnemy();
 void		DrawEnemy();
 ENEMY*		GetEnemy();
+int			GetEnemyNum();
 #endif // !EMEMY_H_
 
 

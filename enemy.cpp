@@ -63,7 +63,7 @@ HRESULT InitEnemy()
 		exit(999);
 	}
 
-	EnemyNum = 0;
+	EnemyNum = 1;
 	return S_OK;
 }
 
@@ -154,4 +154,9 @@ void DrawEnemy()
 ENEMY * GetEnemy()
 {
 	return &Enemy;
+}
+
+int	GetEnemyNum()
+{
+	return EnemyNum;
 }

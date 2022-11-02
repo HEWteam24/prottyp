@@ -26,10 +26,11 @@ void InitScore()
 	{//ロードエラー
 		exit(999);
 	}
-
 	g_ScoreText.Pos = D3DXVECTOR2(SCORETEXT_POS_X, SCORETEXT_POS_Y);
 	g_ScoreText.Size = D3DXVECTOR2(SCORETEXT_SIZE_X, SCORETEXT_SIZE_Y);
 	g_ScoreText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+
 	ScoreTexNo = LoadTexture(g_TextureNameScore);
 	if (ScoreTexNo == -1)
 	{//ロードエラー
@@ -93,7 +94,7 @@ void DrawScore()
 			1.0f,
 			1.0f,
 			1
-		);
+	);
 	
 }
 

@@ -9,6 +9,11 @@ struct COMBO
 	int			combonum;
 	float		texno;
 };
+typedef struct {
+	D3DXVECTOR2		Pos;
+	D3DXVECTOR2		Size;
+	D3DXCOLOR		col;
+}COMBOTEXT;
 
 HRESULT		InitCombo();
 void		UninitCombo();
