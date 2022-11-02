@@ -15,6 +15,12 @@ typedef struct {
 
 }SCORE;
 
+typedef struct {
+	D3DXVECTOR2		Pos;
+	D3DXVECTOR2		Size;
+	D3DXCOLOR		col;
+}SCORETEXT;
+
 void InitScore();
 void UpdateScore();
 void UninitScore();
