@@ -5,12 +5,13 @@
 
 
 SCORE	g_Score[SCOER_DIGIT];
+SCORETEXT g_ScoreText;
 
 static	ID3D11ShaderResourceView* g_ScoreTexture;//画像1枚で1つの変数が必要
 static	char* g_TextureNameScore = (char*)"data\\texture\\number.png";//テクスチャファイルパス JPG BMP PNG
 
 static	ID3D11ShaderResourceView* g_ScoreTextTexture;//画像1枚で1つの変数が必要
-static	char* g_TextureNameScoreText = (char*)"data\\texture\\number.png";//テクスチャファイルパス JPG BMP PNG
+static	char* g_TextureNameScoreText = (char*)"data\\texture\\text_score.png";//テクスチャファイルパス JPG BMP PNG
 
 float	ScoreTexNo;
 float	ScoreTextTexNo;
@@ -25,6 +26,10 @@ void InitScore()
 	{//ロードエラー
 		exit(999);
 	}
+
+	g_ScoreText.Pos = D3DXVECTOR2(SCORETEXT_POS_X, SCORETEXT_POS_Y);
+	g_ScoreText.Size = D3DXVECTOR2(SCORETEXT_SIZE_X, SCORETEXT_SIZE_Y);
+	g_ScoreText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ScoreTexNo = LoadTexture(g_TextureNameScore);
 	if (ScoreTexNo == -1)
 	{//ロードエラー
@@ -76,20 +81,20 @@ void DrawScore()
 	}
 	GetDeviceContext()->PSSetShaderResources(0, 1,
 		GetTexture(ScoreTextTexNo));
-	for (int i = 0; i < SCOER_DIGIT; i++) {
+
 		DrawSpriteColorRotation(
-			g_Score[i].Pos.x,
-			g_Score[i].Pos.y,
-			g_Score[i].Size.x,
-			g_Score[i].Size.y,
+			g_ScoreText.Pos.x,
+			g_ScoreText.Pos.y,
+			g_ScoreText.Size.x,
+			g_ScoreText.Size.y,
 			0.0f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-			g_Score[i].Score,
-			0.2f,
-			0.2f,
-			5
+			g_ScoreText.col,
+			0.0f,
+			1.0f,
+			1.0f,
+			1
 		);
-	}
+	
 }
 
 void ScorePlus(int score)

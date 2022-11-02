@@ -287,7 +287,7 @@ void PlayerCheck(void)
 	{
 		good = C_GOOD;
 
-		g_Player.hp = min(g_Player.hp += 10, PLAYER_HP_DEFAULT);
+		g_Player.hp = min(g_Player.hp += 5, PLAYER_HP_DEFAULT);
 		ComboPlus(1);
 		ScorePlus(10+ GetComboScoreUp());
 		g_Player.flag = true;
@@ -295,7 +295,7 @@ void PlayerCheck(void)
 	else  //BAD•]‰¿
 	{
 		good = C_BAD;
-		g_Player.hp -= 5.0f;
+		g_Player.hp -= 10.0f;
 		PlaySound(g_SE_Damage, 0);
 		ResetCombo();
 		g_Player.flag = false;

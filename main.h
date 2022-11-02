@@ -98,7 +98,15 @@
 #define		COMBO_POS_X		(1780 - (i * COMBO_SIZE_X))
 #define		COMBO_POS_Y		(SCREEN_HEIGHT/2+250.0f)
 
+#define		SCORETEXT_POS_X				(1470.0f)
+#define		SCORETEXT_POS_Y				(SCREEN_HEIGHT/2-280.0f)
+#define		SCORETEXT_SIZE_X				(100)
+#define		SCORETEXT_SIZE_Y				(50)
 
+//レーンの初期値
+#define		LANE_MAX			(5)				//レーン数
+#define		LANE_DRAW_SIZE_X	(150)
+#define		LANE_DRAW_SIZE_Y	(SCREEN_HEIGHT)
 
 
 //シーンの定義

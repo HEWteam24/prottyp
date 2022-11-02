@@ -138,6 +138,7 @@
     <ClCompile Include="frame.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="input.cpp" />
+    <ClCompile Include="lane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="player.cpp" />
@@ -161,6 +162,7 @@
     <ClInclude Include="frame.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="input.h" />
+    <ClInclude Include="lane.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="player.h" />
