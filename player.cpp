@@ -56,10 +56,12 @@ enum CHECK		//タイミング評価
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static int g_TexturePlayer;			//テクスチャのやつ
+static int g_TexturePlayer;	//テクスチャのやつ
 static int g_TextureHp;		//テクスチャのやつ
 static int g_TextureHpGrid;	//テクスチャのやつ
-static int g_TextureCGood;		//テクスチャのやつ
+static int g_TextureHpA;	//テクスチャのやつ
+static int g_TextureHpB;	//テクスチャのやつ
+static int g_TextureCGood;	//テクスチャのやつ
 static int g_TextureCBad;	//テクスチャのやつ
 
 
@@ -93,6 +95,8 @@ void InitPlayer(void)
 	g_TexturePlayer  = LoadTexture((char*)"data/TEXTURE/player02.png");
 	g_TextureHp		 = LoadTexture((char*)"data/TEXTURE/Hp.png");
 	g_TextureHpGrid	 = LoadTexture((char*)"data/TEXTURE/HpGrid.png");
+	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
+	g_TextureHpB = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_TextureCGood	 = LoadTexture((char*)"data/TEXTURE/rythm_good.png");
 	g_TextureCBad	 = LoadTexture((char*)"data/TEXTURE/rythm_bad.png");
 
@@ -280,15 +284,23 @@ void DrawPlayer(void)
 
 void DrawHp(void)
 {
+	////HP下地
+	//DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
+	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6, 0.6, 0.6, 1.0));
+	////HPバー
+	//DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y+(PLAYER_HP_DEFAULT - g_Player.hp)/(PLAYER_HP_DEFAULT/20), NOTES_SIZE_X, ((PLAYER_HP_DEFAULT-(PLAYER_HP_DEFAULT-g_Player.hp))/(PLAYER_HP_DEFAULT/NOTES_SIZE_Y)),
+	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5, 1.0, 0.3, 1.0));
+	////HPグリッド
+	//DrawSpriteColor(g_TextureHpGrid, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
+	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.8, 0.8, 0.8, 1.0));
+	
 	//HP下地
-	DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6, 0.6, 0.6, 1.0));
+	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	//HPバー
-	DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y+(PLAYER_HP_DEFAULT - g_Player.hp)/(PLAYER_HP_DEFAULT/20), NOTES_SIZE_X, ((PLAYER_HP_DEFAULT-(PLAYER_HP_DEFAULT-g_Player.hp))/(PLAYER_HP_DEFAULT/NOTES_SIZE_Y)),
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5, 1.0, 0.3, 1.0));
-	//HPグリッド
-	DrawSpriteColor(g_TextureHpGrid, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.8, 0.8, 0.8, 1.0));
+	DrawSpriteColor(g_TextureHpA, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + ((PLAYER_HP_DEFAULT - g_Player.hp) / 0.665), PLAYER_HP_SIZE_X, PLAYER_HP_SIZE_Y - (PLAYER_HP_DEFAULT - g_Player.hp) * 3.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5f, 1.0f, 0.4f, 1.0f));
+
 	//評価 Good Bad
 	if (good == C_NONE)
 	{
