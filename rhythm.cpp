@@ -98,7 +98,7 @@ HRESULT InitRhythm()
 
 	//‰¼‚ÅŒÅ’è‚ÌBGM
 	NowBPM = BPM2;
-	char	filename[] = "data\\BGM\\BGM_Tanbo120.wav";
+	char	filename[] = "data\\BGM\\hoge.wav";
 	GameSoundNo = LoadSound(filename);
 	PlaySound(GameSoundNo, -1);
 	Frame = 1;
