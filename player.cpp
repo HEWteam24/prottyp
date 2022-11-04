@@ -171,7 +171,7 @@ void UpdatePlayer(void)
 	}
 
 	//スティックで移動
-	if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+	if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
 	{
 		g_Player.moving = true;				//移動中
 		g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
@@ -182,7 +182,7 @@ void UpdatePlayer(void)
 		PlayerCheck();
 	}
 	//左
-	if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+	if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
 	{
 		g_Player.moving = true;				//移動中
 		g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
@@ -199,6 +199,7 @@ void UpdatePlayer(void)
 	//弾発射
 	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false))
 	{
+		g_Player.moving = true;
 		PlayerCheck();
 		if (g_Player.flag) {
 			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
@@ -327,7 +328,7 @@ void PlayerCheck(void)
 	{
 		good = C_GOOD;
 
-		g_Player.hp = min(g_Player.hp += 5, PLAYER_HP_DEFAULT);
+		g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);
 		ComboPlus(1);
 		ScorePlus(10+ GetComboScoreUp());
 		g_Player.flag = true;
