@@ -112,6 +112,15 @@
 #define		LANE_DRAW_SIZE_X	(150)
 #define		LANE_DRAW_SIZE_Y	(SCREEN_HEIGHT)
 
+#define			PLAYER_HP_POS_X		(CENTER_X+460.0f)							//プレイヤー体力ゲージ座標X
+#define			PLAYER_HP_POS_Y		(CENTER_Y)									//プレイヤー体力ゲージ座標Y
+#define			PLAYER_HP_SIZE_X	(50.0f)										//プレイヤー体力サイズX
+#define			PLAYER_HP_SIZE_Y	(900.0f)									//プレイヤー体力サイズY
+#define			PLAYER_HPB_SIZE_X	(60.0f)										//プレイヤー体力サイズX
+#define			PLAYER_HPB_SIZE_Y	(910.0f)									//プレイヤー体力サイズY
+#define			PLAYER_HP_TEX_A		((char*)"data\\texture\\enemyHpBar00.png")	//プレイヤーテクスチャ
+#define			PLAYER_HP_TEX_B		((char*)"data\\texture\\enemyHpBar01.png")	//プレイヤーテクスチャ
+
 
 //シーンの定義
 enum SCENE
