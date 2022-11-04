@@ -56,7 +56,7 @@
 #define PLAYER_SIZE_Y	(360*0.6)						//プレイヤーの高さ
 
 #define PLAYER_POS_DEFAULT_X	(CENTER_X)			//プレイヤーの位置
-#define PLAYER_POS_DEFAULT_Y	(CENTER_Y+350.0f)	//プレイヤーの位置
+#define PLAYER_POS_DEFAULT_Y	(CENTER_Y+380.0f)	//プレイヤーの位置
 
 #define PLAYER_HP_DEFAULT	(300.0f)
 #define GOOD_BAD_X			(400.0f*0.7f)
@@ -111,6 +111,15 @@
 #define		LANE_MAX			(5)				//レーン数
 #define		LANE_DRAW_SIZE_X	(150)
 #define		LANE_DRAW_SIZE_Y	(SCREEN_HEIGHT)
+
+#define			PLAYER_HP_POS_X		(CENTER_X+460.0f)							//プレイヤー体力ゲージ座標X
+#define			PLAYER_HP_POS_Y		(CENTER_Y)									//プレイヤー体力ゲージ座標Y
+#define			PLAYER_HP_SIZE_X	(50.0f)										//プレイヤー体力サイズX
+#define			PLAYER_HP_SIZE_Y	(900.0f)									//プレイヤー体力サイズY
+#define			PLAYER_HPB_SIZE_X	(60.0f)										//プレイヤー体力サイズX
+#define			PLAYER_HPB_SIZE_Y	(910.0f)									//プレイヤー体力サイズY
+#define			PLAYER_HP_TEX_A		((char*)"data\\texture\\enemyHpBar00.png")	//プレイヤーテクスチャ
+#define			PLAYER_HP_TEX_B		((char*)"data\\texture\\enemyHpBar01.png")	//プレイヤーテクスチャ
 
 
 //シーンの定義

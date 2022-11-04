@@ -142,10 +142,15 @@ void DrawEnemy()
 		DrawSprite(Enemy.texno, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
 			0.0f, 0.0f, 1.0f, 1.0f);
 
-		DrawSpriteColor(EnemyHp.texnoB, EnemyHp.pos.x, EnemyHp.pos.y, EnemyHp.size.x+10.0f, EnemyHp.size.y + 10.0f,
+		DrawSpriteColor(EnemyHp.texnoB, EnemyHp.pos.x, EnemyHp.pos.y, EnemyHp.size.x + 10.0f, EnemyHp.size.y + 10.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-		DrawSpriteColor(EnemyHp.texnoA, EnemyHp.pos.x - ((ENEMY_HP - Enemy.hp)/2), EnemyHp.pos.y, EnemyHp.size.x -(ENEMY_HP- Enemy.hp) , EnemyHp.size.y,
+		//â°ï\é¶
+		//DrawSpriteColor(EnemyHp.texnoA, EnemyHp.pos.x - ((ENEMY_HP - Enemy.hp)/2), EnemyHp.pos.y, EnemyHp.size.x -(ENEMY_HP- Enemy.hp) , EnemyHp.size.y,
+		//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
+
+		//ècï\é¶
+		DrawSpriteColor(EnemyHp.texnoA, EnemyHp.pos.x, EnemyHp.pos.y + ((ENEMY_HP - Enemy.hp) / 1.11), EnemyHp.size.x, EnemyHp.size.y - (ENEMY_HP - Enemy.hp) * 1.8,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 		
 
