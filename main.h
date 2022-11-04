@@ -56,7 +56,7 @@
 #define PLAYER_SIZE_Y	(360*0.6)						//プレイヤーの高さ
 
 #define PLAYER_POS_DEFAULT_X	(CENTER_X)			//プレイヤーの位置
-#define PLAYER_POS_DEFAULT_Y	(CENTER_Y+350.0f)	//プレイヤーの位置
+#define PLAYER_POS_DEFAULT_Y	(CENTER_Y+380.0f)	//プレイヤーの位置
 
 #define PLAYER_HP_DEFAULT	(300.0f)
 #define GOOD_BAD_X			(400.0f*0.7f)

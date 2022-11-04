@@ -76,7 +76,7 @@ void UpdateEnemyBullet()
 				g_EnemyBullet[i].pos.y = -10.0f;
 			}
 
-			if (CollisionBB(g_EnemyBullet[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBullet[i].w, g_EnemyBullet[i].h), pPlayer->size))
+			if (CollisionBB(g_EnemyBullet[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBullet[i].w, g_EnemyBullet[i].h), pPlayer->size/2))
 			{
 				g_EnemyBullet[i].use = false;
 				pPlayer->hp -= 10.0f;
