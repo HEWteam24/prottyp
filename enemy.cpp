@@ -129,7 +129,7 @@ void UpdateEnemy()
 	//enemyBullet	(デバッグ用)
 	//if ((GetKeyboardTrigger(DIK_S)))
 	//{
-	//	SetEnemyBullet(Enemy.pos);
+	//	SetEnemyBulletNomal(Enemy.pos);
 	//}
 }
 
