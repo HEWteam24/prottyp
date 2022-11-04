@@ -9,9 +9,10 @@
 #include "title.h"
 #include "texture.h"
 #include "sprite.h"
-#include "input.h"
+#include "inputx.h"
 #include "sound.h"
 #include "fade.h" 
+#include "keyboard.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -58,7 +59,12 @@ void UninitTitle(void)
 void UpdateTitle(void)
 {
 	//エンターキーが押されたらSCENE_GAMEへ移行する
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (Keyboard_IsKeyDown(KK_ENTER))
+	{
+		SceneTransition(SCENE_GAME);
+	}
+	//コントローラーBボタン押したらSCENE_GAMEへ移行
+	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		SceneTransition(SCENE_GAME);
 	}

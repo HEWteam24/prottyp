@@ -9,7 +9,9 @@
 #include "main.h"
 #include <time.h>
 #include "renderer.h"
-#include "input.h"
+//#include "input.h"
+#include "inputx.h"
+#include "keyboard.h"
 #include "sound.h"
 #include "texture.h"
 #include "sprite.h"
@@ -28,7 +30,7 @@
 // マクロ定義
 //*****************************************************************************
 #define CLASS_NAME			"GameWindow"				// ウインドウのクラス名
-#define WINDOW_CAPTION		"チューティング"			// ウインドウのキャプション名
+#define WINDOW_CAPTION		"フォルティシッシャモ"			// ウインドウのキャプション名
 
 //*****************************************************************************
 // 構造体定義
@@ -192,6 +194,8 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 //=============================================================================
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+	Keyboard_ProcessMessage(message, wParam, lParam);
+
 	switch( message )
 	{
 	case WM_DESTROY:
@@ -224,6 +228,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 
 	// 入力処理の初期化
 	InitInput(hInstance, hWnd);
+	Keyboard_Initialize();
 
 	InitFrame();
 	// サウンドの初期化

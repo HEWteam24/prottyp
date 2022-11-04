@@ -137,7 +137,8 @@
     <ClCompile Include="fade.cpp" />
     <ClCompile Include="frame.cpp" />
     <ClCompile Include="game.cpp" />
-    <ClCompile Include="input.cpp" />
+    <ClCompile Include="inputx.cpp" />
+    <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="lane.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Over.cpp" />
@@ -161,7 +162,8 @@
     <ClInclude Include="fade.h" />
     <ClInclude Include="frame.h" />
     <ClInclude Include="game.h" />
-    <ClInclude Include="input.h" />
+    <ClInclude Include="inputx.h" />
+    <ClInclude Include="keyboard.h" />
     <ClInclude Include="lane.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="Over.h" />

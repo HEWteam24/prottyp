@@ -23,6 +23,7 @@
 #include "score.h"
 #include "combo.h"
 #include "lane.h"
+#include "keyboard.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -84,7 +85,7 @@ void UninitGame(void)
 void UpdateGame(void)
 {
 	//エンターキーが押されたらSCENE_GAMEへ移行する
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		SceneTransition(SCENE_TITLE);
 	}

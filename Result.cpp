@@ -9,9 +9,11 @@
 #include "Result.h"
 #include "texture.h"
 #include "sprite.h"
-#include "input.h"
+//#include "input.h"
+#include "inputx.h"
 #include "sound.h"
 #include "fade.h" 
+#include "keyboard.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -53,8 +55,13 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
-	//エンターキーが押されたらSCENE_GAMEへ移行する
-	if (GetKeyboardTrigger(DIK_RETURN))
+	//エンターキーが押されたらSCENE_TITLEへ移行する
+	if (Keyboard_IsKeyDown(KK_ENTER))
+	{
+		SceneTransition(SCENE_TITLE);
+	}
+	//コントローラーBボタン押したらSCENE_TITLEへ移行
+	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		SceneTransition(SCENE_TITLE);
 	}

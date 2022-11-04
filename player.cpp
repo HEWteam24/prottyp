@@ -18,6 +18,8 @@
 #include "rhythm.h"
 #include "combo.h"
 #include "score.h"
+#include "keyboard.h"
+#include "inputx.h"
 #include <algorithm>
 
 //*****************************************************************************
@@ -155,9 +157,47 @@ void UpdatePlayer(void)
 		SceneTransition(SCENE_GAMEOVER);
 	}
 
+	//----------------------------------------
+	// コントローラー入力
+	// ---------------------------------------
+	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false))
+	{
+		PlayerCheck();
+		if (g_Player.flag) {
+			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
+			PlaySound(g_SE_Bullet, 0);
+			//g_Player.hp -= 30.0f;
+		}
+	}
 
+	//スティックで移動
+	if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+	{
+		g_Player.moving = true;				//移動中
+		g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
+
+		g_Player.speed.x = -50.0f;		//スピードを-に
+		g_Player.direction = D_LEFT;		//左移動
+		g_Player.NowLane -= 1;			//レーン変更
+		PlayerCheck();
+	}
+	//左
+	if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+	{
+		g_Player.moving = true;				//移動中
+		g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
+
+		g_Player.speed.x = 50.0f;			//スピードを+に
+		g_Player.direction = D_RIGHT;		//右移動
+		g_Player.NowLane += 1;				//レーン変更
+		PlayerCheck();
+	}
+
+	//----------------------------------------
+	// キーボード入力
+	// ---------------------------------------
 	//弾発射
-	if ((GetKeyboardTrigger(DIK_SPACE))&&(g_Player.moving==false))
+	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false))
 	{
 		PlayerCheck();
 		if (g_Player.flag) {
@@ -168,7 +208,7 @@ void UpdatePlayer(void)
 	}
 
 	//Aキーで右移動
-	if ((GetKeyboardTrigger(DIK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+	if ((Keyboard_IsKeyDown(KK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
 	{
 		g_Player.moving = true;				//移動中
 		g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
@@ -180,7 +220,7 @@ void UpdatePlayer(void)
 	}
 
 	// Dキー で右移動
-	if ((GetKeyboardTrigger(DIK_D)) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+	if ((Keyboard_IsKeyDown(KK_D)) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
 	{
 		g_Player.moving = true;				//移動中
 		g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
