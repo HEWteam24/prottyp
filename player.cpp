@@ -71,7 +71,7 @@ static int g_SE_Damage;		//ダメージサウンド
 static PLAYER g_Player;
 
 
-
+int fire_dist;
 int good;
 int checkFrame;
 float goodAlpha;
@@ -128,6 +128,7 @@ void InitPlayer(void)
 	checkFrame = 0.0f;
 	goodAlpha =1.0f;
 	goodPosY = 0.0f;
+	fire_dist = 0;
 }
 
 //=============================================================================
@@ -174,6 +175,7 @@ void UpdatePlayer(void)
 		}
 	}
 
+
 	//スティックで移動
 	if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
 	{
@@ -201,7 +203,7 @@ void UpdatePlayer(void)
 	// キーボード入力
 	// ---------------------------------------
 	//弾発射
-	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false))
+	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false)&&(fire_dist==0))
 	{
 		g_Player.moving = true;
 		PlayerCheck();
@@ -209,7 +211,13 @@ void UpdatePlayer(void)
 			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
 			PlaySound(g_SE_Bullet, 0);
 			//g_Player.hp -= 30.0f;
+			
 		}
+		fire_dist = 30;
+	}
+	if (fire_dist > 0)
+	{
+		fire_dist--;
 	}
 
 	//Aキーで右移動
