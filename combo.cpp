@@ -38,7 +38,7 @@ HRESULT InitCombo()
 	{
 		g_Combo[i].pos = D3DXVECTOR2(COMBO_POS_X, COMBO_POS_Y);	//位置
 		g_Combo[i].size = D3DXVECTOR2(COMBO_SIZE_X, COMBO_SIZE_Y);	//サイズ
-		g_Combo[i].col = D3DXCOLOR(1.0, 0.0, 0.0, 1.0);
+		g_Combo[i].col = D3DXCOLOR(1.0, 1.0, 1.0, 0.2);
 		g_Combo[i].combonum = 0;					//コンボ数
 	}
 
@@ -89,21 +89,21 @@ void DrawCombo()
 			5
 		);
 	}
-	GetDeviceContext()->PSSetShaderResources(0, 1,
-		GetTexture(ComboTextTexNo));
+	//GetDeviceContext()->PSSetShaderResources(0, 1,
+	//	GetTexture(ComboTextTexNo));
 
-	DrawSpriteColorRotation(
-		g_ComboText.Pos.x,
-		g_ComboText.Pos.y,
-		g_ComboText.Size.x,
-		g_ComboText.Size.y,
-		0.0f,
-		g_ComboText.col,
-		0.0f,
-		1.0f,
-		1.0f,
-		1
-	);
+	//DrawSpriteColorRotation(
+	//	g_ComboText.Pos.x,
+	//	g_ComboText.Pos.y,
+	//	g_ComboText.Size.x,
+	//	g_ComboText.Size.y,
+	//	0.0f,
+	//	g_ComboText.col,
+	//	0.0f,
+	//	1.0f,
+	//	1.0f,
+	//	1
+	//);
 }
 
 void ComboPlus(int combo)

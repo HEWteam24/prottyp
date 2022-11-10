@@ -111,6 +111,7 @@ void DrawGame(void)
 	DrawBG();
 	DrawLane();
 	
+	DrawCombo();
 	DrawBullet();
 	DrawPlayer();
 	DrawEnemyBullet();
@@ -118,6 +119,5 @@ void DrawGame(void)
 	DrawRhythm();
 	DrawHp();
 	DrawScore();
-	DrawCombo();
 
 }

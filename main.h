@@ -99,8 +99,8 @@
 #define		COMBO_DIGIT		(3)
 #define		COMBO_UV_W		(0.2)
 #define		COMBO_UV_H		(0.2)
-#define		COMBO_POS_X		(1780 - (i * COMBO_SIZE_X))
-#define		COMBO_POS_Y		(SCREEN_HEIGHT/2+250.0f)
+#define		COMBO_POS_X		(SCREEN_WIDTH/2+COMBO_SIZE_X - (i * COMBO_SIZE_X))
+#define		COMBO_POS_Y		(SCREEN_HEIGHT/2)
 
 #define		COMBOTEXT_POS_X				(1610.0f)
 #define		COMBOTEXT_POS_Y				(SCREEN_HEIGHT/2+100)
