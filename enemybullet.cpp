@@ -111,11 +111,11 @@ void UpdateEnemyBullet()
 				g_EnemyBulletLong[k].pos.y = -10.0f;
 			}
 
-			if (CollisionBB(g_EnemyBullet[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBullet[i].w, g_EnemyBullet[i].h), pPlayer->size/2))
+			if (CollisionBB(g_EnemyBulletLong[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletLong[k].w, g_EnemyBulletLong[k].h), pPlayer->size/2))
 			{
-				g_EnemyBullet[i].use = false;
+				g_EnemyBulletLong[k].use = false;
 				pPlayer->hp -= 20.0f;
-				g_EnemyBullet[i].pos.y = -10.0f;
+				g_EnemyBulletLong[k].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
 
