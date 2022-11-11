@@ -546,7 +546,6 @@ void SetEnemyBullet()
 void SETBULLET()
 {
 	int atk = 0;	//“G‚ÌUŒ‚—p
-	int count = 0;
 	bool IsAtk = true;
 
 	for (int j = 0; j < MAP_SIZE_X; j++)
@@ -636,7 +635,6 @@ void SETBULLET()
 		}
 		IsAtk = true;
 		atk = 0;
-		count++;
 	}
 
 }
