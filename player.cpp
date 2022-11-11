@@ -213,7 +213,7 @@ void UpdatePlayer(void)
 			//g_Player.hp -= 30.0f;
 			
 		}
-		fire_dist = 30;
+		fire_dist = 20;
 	}
 	if (fire_dist > 0)
 	{
@@ -356,7 +356,7 @@ void PlayerCheck(void)
 	else  //BAD•]‰¿
 	{
 		good = C_BAD;
-		g_Player.hp -= 10.0f;
+		//g_Player.hp -= 10.0f;
 		PlaySound(g_SE_Damage, 0);
 		ResetCombo();
 		g_Player.flag = false;
