@@ -15,4 +15,4 @@ HRESULT InitBG(void);
 void UninitBG(void);
 void UpdateBG(void);
 void DrawBG(void);
-void Unchi(void);
+
