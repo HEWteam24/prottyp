@@ -8,13 +8,14 @@ SCORE	g_Score[SCOER_DIGIT];
 SCORETEXT g_ScoreText;
 
 static	ID3D11ShaderResourceView* g_ScoreTexture;//画像1枚で1つの変数が必要
-static	char* g_TextureNameScore = (char*)"data\\texture\\number.png";//テクスチャファイルパス JPG BMP PNG
+static	char* g_TextureNameScore = (char*)"data\\texture\\number.png";	//テクスチャファイルパス JPG BMP PNG
 
 static	ID3D11ShaderResourceView* g_ScoreTextTexture;//画像1枚で1つの変数が必要
-static	char* g_TextureNameScoreText = (char*)"data\\texture\\text_score.png";//テクスチャファイルパス JPG BMP PNG
+static	char* g_TextureNameScoreText = (char*)"data\\texture\\text_score.png";	//テクスチャファイルパス JPG BMP PNG
 
 float	ScoreTexNo;
 float	ScoreTextTexNo;
+float	ScoreMagTexNo;
 int		ScoreAdd;
 
 void InitScore()
@@ -83,7 +84,7 @@ void DrawScore()
 	GetDeviceContext()->PSSetShaderResources(0, 1,
 		GetTexture(ScoreTextTexNo));
 
-		DrawSpriteColorRotation(
+	DrawSpriteColorRotation(
 			g_ScoreText.Pos.x,
 			g_ScoreText.Pos.y,
 			g_ScoreText.Size.x,

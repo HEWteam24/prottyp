@@ -103,7 +103,7 @@ HRESULT InitRhythm()
 	char	filename[] = "data\\BGM\\hoge.wav";
 	GameSoundNo = LoadSound(filename);
 	PlaySound(GameSoundNo, -1);
-	Frame = 1;
+	Frame = 0;
 
 	return	S_OK;
 }
@@ -128,7 +128,7 @@ void UpdateRhythm()
 			if (i % 2 == 0)
 			{
 				//ノーツ左が真ん中に来た時消える
-				if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 2)
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 3)
 				{
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
@@ -219,7 +219,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame)  % 30 <= 4.0f) && ((Frame-4) % 30 >= 0.0f))
+	if (((Frame-3)  % 30 <= 4.0f) && ((Frame-3) % 30 >= 00.0f))
+	{
+		return true;
+	}
+	else if (((Frame-3) % 30 <= 29.0f) && ((Frame-3) % 30 >= 26.0f))
 	{
 		return true;
 	}

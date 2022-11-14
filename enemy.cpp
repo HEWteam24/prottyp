@@ -12,7 +12,8 @@
 #include "input.h"
 #include "rhythm.h"
 //#include "frame.h"
-//#include "score.h"
+#include "score.h"
+#include "combo.h"
 
 
 ENEMY		Enemy;
@@ -110,6 +111,7 @@ void UpdateEnemy()
 		{
 			Enemy.use = false;
 			Enemy.pos = D3DXVECTOR2(SCREEN_WIDTH / 2, ENEMY_SPAWN_POS_Y - 300.0f);
+ 			ScorePlus((500 * EnemyNum)*GetComboScoreUp());
 			EnemyNum++;
 
 		}
