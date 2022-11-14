@@ -73,16 +73,7 @@ HRESULT InitEnemy()
 //===================================================
 void UninitEnemy()
 {
-	if (g_TextureEnemy)
-	{
-		g_TextureEnemy->Release();
-		g_TextureEnemy = NULL;
-	}
-	if (g_TextureEnemyHp)
-	{
-		g_TextureEnemyHp->Release();
-		g_TextureEnemyHp = NULL;
-	}
+
 }
 
 //===================================================
