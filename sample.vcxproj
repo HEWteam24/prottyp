@@ -146,6 +146,7 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="rhythm.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="rhythm.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
