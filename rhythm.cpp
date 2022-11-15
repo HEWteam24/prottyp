@@ -200,7 +200,6 @@ void SetNotes()
 			Notes[n].use = true;
 			Notes[n].num = NotesNum;
 			Notes[n].alpha = 1.0f;
-			NotesNum++;
 			Notes[n + 1].pos = D3DXVECTOR2(NOTES_POS_X_2, NOTES_POS_Y);
 			Notes[n + 1].use = true;
 
@@ -242,7 +241,7 @@ void ReleaseNotes()
 {//ˆê”Ô^‚ñ’†‚É‹ß‚¢ƒm[ƒc‚ğÁ‚·ŠÖ”
 	int		Min = Notes[0].num, Index = 0;
 
-	for (int i = 1; i < NOTES_MAX; i++) {
+	for (int i = 2; i < NOTES_MAX; i+=2) {
 		if (Notes[i].use) {
 			if (Notes[i].num < Min) {
 				Min = Notes[i].num;
@@ -251,6 +250,7 @@ void ReleaseNotes()
 		}
 	}
 	Notes[Index].use = false;
+	Notes[Index + 1].use = false;
 }
 
 bool	MusicEnd()

@@ -8,8 +8,8 @@
 COMBO	g_Combo[COMBO_DIGIT],g_ComboMag[4];
 COMBOTEXT	g_ComboText;
 D3DXCOLOR	MagColor[5]{
+	D3DXCOLOR(0.6f,0.6f,0.6f,0.2f),
 	D3DXCOLOR(1.0f,1.0f,1.0f,0.2f),
-	D3DXCOLOR(0.0f,0.0f,1.0f,0.2f),
 	D3DXCOLOR(0.0f,1.0f,0.0f,0.2f),
 	D3DXCOLOR(1.0f,1.0f,0.0f,0.2f),
 	D3DXCOLOR(1.0f,0.0f,0.0f,0.2f),
