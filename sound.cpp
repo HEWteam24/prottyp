@@ -34,6 +34,7 @@ static DWORD g_aSizeAudio[MAX_SOUND_NUM] = {};						// オーディオデータサイズ
 static char g_SoundName[MAX_SOUND_NUM][256] = {};					// サウンド名バッファ
 static DWORD g_SoundIndex = 0;										// ソースボイス配列の末尾を示すインデックス
 
+
 /*------------------------------------------------------------------------------
    初期化関数
 ------------------------------------------------------------------------------*/
@@ -266,11 +267,36 @@ void PlaySound(int index, int loopCount)
 
 	// オーディオバッファの登録
 	g_apSourceVoice[index]->SubmitSourceBuffer(&buffer);
-
+	
 	// 再生
 	g_apSourceVoice[index]->Start(0);
 }
 
+/*------------------------------------------------------------------------------
+   音声の再生
+------------------------------------------------------------------------------*/
+void RePlaySound(int index)
+{
+	XAUDIO2_VOICE_STATE xa2state;
+	XAUDIO2_BUFFER buffer;
+
+	// バッファの値設定
+	memset(&buffer, 0, sizeof(XAUDIO2_BUFFER));
+	buffer.AudioBytes = g_aSizeAudio[index];
+	buffer.pAudioData = g_apDataAudio[index];
+	buffer.Flags = 0;
+	buffer.LoopCount = XAUDIO2_LOOP_INFINITE;
+
+	// 状態取得
+	g_apSourceVoice[index]->GetState(&xa2state);
+	//止めた所の秒数的な何かを代入(待ち行列の先頭)
+	buffer.PlayBegin = xa2state.BuffersQueued;
+	// オーディオバッファの登録
+	g_apSourceVoice[index]->SubmitSourceBuffer(&buffer);
+
+	// 再生
+	g_apSourceVoice[index]->Start(0);
+}
 /*------------------------------------------------------------------------------
    音声の停止
 ------------------------------------------------------------------------------*/
@@ -289,7 +315,22 @@ void StopSound(int index)
 		g_apSourceVoice[index]->FlushSourceBuffers();
 	}
 }
+/*------------------------------------------------------------------------------
+   音声の停止
+------------------------------------------------------------------------------*/
+void PauseSound(int index)
+{
+	XAUDIO2_VOICE_STATE xa2state;
 
+	// 状態取得
+	g_apSourceVoice[index]->GetState(&xa2state);
+	if (xa2state.BuffersQueued != 0)
+	{// 再生中
+		// 一時停止
+		g_apSourceVoice[index]->Stop(0);
+
+	}
+}
 /*------------------------------------------------------------------------------
    読み込んでいるすべての音声を停止
 ------------------------------------------------------------------------------*/

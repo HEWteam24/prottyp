@@ -82,18 +82,18 @@
 #define		NOTESLANE_SIZE_Y	(100.0f)
 #define		NOTESLANE_TEX		(((char*)"data\\texture\\notes_lane.png"))
 
-#define		SCORE_SIZE_X		(70)
-#define		SCORE_SIZE_Y		(100)
-#define		SCORE_POS_X		(1800 - (i * SCORE_SIZE_X))
-#define		SCORE_POS_Y		(SCREEN_HEIGHT/2-200.0f)
-#define		SCOER_DIGIT		(6)
+#define		SCORE_SIZE_X		(45)
+#define		SCORE_SIZE_Y		(60)
+#define		SCORE_POS_X		(1860 - (i * SCORE_SIZE_X))
+#define		SCORE_POS_Y		(80.0f)
+#define		SCOER_DIGIT		(8)
 
-#define		SCORETEXT_POS_X				(1470.0f)
-#define		SCORETEXT_POS_Y				(SCREEN_HEIGHT/2-280.0f)
+#define		SCORETEXT_POS_X				(1580.0f)
+#define		SCORETEXT_POS_Y				(25.0f)
 #define		SCORETEXT_SIZE_X			(100)
-#define		SCORETEXT_SIZE_Y			(50)
+#define		SCORETEXT_SIZE_Y			(45)
 
-#define		COMBO_SIZE_X	(150.0f)						//プレイヤーの幅
+#define		COMBO_SIZE_X	(190.0f)						//プレイヤーの幅
 #define		COMBO_SIZE_Y	(220.0f)						//プレイヤーの高さ
 #define		COMBO_TEX		(((char*)"data\\texture\\number.png"))
 #define		COMBO_DIGIT		(3)
@@ -102,10 +102,16 @@
 #define		COMBO_POS_X		(SCREEN_WIDTH/2+COMBO_SIZE_X - (i * COMBO_SIZE_X))
 #define		COMBO_POS_Y		(SCREEN_HEIGHT/2)
 
-#define		COMBOTEXT_POS_X				(1610.0f)
-#define		COMBOTEXT_POS_Y				(SCREEN_HEIGHT/2+100)
-#define		COMBOTEXT_SIZE_X			(200)
-#define		COMBOTEXT_SIZE_Y			(100)
+#define		COMBOTEXT_POS_X				(SCREEN_WIDTH/2)
+#define		COMBOTEXT_POS_Y				(SCREEN_HEIGHT/2-170)
+#define		COMBOTEXT_SIZE_X			(230)
+#define		COMBOTEXT_SIZE_Y			(80)
+
+#define		COMBOMAG_SIZE_X				(85.0f)
+#define		COMBOMAG_SIZE_Y				(100.0f)
+#define		COMBOMAG_POS_X				(SCREEN_WIDTH/2+COMBOMAG_SIZE_X+750 - (i * COMBOMAG_SIZE_X))
+#define		COMBOMAG_POS_Y				(SCREEN_HEIGHT/2-170)
+
 
 //レーンの初期値
 #define		LANE_MAX			(5)				//レーン数

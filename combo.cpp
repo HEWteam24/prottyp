@@ -5,8 +5,15 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-COMBO	g_Combo[COMBO_DIGIT];
+COMBO	g_Combo[COMBO_DIGIT],g_ComboMag[4];
 COMBOTEXT	g_ComboText;
+D3DXCOLOR	MagColor[5]{
+	D3DXCOLOR(0.7f,0.7f,0.7f,1.0f),
+	D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),
+	D3DXCOLOR(0.0f,1.0f,0.0f,1.0f),
+	D3DXCOLOR(1.0f,1.0f,0.0f,1.0f),
+	D3DXCOLOR(1.0f,0.0f,0.0f,1.0f),
+};
 
 static	ID3D11ShaderResourceView	*g_ComboTexture;//画像1枚で1つの変数が必要
 static	char	*g_TextureNameCombo = COMBO_TEX;//テクスチャファイルパス JPG BMP PNG
@@ -14,9 +21,13 @@ static	char	*g_TextureNameCombo = COMBO_TEX;//テクスチャファイルパス JPG BMP PNG
 static	ID3D11ShaderResourceView* g_ComboTextTexture;//画像1枚で1つの変数が必要
 static	char* g_TextureNameComboText = (char*)"data\\texture\\text_combo.png";//テクスチャファイルパス JPG BMP PNG
 
-int		ComboAdd;
+static	ID3D11ShaderResourceView* g_ComboMagTexture;//画像1枚で1つの変数が必要
+static	char* g_TextureNameComboMag = (char*)"data\\texture\\number_03.png";//テクスチャファイルパス JPG BMP PNG
+
+int		ComboAdd, ComboMagNum;
 float	ComboTexno;
 float	ComboTextTexNo;
+float	ComboMagTexNo;
 
 //=============================================================================
 // 初期化処理
@@ -32,14 +43,30 @@ HRESULT InitCombo()
 
 	g_ComboText.Pos = D3DXVECTOR2(COMBOTEXT_POS_X, COMBOTEXT_POS_Y);
 	g_ComboText.Size = D3DXVECTOR2(COMBOTEXT_SIZE_X, COMBOTEXT_SIZE_Y);
-	g_ComboText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	g_ComboText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.2f);
 
-	for (int i = 0; i < COMBO_DIGIT; i++) 
+	ComboMagTexNo = LoadTexture(g_TextureNameComboMag);
+	if (ComboMagTexNo == -1)
+	{//ロードエラー
+		exit(999);
+	}
+	for (int i = 0; i < 4; i++)
 	{
-		g_Combo[i].pos = D3DXVECTOR2(COMBO_POS_X, COMBO_POS_Y);	//位置
+		g_ComboMag[i].pos = D3DXVECTOR2(COMBOMAG_POS_X, COMBOMAG_POS_Y);	//位置
+		g_ComboMag[i].size = D3DXVECTOR2(COMBOMAG_SIZE_X, COMBOMAG_SIZE_Y);	//サイズ
+		g_ComboMag[i].col = D3DXCOLOR(1.0, 1.0, 1.0, 1.0);
+		g_ComboMag[i].combonum = 0;								//コンボの倍率一桁抽出
+	}
+	g_ComboMag[1].combonum = 18;
+	g_ComboMag[2].combonum = 1;
+	g_ComboMag[3].combonum = 16;
+
+	for (int i = 0; i < COMBO_DIGIT; i++)
+	{
+		g_Combo[i].pos = D3DXVECTOR2(COMBO_POS_X, COMBO_POS_Y);		//位置
 		g_Combo[i].size = D3DXVECTOR2(COMBO_SIZE_X, COMBO_SIZE_Y);	//サイズ
 		g_Combo[i].col = D3DXCOLOR(1.0, 1.0, 1.0, 0.2);
-		g_Combo[i].combonum = 0;					//コンボ数
+		g_Combo[i].combonum = 1;					//コンボ数
 	}
 
 	ComboTexno = LoadTexture(g_TextureNameCombo);
@@ -49,6 +76,8 @@ HRESULT InitCombo()
 	}
 
 	ComboAdd = 0;
+	ComboMagNum = 0;
+
 	return S_OK;
 }
 
@@ -63,6 +92,11 @@ void UninitCombo()
 	{
 		g_ComboTextTexture->Release();
 		g_ComboTextTexture = NULL;
+	}
+	if (g_ComboMagTexture)
+	{
+		g_ComboMagTexture->Release();
+		g_ComboMagTexture = NULL;
 	}
 }
 
@@ -89,21 +123,41 @@ void DrawCombo()
 			5
 		);
 	}
-	//GetDeviceContext()->PSSetShaderResources(0, 1,
-	//	GetTexture(ComboTextTexNo));
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(ComboTextTexNo));
 
-	//DrawSpriteColorRotation(
-	//	g_ComboText.Pos.x,
-	//	g_ComboText.Pos.y,
-	//	g_ComboText.Size.x,
-	//	g_ComboText.Size.y,
-	//	0.0f,
-	//	g_ComboText.col,
-	//	0.0f,
-	//	1.0f,
-	//	1.0f,
-	//	1
-	//);
+	DrawSpriteColorRotation(
+		g_ComboText.Pos.x,
+		g_ComboText.Pos.y,
+		g_ComboText.Size.x,
+		g_ComboText.Size.y,
+		0.0f,
+		g_ComboText.col,
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
+
+	int MagColNum = (int)((ComboMagNum)/5);
+
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(ComboMagTexNo));
+
+	for (int i = 0; i < 4; i++) {
+		DrawSpriteColorRotation(
+			g_ComboMag[i].pos.x,			
+			g_ComboMag[i].pos.y,
+			g_ComboMag[i].size.x,
+			g_ComboMag[i].size.y,
+			0.0f,
+			MagColor[MagColNum],
+			g_ComboMag[i].combonum,
+			0.2f,
+			0.2f,
+			5
+		);
+	}
 }
 
 void ComboPlus(int combo)
@@ -126,16 +180,36 @@ void GetComboDizit()
 	}
 }
 
+void ComboMagUp()
+{
+	g_ComboMag[0].combonum = ComboMagNum % 10;
+	if (ComboMagNum == 0)
+	{
+		g_ComboMag[2].combonum = 1;
+	}
+	else if (ComboMagNum % 10 == 0)
+	{
+		g_ComboMag[2].combonum++;
+		g_ComboMag[0].combonum = 0;
+	}
+}
 void ResetCombo()
 {
 	ComboAdd = 0;
+	ComboMagNum = 0;
+	ComboMagUp();
 }
 
-int GetComboScoreUp()
+float GetComboScoreUp()
 {
-	int Up = 0;
-	if (ComboAdd >= 10) {
-		Up = ComboAdd / 10;
+	float Up = 1.0f;
+	if (ComboAdd >= 10)
+	{
+		if (ComboAdd % 10 == 0) {
+			ComboMagNum = ComboAdd / 10;
+			ComboMagUp();
+		}
+		Up += ComboMagNum / 10.0f;
 	}
 	return Up;
 }

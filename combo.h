@@ -21,7 +21,8 @@ void		UpdateCombo();
 void		DrawCombo();
 void		ComboPlus(int combo);
 void		GetComboDizit();
+void		ComboMagUp();
 void		ResetCombo();
-int			GetComboScoreUp();
+float		GetComboScoreUp();
 
 #endif // !COMBO_H_

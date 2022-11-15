@@ -22,7 +22,296 @@ ENEMYBULLET g_EnemyBulletLong[ENEMYBULLETLONG_MAX];
 PLAYER* pPlayer;
 NOTESLANE* pRhythm;
 
+int nowY = 0;	//マップのその時の縦列数
+
 static int g_SE_Damage;		//ダメージサウンド
+
+
+//================================
+//マップチップ
+//================================
+int BulletChip[2][MAP_SIZE_Y][MAP_SIZE_X] =
+{
+	//1個め
+	{
+		2, 0, 1, 0, 1,
+		0, 0, 1, 2, 0,
+		0, 2, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 2, 0, 0, 1,
+		0, 0, 1, 0, 0,
+		0, 0, 2, 0, 1,
+		0, 1, 1, 0, 1,
+		0, 0, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 2, 0, 0, 0,
+		0, 0, 0, 1, 2,
+		0, 0, 1, 0, 0,
+		2, 0, 2, 0, 0,
+		0, 0, 0, 1, 0,
+		0, 1, 2, 0, 0,
+		1, 0, 0, 0, 2,
+		0, 0, 0, 1, 0,
+		1, 0, 2, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 2,
+		0, 0, 0, 1, 2,
+		2, 0, 0, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 2, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
+		2, 0, 0, 0, 2,
+		0, 2, 0, 2, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 2, 0, 0,
+		0, 2, 0, 0, 1,
+		0, 1, 0, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 0, 0, 2,
+		0, 0, 1, 0, 2,
+		1, 0, 0, 1, 2,
+		0, 1, 0, 0, 2,
+		0, 1, 0, 1, 2,
+		1, 0, 1, 0, 2,
+		1, 0, 1, 0, 2,
+		0, 0, 0, 0, 1,
+		0, 1, 0, 0, 0,
+		0, 2, 0, 1, 0,
+		0, 0, 0, 0, 1,
+		1, 0, 0, 1, 1,
+		1, 1, 0, 0, 2,
+		0, 0, 0, 2, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 0, 2, 0,
+		0, 0, 2, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 2, 0, 1, 0,
+		0, 0, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 0, 0, 2,
+		0, 2, 0, 0, 0,
+		2, 0, 0, 0, 2,
+		2, 2, 0, 2, 2,
+		2, 2, 0, 2, 2,
+		2, 2, 0, 2, 2,
+		2, 0, 0, 0, 2,
+		0, 0, 0, 0, 0,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 1,
+		0, 2, 0, 2, 0,
+		0, 0, 0, 0, 0,
+		2, 2, 1, 0, 0,
+		0, 0, 0, 1, 2,
+		1, 2, 1, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 2, 0, 1,
+		2, 0, 0, 0, 0,
+		2, 2, 0, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 2, 0,
+		2, 2, 2, 0, 1,
+		2, 2, 0, 1, 1,
+		2, 2, 0, 0, 0,
+		2, 0, 0, 0, 0,
+		1, 0, 0, 0, 1,
+	},
+
+	//２個目
+	{
+		2, 2, 2, 2, 2,
+		0, 0, 0, 2, 0,
+		0, 2, 1, 0, 0,
+		0, 0, 0, 1, 0,
+		0, 2, 0, 0, 1,
+		0, 0, 1, 0, 0,
+		0, 0, 1, 0, 1,
+		0, 1, 0, 0, 1,
+		0, 0, 2, 1, 0,
+		1, 0, 0, 0, 0,
+		0, 2, 0, 0, 0,
+		0, 0, 0, 1, 2,
+		0, 0, 1, 0, 0,
+		2, 0, 2, 0, 0,
+		0, 0, 0, 1, 0,
+		0, 1, 2, 0, 0,
+		1, 0, 0, 0, 2,
+		0, 0, 0, 1, 0,
+		1, 0, 2, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 2,
+		0, 0, 0, 1, 2,
+		2, 0, 0, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 2, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
+		2, 0, 0, 0, 2,
+		0, 2, 0, 2, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 2, 0, 0,
+		0, 2, 0, 0, 1,
+		0, 1, 0, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 0, 0, 2,
+		0, 0, 1, 0, 2,
+		1, 0, 0, 1, 2,
+		0, 1, 0, 0, 2,
+		0, 1, 0, 1, 2,
+		1, 0, 1, 0, 2,
+		1, 0, 1, 0, 2,
+		0, 0, 0, 0, 1,
+		0, 1, 0, 0, 0,
+		0, 2, 0, 1, 0,
+		0, 0, 0, 0, 1,
+		1, 0, 0, 1, 1,
+		1, 1, 0, 0, 2,
+		0, 0, 0, 2, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 0, 2, 0,
+		0, 0, 2, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 2, 0, 1, 0,
+		0, 0, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 0, 0, 2,
+		0, 2, 0, 0, 0,
+		2, 0, 0, 0, 2,
+		2, 2, 0, 2, 2,
+		2, 2, 0, 2, 2,
+		2, 2, 0, 2, 2,
+		2, 0, 0, 0, 2,
+		0, 0, 0, 0, 0,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 1,
+		0, 2, 0, 2, 0,
+		0, 0, 0, 0, 0,
+		2, 2, 1, 0, 0,
+		0, 0, 0, 1, 2,
+		1, 2, 1, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0,
+		0, 1, 0, 0, 0,
+		0, 0, 2, 0, 1,
+		2, 0, 0, 0, 0,
+		2, 2, 0, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 0, 0,
+		2, 2, 2, 2, 0,
+		2, 2, 2, 0, 1,
+		2, 2, 0, 1, 1,
+		2, 2, 0, 0, 0,
+		2, 0, 0, 0, 0,
+		1, 0, 0, 0, 1,
+	}
+};
+int BulletChip2[MAP_SIZE_Y][MAP_SIZE_X] =
+{
+	2, 2, 2, 2, 2,
+	0, 0, 0, 2, 0,
+	0, 2, 1, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 2, 0, 0, 1,
+	0, 0, 1, 0, 0,
+	0, 0, 1, 0, 1,
+	0, 1, 0, 0, 1,
+	0, 0, 2, 1, 0,
+	1, 0, 0, 0, 0,
+	0, 2, 0, 0, 0,
+	0, 0, 0, 1, 2,
+	0, 0, 1, 0, 0,
+	2, 0, 2, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 1, 2, 0, 0,
+	1, 0, 0, 0, 2,
+	0, 0, 0, 1, 0,
+	1, 0, 2, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 2,
+	0, 0, 0, 1, 2,
+	2, 0, 0, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 2, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 0,
+	2, 0, 0, 0, 2,
+	0, 2, 0, 2, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 2, 0, 0,
+	0, 2, 0, 0, 1,
+	0, 1, 0, 0, 0,
+	1, 0, 0, 1, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 0, 0, 2,
+	0, 0, 1, 0, 2,
+	1, 0, 0, 1, 2,
+	0, 1, 0, 0, 2,
+	0, 1, 0, 1, 2,
+	1, 0, 1, 0, 2,
+	1, 0, 1, 0, 2,
+	0, 0, 0, 0, 1,
+	0, 1, 0, 0, 0,
+	0, 2, 0, 1, 0,
+	0, 0, 0, 0, 1,
+	1, 0, 0, 1, 1,
+	1, 1, 0, 0, 2,
+	0, 0, 0, 2, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 0, 2, 0,
+	0, 0, 2, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 2, 0, 1, 0,
+	0, 0, 0, 0, 1,
+	1, 0, 0, 1, 0,
+	0, 1, 0, 0, 2,
+	0, 2, 0, 0, 0,
+	2, 0, 0, 0, 2,
+	2, 2, 0, 2, 2,
+	2, 2, 0, 2, 2,
+	2, 2, 0, 2, 2,
+	2, 0, 0, 0, 2,
+	0, 0, 0, 0, 0,
+	0, 1, 0, 1, 0,
+	1, 0, 1, 0, 1,
+	0, 1, 0, 1, 0,
+	1, 0, 1, 0, 1,
+	0, 2, 0, 2, 0,
+	0, 0, 0, 0, 0,
+	2, 2, 1, 0, 0,
+	0, 0, 0, 1, 2,
+	1, 2, 1, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 2, 0, 1,
+	2, 0, 0, 0, 0,
+	2, 2, 0, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 2, 0,
+	2, 2, 2, 0, 1,
+	2, 2, 0, 1, 1,
+	2, 2, 0, 0, 0,
+	2, 0, 0, 0, 0,
+	1, 0, 0, 0, 1,
+};
+
+
 //================================
 //初期化
 //================================
@@ -74,7 +363,8 @@ void UpdateEnemyBullet()
 
 	if (pRhythm->frame % 60*1.5 == 0.0f)
 	{
-		SetEnemyBullet();
+		SETBULLET();
+		nowY++;
 	}
 
 	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
@@ -92,7 +382,7 @@ void UpdateEnemyBullet()
 			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), pPlayer->size))
 			{
 				g_EnemyBulletNomal[i].use = false;
-				pPlayer->hp -= 10.0f;
+				pPlayer->hp -= 25.0f;
 				g_EnemyBulletNomal[i].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
@@ -114,7 +404,7 @@ void UpdateEnemyBullet()
 			if (CollisionBB(g_EnemyBulletLong[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletLong[k].w, g_EnemyBulletLong[k].h), pPlayer->size/2))
 			{
 				g_EnemyBulletLong[k].use = false;
-				pPlayer->hp -= 20.0f;
+				pPlayer->hp -= 15.0f;
 				g_EnemyBulletLong[k].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
@@ -126,20 +416,20 @@ void UpdateEnemyBullet()
 void DrawEnemyBullet()
 {
 
-	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+	for (int x = 0; x < ENEMYBULLETNOMAL_MAX; x++)
 	{
-		if (g_EnemyBulletNomal[i].use)
+		if (g_EnemyBulletNomal[x].use)
 		{
-			DrawSpriteColor(g_EnemyBulletNomal[i].texNo, g_EnemyBulletNomal[i].pos.x, g_EnemyBulletNomal[i].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
+			DrawSpriteColor(g_EnemyBulletNomal[x].texNo, g_EnemyBulletNomal[x].pos.x, g_EnemyBulletNomal[x].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
 
-	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+	for (int y = 0; y < ENEMYBULLETLONG_MAX; y++)
 	{
-		if (g_EnemyBulletLong[k].use)
+		if (g_EnemyBulletLong[y].use)
 		{
-			DrawSpriteColor(g_EnemyBulletLong[k].texNo, g_EnemyBulletLong[k].pos.x, g_EnemyBulletLong[k].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
+			DrawSpriteColor(g_EnemyBulletLong[y].texNo, g_EnemyBulletLong[y].pos.x, g_EnemyBulletLong[y].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
@@ -157,97 +447,194 @@ ENEMYBULLET* GetEnemyBulletLong()
 
 void SetEnemyBullet()
 {
-	srand((unsigned int)time(NULL));
-	int num,numm;		//乱数用
-	int atk = 0,atkk = 0;	//敵の攻撃用
-	num = rand() % 9;
-	numm = rand() % 2;
+	//srand((unsigned int)time(NULL));
+	//int num,numm;		//乱数用
+	//int atk = 0,atkk = 0;	//敵の攻撃用
+	//num = rand() % 9;
+	//numm = rand() % 2;
 
-	switch (num)
+	//switch (num)
+	//{
+	//case 0:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2;
+	//	break;
+	//case 1:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2;
+	//	break;
+	//case 2:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2;
+	//	break;
+	//case 3:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+	//	break;
+	//case 4:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+	//	break;
+	//case 5:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+	//	break;
+	//case 6:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+	//	break;
+	//case 7:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+	//	break;
+	//case 8:
+	//	if (numm == 0)
+	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+	//	else
+	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+	//	break;
+	//default:
+	//	break;
+
+	//}
+
+
+	//if (atkk == 0)
+	//{
+	//	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+	//	{
+	//		if (g_EnemyBulletNomal[i].use == false)
+	//		{
+	//			g_EnemyBulletNomal[i].pos.x = atk;
+	//			g_EnemyBulletNomal[i].use = true;
+	//			return;
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+	//	{
+	//		if (g_EnemyBulletLong[k].use == false)
+	//		{
+	//			g_EnemyBulletLong[k].pos.x = atkk;
+	//			g_EnemyBulletLong[k].use = true;
+	//			return;
+	//		}
+
+	//	}
+	//}
+}
+
+
+void SETBULLET()
+{
+	int atk = 0;	//敵の攻撃用
+	bool IsAtk = true;
+
+	for (int j = 0; j < MAP_SIZE_X; j++)
 	{
-	case 0:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2;
-		else
-			atkk = SCREEN_WIDTH / 2;
-		break;
-	case 1:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2;
-		else
-			atkk = SCREEN_WIDTH / 2;
-		break;
-	case 2:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2;
-		else
-			atkk = SCREEN_WIDTH / 2;
-		break;
-	case 3:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-		else
-			atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-		break;
-	case 4:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-		else
-			atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-		break;
-	case 5:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-		else
-			atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-		break;
-	case 6:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-		else
-			atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-		break;
-	case 7:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-		else
-			atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-		break;
-	case 8:
-		if (numm == 0)
-			atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-		else
-			atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-		break;
-	default:
-		break;
-
-	}
-
-
-	if (atkk == 0)
-	{
-		for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+		switch (BulletChip[0][nowY][j])
 		{
-			if (g_EnemyBulletNomal[i].use == false)
+		case 0:
+			IsAtk = false;
+			break;
+		case 1:
+			switch (j)
 			{
-				g_EnemyBulletNomal[i].pos.x = atk;
-				g_EnemyBulletNomal[i].use = true;
-				return;
+			case 0:
+				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+				break;
+			case 1:
+				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+				break;
+			case 2:
+				atk = SCREEN_WIDTH / 2;
+				break;
+			case 3:
+				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+				break;
+			case 4:
+				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+				break;
+			default:
+				break;
 			}
+			if (IsAtk)
+			{
+				for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+				{
+					if (g_EnemyBulletNomal[i].use == false)
+					{
+						g_EnemyBulletNomal[i].pos.x = atk;
+						g_EnemyBulletNomal[i].use = true;
+						break;
+					}
+				}
+			}
+			break;
+		case 2:
+			switch (j)
+			{
+			case 0:
+				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+				break;
+			case 1:
+				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+				break;
+			case 2:
+				atk = SCREEN_WIDTH / 2;
+				break;
+			case 3:
+				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+				break;
+			case 4:
+				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+				break;
+			default:
+				break;
+			}
+			if (IsAtk)
+			{
+				for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+				{
+					if (g_EnemyBulletLong[k].use == false)
+					{
+						g_EnemyBulletLong[k].pos.x = atk;
+						g_EnemyBulletLong[k].use = true;
+						break;
+					}
+				}
+			}
+			break;
+		case 3:
+			IsAtk = false;
+			break;
+		case 4:
+			IsAtk = false;
+			break;
+		default:
+			IsAtk = false;
+			break;
 		}
+		IsAtk = true;
+		atk = 0;
 	}
-	else
-	{
-		for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-		{
-			if (g_EnemyBulletLong[k].use == false)
-			{
-				g_EnemyBulletLong[k].pos.x = atkk;
-				g_EnemyBulletLong[k].use = true;
-				return;
-			}
 
-		}
-	}
 }

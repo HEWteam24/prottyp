@@ -10,6 +10,8 @@ void UninitSound(void);
 
 int LoadSound(char* pFilename);
 void PlaySound(int index, int loopCount);
+void RePlaySound(int index);
 void StopSound(int index);
+void PauseSound(int index);
 void StopSoundAll(void);
 void SetVolume(int index, float vol);

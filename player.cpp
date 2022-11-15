@@ -168,7 +168,8 @@ void UpdatePlayer(void)
 	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false))
 	{
 		PlayerCheck();
-		if (g_Player.flag) {
+		if (g_Player.flag) 
+		{
 			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
 			PlaySound(g_SE_Bullet, 0);
 			//g_Player.hp -= 30.0f;
@@ -213,7 +214,7 @@ void UpdatePlayer(void)
 			//g_Player.hp -= 30.0f;
 			
 		}
-		fire_dist = 30;
+		fire_dist = 20;
 	}
 	if (fire_dist > 0)
 	{
@@ -350,7 +351,7 @@ void PlayerCheck(void)
 
 		g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);
 		ComboPlus(1);
-		ScorePlus(10+ GetComboScoreUp());
+		ScorePlus(10 * GetComboScoreUp());
 		g_Player.flag = true;
 	}
 	else  //BAD•]‰¿

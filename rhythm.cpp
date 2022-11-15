@@ -9,6 +9,7 @@
 #include "texture.h"
 #include "sprite.h"
 #include "main.h"
+#include "keyboard.h"
 
 
 
@@ -22,6 +23,7 @@ int			GameSoundNo;
 
 int			NotesNum = 0;
 int			Frame;
+
 
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
@@ -101,31 +103,32 @@ HRESULT InitRhythm()
 	char	filename[] = "data\\BGM\\hoge.wav";
 	GameSoundNo = LoadSound(filename);
 	PlaySound(GameSoundNo, -1);
-	Frame = 1;
+	Frame = 0;
 
 	return	S_OK;
 }
 
 void UpdateRhythm()
 {
+
 	//ノーツのセット(BPM120の時は30フレームごと)
-	if ((Frame) % 30*NOTES_DIST == 0.0f)
+	if ((Frame) % 30 * NOTES_DIST == 0.0f)
 	{
 		SetNotes();
 	}
 	Frame++;
 	NotesLane.frame++;
-	
-	for (int i = 0; i < NOTES_MAX; i++) 
+
+	for (int i = 0; i < NOTES_MAX; i++)
 	{
 		if (Notes[i].use)
 		{
 			Notes[i].pos.x += Notes[i].sp.x;
-			Notes[i].alpha -= 0.005f*NOTES_DIST;
+			Notes[i].alpha -= 0.005f * NOTES_DIST;
 			if (i % 2 == 0)
 			{
 				//ノーツ左が真ん中に来た時消える
-				if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 2)
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 3)
 				{
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
@@ -136,7 +139,7 @@ void UpdateRhythm()
 				//	
 				//}
 			}
-			if(i % 2 == 1)
+			if (i % 2 == 1)
 			{
 				//ノーツ右が真ん中に来た時消える
 				if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
@@ -151,6 +154,7 @@ void UpdateRhythm()
 			}
 		}
 	}
+
 }
 
 void UninitRhythm()
@@ -215,7 +219,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame+3)  % 30 <= 6.0f) && ((Frame+3) % 30 >= 0.0f))
+	if (((Frame-3)  % 30 <= 4.0f) && ((Frame-3) % 30 >= 00.0f))
+	{
+		return true;
+	}
+	else if (((Frame-3) % 30 <= 29.0f) && ((Frame-3) % 30 >= 26.0f))
 	{
 		return true;
 	}
