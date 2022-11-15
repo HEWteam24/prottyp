@@ -81,7 +81,6 @@ void UninitEnemy()
 //===================================================
 void UpdateEnemy()
 {
-	NOTESLANE* pRythm = GetNotesLane();
 
 	if (Enemy.use) 
 	{

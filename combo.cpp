@@ -8,11 +8,11 @@
 COMBO	g_Combo[COMBO_DIGIT],g_ComboMag[4];
 COMBOTEXT	g_ComboText;
 D3DXCOLOR	MagColor[5]{
-	D3DXCOLOR(0.7f,0.7f,0.7f,1.0f),
-	D3DXCOLOR(1.0f,1.0f,1.0f,1.0f),
-	D3DXCOLOR(0.0f,1.0f,0.0f,1.0f),
-	D3DXCOLOR(1.0f,1.0f,0.0f,1.0f),
-	D3DXCOLOR(1.0f,0.0f,0.0f,1.0f),
+	D3DXCOLOR(1.0f,1.0f,1.0f,0.2f),
+	D3DXCOLOR(0.0f,0.0f,1.0f,0.2f),
+	D3DXCOLOR(0.0f,1.0f,0.0f,0.2f),
+	D3DXCOLOR(1.0f,1.0f,0.0f,0.2f),
+	D3DXCOLOR(1.0f,0.0f,0.0f,0.2f),
 };
 
 static	ID3D11ShaderResourceView	*g_ComboTexture;//‰æ‘œ1–‡‚Å1‚Â‚Ì•Ï”‚ª•K—v
@@ -139,7 +139,7 @@ void DrawCombo()
 		1
 	);
 
-	int MagColNum = (int)((ComboMagNum)/5);
+	int MagColNum = min((int)((ComboMagNum)/5),4);
 
 	GetDeviceContext()->PSSetShaderResources(0, 1,
 		GetTexture(ComboMagTexNo));
@@ -206,7 +206,7 @@ float GetComboScoreUp()
 	if (ComboAdd >= 10)
 	{
 		if (ComboAdd % 10 == 0) {
-			ComboMagNum = ComboAdd / 10;
+			ComboMagNum = ComboAdd*2 / 10;
 			ComboMagUp();
 		}
 		Up += ComboMagNum / 10.0f;

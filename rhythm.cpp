@@ -24,7 +24,6 @@ int			GameSoundNo;
 int			NotesNum = 0;
 int			Frame;
 
-
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
 
@@ -83,8 +82,6 @@ HRESULT InitRhythm()
 	NotesLane.pos = D3DXVECTOR2(NOTESLANE_POS_X, NOTESLANE_POS_Y);
 	NotesLane.size = D3DXVECTOR2(NOTESLANE_SIZE_X, NOTESLANE_SIZE_Y);
 	NotesLane.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	NotesLane.frame = 1;
-	NotesLane.frameD = 1;
 
 	//テクスチャのロード
 	NotesLane.texno = LoadTexture(g_TextureNameNotesLane);
@@ -110,14 +107,12 @@ HRESULT InitRhythm()
 
 void UpdateRhythm()
 {
-
 	//ノーツのセット(BPM120の時は30フレームごと)
-	if ((Frame) % 30 * NOTES_DIST == 0.0f)
+	if ((Frame % (60 /(NowBPM / 60))) * NOTES_DIST == 0.0f)
 	{
 		SetNotes();
 	}
 	Frame++;
-	NotesLane.frame++;
 
 	for (int i = 0; i < NOTES_MAX; i++)
 	{
@@ -133,11 +128,11 @@ void UpdateRhythm()
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
 				}
-				////ノーツ左が消えてる時右も消える
-				//if (Notes[i + 1].use)
-				//{
-				//	
-				//}
+				//ノーツ左が消えてる時右も消える
+				if (!Notes[i + 1].use)
+				{
+					Notes[i].use = false;
+				}
 			}
 			if (i % 2 == 1)
 			{
@@ -219,11 +214,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame-3)  % 30 <= 4.0f) && ((Frame-3) % 30 >= 00.0f))
+	if (((Frame-3)  % (60 / (NowBPM / 60)) <= 4.0f) && ((Frame-3) % (60 / (NowBPM / 60)) >= 00.0f))
 	{
 		return true;
 	}
-	else if (((Frame-3) % 30 <= 29.0f) && ((Frame-3) % 30 >= 26.0f))
+	else if (((Frame-3) % (60 / (NowBPM / 60)) <= 29.0f) && ((Frame-3) % (60 / (NowBPM / 60)) >= 26.0f))
 	{
 		return true;
 	}
@@ -238,19 +233,19 @@ NOTES * GetNotes()
 	return Notes;
 }
 
-NOTESLANE * GetNotesLane()
+int  GetFreame()
 {
-	return &NotesLane;
+	return Frame;
 }
 
 void ReleaseNotes()
 {//一番真ん中に近いノーツを消す関数
-	int		Max = Notes[0].num, Index = 0;
+	int		Min = Notes[0].num, Index = 0;
 
 	for (int i = 1; i < NOTES_MAX; i++) {
 		if (Notes[i].use) {
-			if (Notes[i].num > Max) {
-				Max = Notes[i].num;
+			if (Notes[i].num < Min) {
+				Min = Notes[i].num;
 				Index = i;
 			}
 		}
@@ -258,3 +253,12 @@ void ReleaseNotes()
 	Notes[Index].use = false;
 }
 
+bool	MusicEnd()
+{
+	if (Frame < 120*60) {
+		return false;
+	}
+	else {
+		return true;
+	}
+}
