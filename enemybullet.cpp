@@ -20,7 +20,6 @@
 ENEMYBULLET g_EnemyBulletNomal[ENEMYBULLETNOMAL_MAX];
 ENEMYBULLET g_EnemyBulletLong[ENEMYBULLETLONG_MAX];
 PLAYER* pPlayer;
-NOTESLANE* pRhythm;
 
 int nowY = 0;	//ƒ}ƒbƒv‚Ì‚»‚ÌŽž‚Ìc—ñ”
 
@@ -346,7 +345,6 @@ HRESULT InitEnemyBullet()
 	g_SE_Damage = LoadSound(file_SE_Damage);
 
 	pPlayer = GetPlayer();
-	pRhythm = GetNotesLane();
 
 	return S_OK;
 }
@@ -360,8 +358,9 @@ void UninitEnemyBullet()
 void UpdateEnemyBullet()
 {
 	
+	int eFreame = GetFreame();
 
-	if (pRhythm->frame % 60*1.5 == 0.0f)
+	if (eFreame % 60*1.5 == 0.0f)
 	{
 		SETBULLET();
 		nowY++;

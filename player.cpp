@@ -353,6 +353,7 @@ void PlayerCheck(void)
 		ComboPlus(1);
 		ScorePlus(10 * GetComboScoreUp());
 		g_Player.flag = true;
+		ReleaseNotes();
 	}
 	else  //BAD•]‰¿
 	{

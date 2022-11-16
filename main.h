@@ -107,10 +107,10 @@
 #define		COMBOTEXT_SIZE_X			(230)
 #define		COMBOTEXT_SIZE_Y			(80)
 
-#define		COMBOMAG_SIZE_X				(85.0f)
-#define		COMBOMAG_SIZE_Y				(100.0f)
-#define		COMBOMAG_POS_X				(SCREEN_WIDTH/2+COMBOMAG_SIZE_X+750 - (i * COMBOMAG_SIZE_X))
-#define		COMBOMAG_POS_Y				(SCREEN_HEIGHT/2-170)
+#define		COMBOMAG_SIZE_X				(80.0f)
+#define		COMBOMAG_SIZE_Y				(95.0f)
+#define		COMBOMAG_POS_X				(SCREEN_WIDTH/2+COMBOMAG_SIZE_X - (i * COMBOMAG_SIZE_X))
+#define		COMBOMAG_POS_Y				(SCREEN_HEIGHT/2+180)
 
 
 //ÉåÅ[ÉìÇÃèâä˙íl
