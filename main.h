@@ -131,11 +131,13 @@
 //シーンの定義
 enum SCENE
 {
-	SCENE_NONE,		//シーン無し
-	SCENE_TITLE,	//タイトル画面
-	SCENE_GAME,		//ゲーム本編
-	SCENE_RESULT,	//リザルト画面
-	SCENE_GAMEOVER,
+	SCENE_NONE,			//シーン無し
+	SCENE_TITLE,		//タイトル画面
+	SCENE_GAME,			//ゲーム本編
+	SCENE_RESULT,		//リザルト画面
+	SCENE_GAMEOVER,		//ゲームオーバー
+	SCENE_STAGESELECT,	//セレクト
+	SCENE_STAGE_0,
 
 	SCENE_NUM,		//終端コード
 };
@@ -145,5 +147,5 @@ enum SCENE
 // プロトタイプ宣言
 //*****************************************************************************
 
-void SetScene(SCENE nextScene);
+void SetScene(int nextScene);
 float frand(void);

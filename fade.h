@@ -34,7 +34,7 @@ void UpdateFade(void);
 void DrawFade(void);
 
 void SceneFadeIn(SCENE nextScene);
-void SceneTransition(SCENE nextScene);
+void SceneTransition(int nextScene);
 FADE_STATE GetFadeState(void);
 
 void SetFadeColor(float r, float g, float b);

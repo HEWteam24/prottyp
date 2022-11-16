@@ -150,6 +150,7 @@
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="stage_select.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
@@ -176,6 +177,7 @@
     <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="stage_select.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>
