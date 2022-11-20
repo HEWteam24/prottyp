@@ -22,6 +22,7 @@ typedef struct {
 }SCORETEXT;
 
 void InitScore();
+void InitScoreResult();
 void UpdateScore();
 void UninitScore();
 void DrawScore();

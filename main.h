@@ -88,6 +88,18 @@
 #define		SCORE_POS_Y		(80.0f)
 #define		SCOER_DIGIT		(8)
 
+#define		SCORE_R_SIZE_X		(60)
+#define		SCORE_R_SIZE_Y		(80)
+#define		SCORE_R_POS_X		(1760 - (i * SCORE_R_SIZE_X))
+#define		SCORE_R_POS_Y		(CENTER_Y+80.0f)
+#define		SCOER_R_DIGIT		(8)
+
+#define		SCORE_R_TEXT_POS_X			(1381.0f)
+#define		SCORE_R_TEXT_POS_Y			(CENTER_Y+10.0f)
+#define		SCORE_R_TEXT_SIZE_X			(133)
+#define		SCORE_R_TEXT_SIZE_Y			(60)
+
+
 #define		SCORETEXT_POS_X				(1580.0f)
 #define		SCORETEXT_POS_Y				(25.0f)
 #define		SCORETEXT_SIZE_X			(100)
