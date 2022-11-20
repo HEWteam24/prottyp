@@ -73,7 +73,7 @@ void UninitGame(void)
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();
-	UninitScore();
+	//UninitScore();
 	UninitCombo();
 
 	StopSound(g_BGMGame);

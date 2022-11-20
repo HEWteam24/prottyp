@@ -159,7 +159,7 @@ void UpdatePlayer(void)
 	//体力0でゲームオーバー
 	if (g_Player.hp <= 0)
 	{
-		SceneTransition(SCENE_GAMEOVER);
+		SceneTransition(SCENE_RESULT);
 	}
 
 	//----------------------------------------

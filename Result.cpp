@@ -15,6 +15,8 @@
 #include "fade.h" 
 #include "keyboard.h"
 
+#include "score.h"
+
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
@@ -36,8 +38,8 @@ HRESULT InitResult(void)
 {
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back_Clear.png");
 	
-	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Result.wav");
-	PlaySound(g_BGMNo, -1);
+	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Result.wav");
+	//PlaySound(g_BGMNo, -1);
 
 	return S_OK;
 }
@@ -47,6 +49,7 @@ HRESULT InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
+	UninitScore();
 	StopSound(g_BGMNo);
 }
 
@@ -74,4 +77,6 @@ void DrawResult(void)
 {
 	DrawSpriteLeftTop(g_TextureBgTitle, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
 		0.0f, 0.0f, 1.0f, 1.0f);
+
+	DrawScore();
 }

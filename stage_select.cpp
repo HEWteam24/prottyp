@@ -31,7 +31,7 @@
 static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
 static int g_BGMNo;//タイトル用BGMの識別子
 int NowSelect = STAGE_1;
-
+float alpha;
 STAGE_PANEL g_StagePanel[STAGE_MAX];
 
 //=============================================================================
@@ -69,6 +69,8 @@ HRESULT InitStageSelect(void)
 	
 	g_StagePanel[1].size = D3DXVECTOR2(395.0f, 395.0f);;
 	g_StagePanel[10].NowLane =PLANE_1;
+
+	alpha = 1.0f;
 
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
@@ -115,7 +117,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].NowLane++;
 			g_StagePanel[i].spd = 60.0f;			//スピードを+に
 			g_StagePanel[i].direction = D_RIGHT;		//右移動
-
+			alpha = 1.0f;
 		}
 		//左
 		if ((GetThumbLeftX(0) > 0.3f) && (g_StagePanel[i].moving == false))
@@ -124,6 +126,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].NowLane--;
 			g_StagePanel[i].spd = -60.0f;		//スピードを-に
 			g_StagePanel[i].direction = D_LEFT;		//左移動
+			alpha = 1.0f;
 		}
 
 		//Dキーで右移動
@@ -133,7 +136,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].NowLane--;
 			g_StagePanel[i].spd = -60.0f;		//スピードを-に
 			g_StagePanel[i].direction = D_LEFT;		//左移動
-
+			alpha = 1.0f;
 		}
 
 		//Aキー で左移動
@@ -143,11 +146,13 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].NowLane++;
 			g_StagePanel[i].spd = 60.0f;			//スピードを+に
 			g_StagePanel[i].direction = D_RIGHT;		//右移動
+			alpha = 1.0f;
 		}
 
 		//選択移動
 		if ((g_StagePanel[i].moving))
 		{
+			alpha *= 0.99f;
 			g_StagePanel[i].pos.x += g_StagePanel[i].spd;	//スピードを足して移動
 			g_StagePanel[i].spd *= 0.9f;			//スピード減衰
 			if (g_StagePanel[i].NowLane == PLANE_3)
@@ -168,6 +173,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].pos.x = -480.0f*2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
 			NowSelect++;	//選択ステージ変更
+			
 		}
 		//左移動完了
 		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT))
@@ -175,11 +181,20 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].pos.x = -480.0f*2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
 			NowSelect--;	//選択ステージ変更
+		
 		}
 
 		if (g_StagePanel[i].NowLane == PLANE_3)
 		{
+			g_TextureBgStageSelect[1] = g_StagePanel[i].texno;
 			g_StagePanel[i].col = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
+			if (g_StagePanel[i].moving == false)
+			{
+				alpha = 1.0f;
+				g_TextureBgStageSelect[0] = g_StagePanel[i].texno;
+			}
+
+			//g_TextureBgStageSelect[1] = g_StagePanel[i].texno;
 		}
 		else
 		{
@@ -205,10 +220,11 @@ void UpdateStageSelect(void)
 void DrawStageSelect(void)
 {
 	//背景表示
-	DrawSpriteLeftTop(g_TextureBgStageSelect[0], 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
-		0.0f, 0.0f, 1.0f, 1.0f);
-	DrawSpriteLeftTop(g_TextureBgStageSelect[1], 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
-		0.0f, 0.0f, 1.0f, 1.0f);
+	DrawSpriteColor(g_TextureBgStageSelect[1], CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
+		0.0f, 0.0f, 1.0f, 1.0f,D3DXCOLOR(0.6f,0.6f,0.6f,1.0f));
+	DrawSpriteColor(g_TextureBgStageSelect[0], CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6f, 0.6f, 0.6f, alpha));
+
 
 	//ステージパネルの表示
 	for (int i = 0; i < STAGE_MAX; i++)
