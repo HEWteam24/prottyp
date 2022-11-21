@@ -117,6 +117,7 @@ void InitPlayer(void)
 	g_Player.direction	= D_LEFT;	//移動方向
 	g_Player.NowLane	= LANE_3;	//初期レーン
 	g_Player.flag		= false;
+	g_Player.dead = false;	
 
 	//effectPosを初期化
 	for (int i = 0; i <= 9; i++)
@@ -159,6 +160,7 @@ void UpdatePlayer(void)
 	//体力0でゲームオーバー
 	if (g_Player.hp <= 0)
 	{
+		g_Player.dead = true;
 		SceneTransition(SCENE_RESULT);
 	}
 

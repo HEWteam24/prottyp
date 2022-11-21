@@ -12,6 +12,7 @@ typedef struct {
 	D3DXVECTOR2		Pos;
 	D3DXVECTOR2		Size;
 	int			Score;
+	int			ToResult;
 
 }SCORE;
 
@@ -28,6 +29,7 @@ void UninitScore();
 void DrawScore();
 void ScorePlus(int score);
 void GetDizit();
+SCORE* GetScore(void);
 
 void SetScore(D3DXVECTOR2 Pos, D3DXVECTOR2 Size);
 

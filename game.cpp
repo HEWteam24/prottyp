@@ -69,7 +69,7 @@ void UninitGame(void)
 	UninitLane();
 
 	UninitBullet();
-	UninitPlayer();
+
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();

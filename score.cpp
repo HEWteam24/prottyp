@@ -41,6 +41,7 @@ void InitScore()
 		g_Score[i].Pos = D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y);
 		g_Score[i].Size = D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y);
 		g_Score[i].Score = 0;
+		g_Score[i].ToResult = 0;
 	}
 }
 
@@ -115,6 +116,7 @@ void DrawScore()
 void ScorePlus(int score)
 {
 	ScoreAdd += score;
+	g_Score[0].ToResult += score;
 }
 
 void GetDizit()
@@ -138,4 +140,9 @@ void SetScore(D3DXVECTOR2 Pos, D3DXVECTOR2 Size)
 		g_Score[i].Pos = D3DXVECTOR2(Pos.x - (i * Size.x), Pos.y);
 		g_Score[i].Size = D3DXVECTOR2(Size.x, Size.y);
 	}
+}
+
+SCORE* GetScore()
+{
+	return &g_Score[0];
 }
