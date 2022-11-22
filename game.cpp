@@ -69,11 +69,11 @@ void UninitGame(void)
 	UninitLane();
 
 	UninitBullet();
-	UninitPlayer();
+
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();
-	UninitScore();
+	//UninitScore();
 	UninitCombo();
 
 	StopSound(g_BGMGame);
@@ -89,16 +89,23 @@ void UpdateGame(void)
 	{
 		SceneTransition(SCENE_TITLE);
 	}
-	UpdateBG();
-	UpdateLane();
 
-	UpdatePlayer();
-	UpdateBullet();
-	UpdateEnemy();
-	UpdateEnemyBullet();
-	UpdateRhythm();
-	UpdateScore();
-	UpdateCombo();
+	 
+	if (!MusicEnd()) {
+		UpdateBG();
+		UpdateLane();
+
+		UpdatePlayer();
+		UpdateBullet();
+		UpdateEnemy();
+		UpdateEnemyBullet();
+		UpdateRhythm();
+		UpdateScore();
+		UpdateCombo();
+	}
+	else {
+		SceneTransition(SCENE_RESULT);
+	}
 
 }
 

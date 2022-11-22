@@ -31,6 +31,8 @@ struct PLAYER
 	int		animeIndex;		//アニメーション枚数
 	int		animeWait;		//アニメーション
 	bool	flag;
+
+	bool dead;
 };
 
 //*****************************************************************************

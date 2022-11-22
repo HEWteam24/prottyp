@@ -117,6 +117,7 @@ void InitPlayer(void)
 	g_Player.direction	= D_LEFT;	//移動方向
 	g_Player.NowLane	= LANE_3;	//初期レーン
 	g_Player.flag		= false;
+	g_Player.dead = false;	
 
 	//effectPosを初期化
 	for (int i = 0; i <= 9; i++)
@@ -159,7 +160,8 @@ void UpdatePlayer(void)
 	//体力0でゲームオーバー
 	if (g_Player.hp <= 0)
 	{
-		SceneTransition(SCENE_GAMEOVER);
+		g_Player.dead = true;
+		SceneTransition(SCENE_RESULT);
 	}
 
 	//----------------------------------------
@@ -168,7 +170,8 @@ void UpdatePlayer(void)
 	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false))
 	{
 		PlayerCheck();
-		if (g_Player.flag) {
+		if (g_Player.flag) 
+		{
 			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
 			PlaySound(g_SE_Bullet, 0);
 			//g_Player.hp -= 30.0f;
@@ -350,8 +353,9 @@ void PlayerCheck(void)
 
 		g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);
 		ComboPlus(1);
-		ScorePlus(10+ GetComboScoreUp());
+		ScorePlus(10 * GetComboScoreUp());
 		g_Player.flag = true;
+		ReleaseNotes();
 	}
 	else  //BAD評価
 	{

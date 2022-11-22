@@ -146,9 +146,11 @@
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Result.cpp" />
     <ClCompile Include="rhythm.cpp" />
+    <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="sprite.cpp" />
+    <ClCompile Include="stage_select.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="title.cpp" />
   </ItemGroup>
@@ -171,9 +173,11 @@
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Result.h" />
     <ClInclude Include="rhythm.h" />
+    <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="sprite.h" />
+    <ClInclude Include="stage_select.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="title.h" />
   </ItemGroup>

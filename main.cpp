@@ -20,6 +20,7 @@
 #include "game.h"
 #include "Over.h"
 #include "Result.h"
+#include "stage_select.h"
 
 #include "fade.h"
 #include "frame.h"
@@ -57,7 +58,7 @@ char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
 #endif
 
 
-static SCENE g_Scene;//現在実行されているシーン
+static int g_Scene;//現在実行されているシーン
 
 
 //=============================================================================
@@ -280,7 +281,9 @@ void Update(void)
 	{
 	case SCENE_TITLE:
 		UpdateTitle();
-
+		break;
+	case SCENE_STAGESELECT:
+		UpdateStageSelect();
 		break;
 	case SCENE_GAME:
 		UpdateGame();
@@ -316,9 +319,14 @@ void Draw(void)
 		DrawTitle();
 		break;
 
+	case SCENE_STAGESELECT:
+		DrawStageSelect();
+		break;
+
 	case SCENE_GAME:
 		DrawGame();
 		break;
+
 	case SCENE_GAMEOVER:
 		DrawOver();
 		break;
@@ -335,7 +343,7 @@ void Draw(void)
 }
 
 
-void SetScene(SCENE nextScene)
+void SetScene(int nextScene)
 {
 	//現在動作しているシーンの終了処理を実行する
 	switch (g_Scene)
@@ -343,8 +351,11 @@ void SetScene(SCENE nextScene)
 	case SCENE_TITLE:
 		UninitTitle();
 		break;
+	case SCENE_STAGESELECT:
+		UninitStageSelect();
 	case SCENE_GAME:
 		UninitGame();
+		break;
 		break;
 	case SCENE_GAMEOVER:
 		UninitOver();
@@ -362,6 +373,9 @@ void SetScene(SCENE nextScene)
 	{
 	case SCENE_TITLE:
 		InitTitle();
+		break;
+	case SCENE_STAGESELECT:
+		InitStageSelect();
 		break;
 	case SCENE_GAME:
 		InitGame();

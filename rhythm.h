@@ -32,8 +32,6 @@ struct NOTESLANE
 	float			texno;
 	float			texcent;
 
-	int frame;
-	float frameD;
 };
 
 
@@ -44,8 +42,9 @@ void	DrawRhythm();
 void	SetNotes();
 bool	GetRhythm();
 NOTES*	GetNotes();
-NOTESLANE*	GetNotesLane();
+int		GetFreame();
 void	ReleaseNotes();
+bool	MusicEnd();
 
 #endif // RHYTHM_H_
 

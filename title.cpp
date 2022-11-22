@@ -14,6 +14,7 @@
 #include "fade.h" 
 #include "keyboard.h"
 
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -58,15 +59,15 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
-	//エンターキーが押されたらSCENE_GAMEへ移行する
+	//エンターキーが押されたらSCENE_STAGESELECTへ移行する
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
-		SceneTransition(SCENE_GAME);
+		SceneTransition(SCENE_STAGESELECT);
 	}
-	//コントローラーBボタン押したらSCENE_GAMEへ移行
+	//コントローラーBボタン押したらSCENE_STAGESELECTへ移行
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
-		SceneTransition(SCENE_GAME);
+		SceneTransition(SCENE_STAGESELECT);
 	}
 }
 

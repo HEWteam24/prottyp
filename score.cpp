@@ -8,13 +8,14 @@ SCORE	g_Score[SCOER_DIGIT];
 SCORETEXT g_ScoreText;
 
 static	ID3D11ShaderResourceView* g_ScoreTexture;//画像1枚で1つの変数が必要
-static	char* g_TextureNameScore = (char*)"data\\texture\\number.png";//テクスチャファイルパス JPG BMP PNG
+static	char* g_TextureNameScore = (char*)"data\\texture\\number.png";	//テクスチャファイルパス JPG BMP PNG
 
 static	ID3D11ShaderResourceView* g_ScoreTextTexture;//画像1枚で1つの変数が必要
-static	char* g_TextureNameScoreText = (char*)"data\\texture\\text_score.png";//テクスチャファイルパス JPG BMP PNG
+static	char* g_TextureNameScoreText = (char*)"data\\texture\\text_score.png";	//テクスチャファイルパス JPG BMP PNG
 
 float	ScoreTexNo;
 float	ScoreTextTexNo;
+float	ScoreMagTexNo;
 int		ScoreAdd;
 
 void InitScore()
@@ -40,6 +41,20 @@ void InitScore()
 		g_Score[i].Pos = D3DXVECTOR2(SCORE_POS_X, SCORE_POS_Y);
 		g_Score[i].Size = D3DXVECTOR2(SCORE_SIZE_X, SCORE_SIZE_Y);
 		g_Score[i].Score = 0;
+		g_Score[i].ToResult = 0;
+	}
+}
+
+void InitScoreResult()
+{
+	g_ScoreText.Pos = D3DXVECTOR2(SCORE_R_TEXT_POS_X, SCORE_R_TEXT_POS_Y);
+	g_ScoreText.Size = D3DXVECTOR2(SCORE_R_TEXT_SIZE_X, SCORE_R_TEXT_SIZE_Y);
+	g_ScoreText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	for (int i = 0; i < SCOER_DIGIT; i++) {
+		g_Score[i].Pos = D3DXVECTOR2(SCORE_R_POS_X, SCORE_R_POS_Y);
+		g_Score[i].Size = D3DXVECTOR2(SCORE_R_SIZE_X, SCORE_R_SIZE_Y);
+		
 	}
 }
 
@@ -83,7 +98,7 @@ void DrawScore()
 	GetDeviceContext()->PSSetShaderResources(0, 1,
 		GetTexture(ScoreTextTexNo));
 
-		DrawSpriteColorRotation(
+	DrawSpriteColorRotation(
 			g_ScoreText.Pos.x,
 			g_ScoreText.Pos.y,
 			g_ScoreText.Size.x,
@@ -101,6 +116,7 @@ void DrawScore()
 void ScorePlus(int score)
 {
 	ScoreAdd += score;
+	g_Score[0].ToResult += score;
 }
 
 void GetDizit()
@@ -124,4 +140,9 @@ void SetScore(D3DXVECTOR2 Pos, D3DXVECTOR2 Size)
 		g_Score[i].Pos = D3DXVECTOR2(Pos.x - (i * Size.x), Pos.y);
 		g_Score[i].Size = D3DXVECTOR2(Size.x, Size.y);
 	}
+}
+
+SCORE* GetScore()
+{
+	return &g_Score[0];
 }

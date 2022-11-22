@@ -25,7 +25,7 @@
 static int	g_TextureBgTitle;				// テクスチャ番号
 
 FADE_STATE	g_FadeState = FADE_NONE;	// フェードの状態
-SCENE		g_SceneNext;				// 次のシーン
+int		g_SceneNext;				// 次のシーン
 D3DXCOLOR	g_Color;					// フェードのカラー
 
 
@@ -105,7 +105,7 @@ void DrawFade(void)
 /*------------------------------------------------------------------------------
    フェードアウト・フェードイン処理をしながらシーン遷移する関数
 ------------------------------------------------------------------------------*/
-void SceneTransition(SCENE nextScene)
+void SceneTransition(int nextScene)
 {
 	g_SceneNext = nextScene;
 	g_FadeState = FADE_OUT;
