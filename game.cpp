@@ -89,23 +89,26 @@ void UpdateGame(void)
 	{
 		SceneTransition(SCENE_TITLE);
 	}
+	UpdateRhythm();
 
-	 
-	if (!MusicEnd()) {
-		UpdateBG();
-		UpdateLane();
+	if (GetFreame() > 120) {
 
-		UpdatePlayer();
-		UpdateBullet();
-		UpdateEnemy();
-		UpdateEnemyBullet();
-		UpdateRhythm();
-		UpdateScore();
-		UpdateCombo();
+		if (!MusicEnd()) {
+			UpdateBG();
+			UpdateLane();
+
+			UpdatePlayer();
+			UpdateBullet();
+			UpdateEnemy();
+			UpdateEnemyBullet();
+			UpdateScore();
+			UpdateCombo();
+		}
+		else {
+			SceneTransition(SCENE_RESULT);
+		}
 	}
-	else {
-		SceneTransition(SCENE_RESULT);
-	}
+	
 
 }
 
