@@ -56,7 +56,7 @@ HRESULT InitResult(void)
 	g_Coin.u = 0.0f;
 	g_Coin.u = 0.0f;
 
-	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins.png");
+	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins_1200x200.png");
 	g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_clear.png");
 	if (pPlayerOne->dead)
 	{
@@ -70,15 +70,15 @@ HRESULT InitResult(void)
 	{
 		g_Coin.rank = 5;
 	}
-	if (pScore->ToResult >= 7000)
+	if (pScore->ToResult >= 4000)
 	{
 		g_Coin.rank = 4;
 	}
-	if (pScore->ToResult >= 10000)
+	if (pScore->ToResult >= 8000)
 	{
 		g_Coin.rank = 3;
 	}
-	if (pScore->ToResult >= 13000)
+	if (pScore->ToResult >= 12000)
 	{
 		g_Coin.rank = 2;
 	}
@@ -184,9 +184,9 @@ void DrawResult(void)
 			g_Coin.rad,
 			g_Coin.col,
 			g_Coin.rank,
-			0.333f,
-			0.5f,
-			5
+			0.16665f,
+			1.0f,
+			6
 		);
 	}
 
