@@ -97,9 +97,9 @@ HRESULT InitRhythm()
 
 	//仮で固定のBGM
 	NowBPM = BPM2;
-	char	filename[] = "data\\BGM\\hoge.wav";
+	char	filename[] = "data\\BGM\\sample.wav";
 	GameSoundNo = LoadSound(filename);
-	PlaySound(GameSoundNo, -1);
+
 	Frame = 0;
 
 	return	S_OK;
@@ -107,45 +107,50 @@ HRESULT InitRhythm()
 
 void UpdateRhythm()
 {
-	//ノーツのセット(BPM120の時は30フレームごと)
-	if ((Frame % (60 /(NowBPM / 60))) * NOTES_DIST == 0.0f)
-	{
-		SetNotes();
-	}
 	Frame++;
-
-	for (int i = 0; i < NOTES_MAX; i++)
-	{
-		if (Notes[i].use)
+	if (Frame / 120 == 0.0f){
+		PlaySound(GameSoundNo, -1);
+	}
+	else {
+		//ノーツのセット(BPM120の時は30フレームごと)
+		if ((Frame % (60 / (NowBPM / 60))) * NOTES_DIST == 0.0f)
 		{
-			Notes[i].pos.x += Notes[i].sp.x;
-			Notes[i].alpha -= 0.005f * NOTES_DIST;
-			if (i % 2 == 0)
+			SetNotes();
+		}
+
+		for (int i = 0; i < NOTES_MAX; i++)
+		{
+			if (Notes[i].use)
 			{
-				//ノーツ左が真ん中に来た時消える
-				if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 3)
+				Notes[i].pos.x += Notes[i].sp.x;
+				Notes[i].alpha -= 0.005f * NOTES_DIST;
+				if (i % 2 == 0)
 				{
-					Notes[i].use = false;
-					Notes[i + 1].use = false;
+					//ノーツ左が真ん中に来た時消える
+					if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 3)
+					{
+						Notes[i].use = false;
+						Notes[i + 1].use = false;
+					}
+					//ノーツ左が消えてる時右も消える
+					if (!Notes[i + 1].use)
+					{
+						Notes[i].use = false;
+					}
 				}
-				//ノーツ左が消えてる時右も消える
-				if (!Notes[i + 1].use)
+				if (i % 2 == 1)
 				{
-					Notes[i].use = false;
+					//ノーツ右が真ん中に来た時消える
+					if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
+					{
+						Notes[i].use = false;
+					}
+					////ノーツ右が消えてる時左も消える
+					//if (Notes[i - 1].use)
+					//{
+					//	Notes[i - 1].use = false;
+					//}
 				}
-			}
-			if (i % 2 == 1)
-			{
-				//ノーツ右が真ん中に来た時消える
-				if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
-				{
-					Notes[i].use = false;
-				}
-				////ノーツ右が消えてる時左も消える
-				//if (Notes[i - 1].use)
-				//{
-				//	Notes[i - 1].use = false;
-				//}
 			}
 		}
 	}

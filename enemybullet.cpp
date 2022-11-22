@@ -381,7 +381,7 @@ void UpdateEnemyBullet()
 			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), pPlayer->size))
 			{
 				g_EnemyBulletNomal[i].use = false;
-				pPlayer->hp -= 25.0f;
+				//pPlayer->hp -= 25.0f;
 				g_EnemyBulletNomal[i].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
@@ -403,7 +403,7 @@ void UpdateEnemyBullet()
 			if (CollisionBB(g_EnemyBulletLong[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletLong[k].w, g_EnemyBulletLong[k].h), pPlayer->size/2))
 			{
 				g_EnemyBulletLong[k].use = false;
-				pPlayer->hp -= 15.0f;
+				//pPlayer->hp -= 15.0f;
 				g_EnemyBulletLong[k].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
