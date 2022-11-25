@@ -255,7 +255,7 @@ HRESULT InitEnemyBullet()
 	g_SE_Damage = LoadSound(file_SE_Damage);
 
 	pPlayer = GetPlayer();
-
+	nowY = 0;
 	return S_OK;
 }
 

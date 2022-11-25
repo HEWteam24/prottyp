@@ -23,6 +23,7 @@
 //==============================================================================
 
 #include "special.h""
+#include "combo.h"
 
 //スペシャルのテクスチャ
 static int g_SpecialFrameTexture;
@@ -111,7 +112,7 @@ void UpdateSpecial()
 	}
 
 	//スペシャルゲージがたまりきったら発動可能
-	if (sp.charge == SPECIAL_MAX)
+	if (sp.charge >= SPECIAL_MAX)
 	{
 		colorB = 0.0f;
 		sp.UseOk = true;
@@ -214,9 +215,9 @@ void DrawSpecial()
 //スペシャルの増加
 void SpecialPlus()
 {
-	if (sp.charge < 30)
+	if (sp.charge < SPECIAL_MAX)
 	{
-		sp.charge += 1;
+		sp.charge += 1 + (GetComboScoreUp() / 2);
 	}
 }
 
