@@ -228,7 +228,7 @@ bool GetRhythm()
 	}
 	else
 	{
-		return	true;
+		return	false;
 	}
 }
 
