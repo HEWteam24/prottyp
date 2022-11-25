@@ -41,10 +41,10 @@ STAGE StageLv = STAGE01;
 //================================
 //マップチップ
 //================================
-int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
+int StageBullet[2][MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
-
+	{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
@@ -134,10 +134,8 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 		0, 0, 0, 1, 1,
 		1, 0, 1, 0, 0,
 		0, 0, 1, 0, 1,
-
-};
-int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
-{
+	},
+	{
 	2, 2, 2, 2, 2,
 	0, 0, 0, 2, 0,
 	0, 2, 1, 0, 0,
@@ -227,6 +225,7 @@ int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 	2, 2, 0, 0, 0,
 	2, 0, 0, 0, 0,
 	1, 0, 0, 0, 1,
+	}
 };
 
 
@@ -403,7 +402,7 @@ void SETBULLET()
 		case STAGE01:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet01[nowY][j])
+				switch (StageBullet[0][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
@@ -497,7 +496,7 @@ void SETBULLET()
 		case STAGE02:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet02[nowY][j])
+				switch (StageBullet[1][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
