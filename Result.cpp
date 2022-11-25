@@ -56,7 +56,7 @@ HRESULT InitResult(void)
 	g_Coin.u = 0.0f;
 	g_Coin.u = 0.0f;
 
-	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins_1200x200.png");
+	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins_1200x200_B.png");
 	g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_clear.png");
 	if (pPlayerOne->dead)
 	{
