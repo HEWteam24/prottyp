@@ -32,3 +32,5 @@ void	DrawBullet();
 
 BULLET*	GetBullet();
 void	SetBullet(D3DXVECTOR2 pos);	//íeî≠ê∂
+
+int Damage();

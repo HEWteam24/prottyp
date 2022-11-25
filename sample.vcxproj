@@ -149,6 +149,7 @@
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="special.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="stage_select.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -176,6 +177,7 @@
     <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="special.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stage_select.h" />
     <ClInclude Include="texture.h" />
