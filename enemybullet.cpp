@@ -307,7 +307,7 @@ void UpdateEnemyBullet()
 				g_EnemyBulletNomal[i].pos.y = -10.0f;
 			}
 
-			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), pPlayer->size))
+			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos - D3DXVECTOR2(0.0f,pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), D3DXVECTOR2(pPlayer->size.x,1.0f)))
 			{
 				g_EnemyBulletNomal[i].use = false;
 				//スペシャルの被ダメ減少
