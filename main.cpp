@@ -353,9 +353,9 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_STAGESELECT:
 		UninitStageSelect();
+		break;
 	case SCENE_GAME:
 		UninitGame();
-		break;
 		break;
 	case SCENE_GAMEOVER:
 		UninitOver();

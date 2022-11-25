@@ -21,6 +21,15 @@ ENEMYBULLET g_EnemyBulletNomal[ENEMYBULLETNOMAL_MAX];
 ENEMYBULLET g_EnemyBulletLong[ENEMYBULLETLONG_MAX];
 PLAYER* pPlayer;
 
+//テクスチャのロード
+int g_EnemyBulletNomalTex;
+static	ID3D11ShaderResourceView* g_TextureEnemyBulletNomal;
+static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\bullet00.png";//テクスチャ名
+
+int g_EnemyBulletLongTex;
+static	ID3D11ShaderResourceView* g_TextureEnemyBulletLong;
+static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\EnemyBullet01.png";//テクスチャ名
+
 int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
@@ -59,7 +68,7 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 		1, 0, 0, 0, 1,
 		0, 1, 0, 1, 0,
 		1, 0, 1, 0, 0,
-		0, 1, 1, 0, 0,
+		0, 1, 2, 0, 0,
 		0, 0, 0, 1, 1,
 		1, 0, 1, 0, 0,
 		0, 1, 0, 1, 0,
@@ -92,7 +101,7 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 		0, 0, 1, 0, 1,
 		1, 1, 0, 0, 0,
 		0, 0, 0, 1, 1,
-		1, 0, 1, 0, 0,
+		1, 0, 2, 0, 0,
 		0, 1, 1, 0, 0,
 		1, 0, 0, 1, 0,
 		0, 0, 0, 1, 1,
@@ -114,7 +123,7 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 		1, 0, 0, 1, 0,
 		0, 1, 1, 0, 0,
 		0, 0, 0, 1, 1,
-		0, 1, 1, 0, 0,
+		0, 1, 2, 0, 0,
 		1, 1, 0, 0, 0,
 		0, 0, 1, 1, 0,
 		0, 1, 0, 0, 1,
@@ -225,8 +234,10 @@ int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 
 HRESULT InitEnemyBullet()
 {
-	//テクスチャのロード
-	int texno = LoadTexture((char*)"data\\TEXTURE\\Back.JPG");
+	g_EnemyBulletNomalTex = LoadTexture(g_TextureEnemyBulletNomalName);
+	g_EnemyBulletLongTex = LoadTexture(g_TextureEnemyBulletLongName);
+
+	nowY = 0;
 	//構造体の初期化
 	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
 	{
@@ -235,7 +246,6 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletNomal[i].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletNomal[i].h = ENEMYBULLET_SIZE_H;
 		g_EnemyBulletNomal[i].pos = D3DXVECTOR2(0, -10);
-		g_EnemyBulletNomal[i].texNo = texno;
 		g_EnemyBulletNomal[i].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
 	}
 	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
@@ -245,7 +255,6 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletLong[k].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletLong[k].h = ENEMYBULLET_SIZE_H * 3;
 		g_EnemyBulletLong[k].pos = D3DXVECTOR2(0, -40);
-		g_EnemyBulletLong[k].texNo = texno;
 		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
 
 	}
@@ -260,6 +269,16 @@ HRESULT InitEnemyBullet()
 //終了処理
 void UninitEnemyBullet()
 {
+	if (g_TextureEnemyBulletNomal)
+	{
+		g_TextureEnemyBulletNomal->Release();
+		g_TextureEnemyBulletNomal = NULL;
+	}
+	if (g_TextureEnemyBulletLong)
+	{
+		g_TextureEnemyBulletLong->Release();
+		g_TextureEnemyBulletLong = NULL;
+	}
 }
 
 //更新処理
@@ -327,7 +346,7 @@ void DrawEnemyBullet()
 	{
 		if (g_EnemyBulletNomal[x].use)
 		{
-			DrawSpriteColor(g_EnemyBulletNomal[x].texNo, g_EnemyBulletNomal[x].pos.x, g_EnemyBulletNomal[x].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
+			DrawSpriteColor(g_EnemyBulletNomalTex, g_EnemyBulletNomal[x].pos.x, g_EnemyBulletNomal[x].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
@@ -336,7 +355,7 @@ void DrawEnemyBullet()
 	{
 		if (g_EnemyBulletLong[y].use)
 		{
-			DrawSpriteColor(g_EnemyBulletLong[y].texNo, g_EnemyBulletLong[y].pos.x, g_EnemyBulletLong[y].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
+			DrawSpriteColor(g_EnemyBulletLongTex, g_EnemyBulletLong[y].pos.x, g_EnemyBulletLong[y].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
@@ -352,108 +371,8 @@ ENEMYBULLET* GetEnemyBulletLong()
 	return &g_EnemyBulletLong[0];
 }
 
-void SetEnemyBullet()
-{
-	//srand((unsigned int)time(NULL));
-	//int num,numm;		//乱数用
-	//int atk = 0,atkk = 0;	//敵の攻撃用
-	//num = rand() % 9;
-	//numm = rand() % 2;
-
-	//switch (num)
-	//{
-	//case 0:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 1:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 2:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 3:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	break;
-	//case 4:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	break;
-	//case 5:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	break;
-	//case 6:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	break;
-	//case 7:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-	//	break;
-	//case 8:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-	//	break;
-	//default:
-	//	break;
-
-	//}
-
-
-	//if (atkk == 0)
-	//{
-	//	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
-	//	{
-	//		if (g_EnemyBulletNomal[i].use == false)
-	//		{
-	//			g_EnemyBulletNomal[i].pos.x = atk;
-	//			g_EnemyBulletNomal[i].use = true;
-	//			return;
-	//		}
-	//	}
-	//}
-	//else
-	//{
-	//	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-	//	{
-	//		if (g_EnemyBulletLong[k].use == false)
-	//		{
-	//			g_EnemyBulletLong[k].pos.x = atkk;
-	//			g_EnemyBulletLong[k].use = true;
-	//			return;
-	//		}
-
-	//	}
-	//}
-}
-
-
 void SETBULLET()
 {
-
-
 	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
 	StageLv = STAGE01;		//現在のステージ(テスト用)
