@@ -52,6 +52,7 @@ bool	moving;
 HRESULT InitResult(void)
 {
 	g_Coin.col = D3DXCOLOR(0.0f,0.0f,0.0f,1.0f);
+	g_Coin.TextCol = D3DXCOLOR(1.0f, 0.6f, 0.4f, 1.0f);
 	g_Coin.rad = 0.0f;
 	g_Coin.u = 0.0f;
 	g_Coin.u = 0.0f;
@@ -61,6 +62,7 @@ HRESULT InitResult(void)
 	if (pPlayerOne->dead)
 	{
 		g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_failed.png");
+		g_Coin.TextCol = D3DXCOLOR(0.8f, 0.5f, 1.0f, 1.0f);
 	}
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back.JPG");
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
@@ -170,7 +172,7 @@ void DrawResult(void)
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 
 	DrawSpriteColor(g_TextureClear, CENTER_X, CENTER_Y-300.0f, 600.0f, 100.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+		0.0f, 0.0f, 1.0f, 1.0f,g_Coin.TextCol);
 
 
 	GetDeviceContext()->PSSetShaderResources(0, 1,
