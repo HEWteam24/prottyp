@@ -4,7 +4,7 @@
                                                          Author : うんち
                                                          Date   : 
 --------------------------------------------------------------------------------
-
+pでポーズ、mで再開
 ==============================================================================*/
 #include "main.h"
 #include <time.h>
@@ -54,6 +54,14 @@ void Draw(void);
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
 char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
+
+bool pause = false;
+bool restart = false;
+
+static int PauseTexture;
+static int PauseCntTexture;
+
+int pause_frame = 0;
 
 #endif
 
@@ -232,6 +240,10 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	Keyboard_Initialize();
 
 	InitFrame();
+
+	PauseTexture = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
+	PauseCntTexture = LoadTexture((char*)"data/TEXTURE/number.png");
+
 	// サウンドの初期化
 	InitSound(hWnd);
 
@@ -277,23 +289,51 @@ void Update(void)
 	// 入力処理の更新処理
 	UpdateInput();
 
-	switch (g_Scene)
+	if (Keyboard_IsKeyDown(KK_P) && pause == false)
 	{
-	case SCENE_TITLE:
-		UpdateTitle();
-		break;
-	case SCENE_STAGESELECT:
-		UpdateStageSelect();
-		break;
-	case SCENE_GAME:
-		UpdateGame();
-		break;
-	case SCENE_GAMEOVER:
-		UpdateOver();
-		break;
-	case SCENE_RESULT:
-		UpdateResult();
-		break;
+		PauseSound(BGM_RE());
+		pause = true;
+	}
+
+	if (Keyboard_IsKeyDown(KK_M) && pause == true)
+	{
+		restart = true;
+	}
+
+	if (restart == true)
+	{
+		pause_frame++;
+	}
+
+	if (pause_frame == 180)
+	{
+		pause_frame = 0;
+		restart = false;
+		pause = false;
+		RePlaySound(BGM_RE());
+	}
+	
+	if (pause == false)
+	{
+
+		switch (g_Scene)
+		{
+		case SCENE_TITLE:
+			UpdateTitle();
+			break;
+		case SCENE_STAGESELECT:
+			UpdateStageSelect();
+			break;
+		case SCENE_GAME:
+			UpdateGame();
+			break;
+		case SCENE_GAMEOVER:
+			UpdateOver();
+			break;
+		case SCENE_RESULT:
+			UpdateResult();
+			break;
+		}
 	}
 
 	UpdateFade();
@@ -333,6 +373,50 @@ void Draw(void)
 	case SCENE_RESULT:
 		DrawResult();
 		break;
+	}
+
+	if (pause == true)
+	{
+		DrawSpriteColor(PauseTexture,
+			0.0f,
+			0.0f,
+			10000.0f,
+			10000.0f,
+			0.0f,
+			0.0f,
+			1.0f,
+			1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
+	}
+
+	if (restart == true)
+	{
+		/*DrawSpriteColor(PauseCntTexture,
+			SCREEN_WIDTH / 2,
+			SCREEN_HEIGHT /2,
+			300.0f,
+			300.0f,
+			0.0f,
+			0.0f,
+			1.0f,
+			1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));*/
+		GetDeviceContext()->PSSetShaderResources(0, 1,
+			GetTexture(PauseCntTexture));
+		for (int i = 0; i < SCOER_DIGIT; i++) {
+			DrawSpriteColorRotation(
+				SCREEN_WIDTH / 2,
+				SCREEN_HEIGHT / 2,
+				300.0f,
+				300.0f,
+				0.0f,
+				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
+				(3.0f - (pause_frame / 60)),
+				0.2f,
+				0.2f,
+				5
+			);
+		}
 	}
 
 	//フェードの描画
