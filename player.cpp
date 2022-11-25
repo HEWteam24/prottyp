@@ -20,6 +20,7 @@
 #include "score.h"
 #include "keyboard.h"
 #include "inputx.h"
+#include "special.h"
 #include <algorithm>
 
 //*****************************************************************************
@@ -342,6 +343,8 @@ PLAYER* GetPlayer(void)
 //=============================================================================
 void PlayerCheck(void)
 {
+	SPECIAL* sp = GetSpecial();
+
 	//NOTESLANE* pRythm = GetNotesLane();
 	goodAlpha = 1.0f;
 	goodPosY = 100.0f;
@@ -353,6 +356,7 @@ void PlayerCheck(void)
 
 		g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);
 		ComboPlus(1);
+		SpecialPlus();
 		ScorePlus(10 * GetComboScoreUp());
 		g_Player.flag = true;
 		ReleaseNotes();
@@ -360,7 +364,15 @@ void PlayerCheck(void)
 	else  //BAD評価
 	{
 		good = C_BAD;
-		g_Player.hp -= 10.0f;
+		//スペシャルの被ダメ減少
+		if (sp->get_damage_down == true)
+		{
+			g_Player.hp -= 2.0f;
+		}
+		else
+		{
+			g_Player.hp -= 10.0f;
+		}
 		PlaySound(g_SE_Damage, 0);
 		ResetCombo();
 		g_Player.flag = false;

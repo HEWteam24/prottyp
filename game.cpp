@@ -24,6 +24,7 @@
 #include "combo.h"
 #include "lane.h"
 #include "keyboard.h"
+#include "special.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -49,6 +50,7 @@ HRESULT InitGame(void)
 	InitRhythm();
 	InitScore();
 	InitCombo();
+	InitSpecial();
 
 	// 背景の初期化
 	InitBG();
@@ -75,6 +77,7 @@ void UninitGame(void)
 	UninitRhythm();
 	//UninitScore();
 	UninitCombo();
+	UninitSpecial();
 
 	StopSound(g_BGMGame);
 }
@@ -103,6 +106,7 @@ void UpdateGame(void)
 			UpdateEnemyBullet();
 			UpdateScore();
 			UpdateCombo();
+			UpdateSpecial();
 		}
 		else {
 			SceneTransition(SCENE_RESULT);
@@ -128,6 +132,7 @@ void DrawGame(void)
 	DrawEnemy();
 	DrawRhythm();
 	DrawHp();
+	DrawSpecial();
 	DrawScore();
 
 }
