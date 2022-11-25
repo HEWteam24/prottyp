@@ -25,199 +25,107 @@ int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
 
+STAGE StageLv = STAGE01;
 
 //================================
 //マップチップ
 //================================
-int BulletChip[2][MAP_SIZE_Y][MAP_SIZE_X] =
+int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
-	{
-		2, 0, 1, 0, 1,
-		0, 0, 1, 2, 0,
-		0, 2, 0, 0, 0,
-		0, 0, 1, 1, 0,
-		0, 2, 0, 0, 1,
-		0, 0, 1, 0, 0,
-		0, 0, 2, 0, 1,
-		0, 1, 1, 0, 1,
-		0, 0, 0, 1, 0,
-		1, 0, 1, 0, 0,
-		0, 2, 0, 0, 0,
-		0, 0, 0, 1, 2,
-		0, 0, 1, 0, 0,
-		2, 0, 2, 0, 0,
-		0, 0, 0, 1, 0,
-		0, 1, 2, 0, 0,
-		1, 0, 0, 0, 2,
-		0, 0, 0, 1, 0,
-		1, 0, 2, 0, 0,
-		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 2,
-		0, 0, 0, 1, 2,
-		2, 0, 0, 0, 0,
-		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 2, 0, 0,
-		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 0,
-		2, 0, 0, 0, 2,
-		0, 2, 0, 2, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 2, 0, 0,
-		0, 2, 0, 0, 1,
-		0, 1, 0, 0, 0,
-		1, 0, 0, 1, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 0, 0, 2,
-		0, 0, 1, 0, 2,
-		1, 0, 0, 1, 2,
-		0, 1, 0, 0, 2,
-		0, 1, 0, 1, 2,
-		1, 0, 1, 0, 2,
-		1, 0, 1, 0, 2,
-		0, 0, 0, 0, 1,
-		0, 1, 0, 0, 0,
-		0, 2, 0, 1, 0,
-		0, 0, 0, 0, 1,
-		1, 0, 0, 1, 1,
-		1, 1, 0, 0, 2,
-		0, 0, 0, 2, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 0, 2, 0,
-		0, 0, 2, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 2, 0, 1, 0,
-		0, 0, 0, 0, 1,
-		1, 0, 0, 1, 0,
-		0, 1, 0, 0, 2,
-		0, 2, 0, 0, 0,
-		2, 0, 0, 0, 2,
-		2, 2, 0, 2, 2,
-		2, 2, 0, 2, 2,
-		2, 2, 0, 2, 2,
-		2, 0, 0, 0, 2,
-		0, 0, 0, 0, 0,
-		0, 1, 0, 1, 0,
-		1, 0, 1, 0, 1,
-		0, 1, 0, 1, 0,
-		1, 0, 1, 0, 1,
-		0, 2, 0, 2, 0,
-		0, 0, 0, 0, 0,
-		2, 2, 1, 0, 0,
-		0, 0, 0, 1, 2,
-		1, 2, 1, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 1, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 2, 0, 1,
-		2, 0, 0, 0, 0,
-		2, 2, 0, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 2, 0,
-		2, 2, 2, 0, 1,
-		2, 2, 0, 1, 1,
-		2, 2, 0, 0, 0,
-		2, 0, 0, 0, 0,
-		1, 0, 0, 0, 1,
-	},
 
-	//２個目
-	{
-		2, 2, 2, 2, 2,
-		0, 0, 0, 2, 0,
-		0, 2, 1, 0, 0,
-		0, 0, 0, 1, 0,
-		0, 2, 0, 0, 1,
-		0, 0, 1, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
 		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
 		0, 1, 0, 0, 1,
-		0, 0, 2, 1, 0,
-		1, 0, 0, 0, 0,
-		0, 2, 0, 0, 0,
-		0, 0, 0, 1, 2,
-		0, 0, 1, 0, 0,
-		2, 0, 2, 0, 0,
-		0, 0, 0, 1, 0,
-		0, 1, 2, 0, 0,
-		1, 0, 0, 0, 2,
-		0, 0, 0, 1, 0,
-		1, 0, 2, 0, 0,
 		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 2,
-		0, 0, 0, 1, 2,
-		2, 0, 0, 0, 0,
-		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 2, 0, 0,
-		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 0,
-		2, 0, 0, 0, 2,
-		0, 2, 0, 2, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 2, 0, 0,
-		0, 2, 0, 0, 1,
-		0, 1, 0, 0, 0,
+		0, 0, 1, 0, 1,
 		1, 0, 0, 1, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 0, 0, 2,
-		0, 0, 1, 0, 2,
-		1, 0, 0, 1, 2,
-		0, 1, 0, 0, 2,
-		0, 1, 0, 1, 2,
-		1, 0, 1, 0, 2,
-		1, 0, 1, 0, 2,
-		0, 0, 0, 0, 1,
-		0, 1, 0, 0, 0,
-		0, 2, 0, 1, 0,
-		0, 0, 0, 0, 1,
-		1, 0, 0, 1, 1,
-		1, 1, 0, 0, 2,
-		0, 0, 0, 2, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 0, 2, 0,
-		0, 0, 2, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 2, 0, 1, 0,
-		0, 0, 0, 0, 1,
-		1, 0, 0, 1, 0,
-		0, 1, 0, 0, 2,
-		0, 2, 0, 0, 0,
-		2, 0, 0, 0, 2,
-		2, 2, 0, 2, 2,
-		2, 2, 0, 2, 2,
-		2, 2, 0, 2, 2,
-		2, 0, 0, 0, 2,
-		0, 0, 0, 0, 0,
+		0, 1, 0, 0, 1,
+		0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 0, 1,
 		0, 1, 0, 1, 0,
-		1, 0, 1, 0, 1,
-		0, 1, 0, 1, 0,
-		1, 0, 1, 0, 1,
-		0, 2, 0, 2, 0,
-		0, 0, 0, 0, 0,
-		2, 2, 1, 0, 0,
-		0, 0, 0, 1, 2,
-		1, 2, 1, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 1, 0,
-		0, 1, 0, 0, 0,
-		0, 0, 2, 0, 1,
-		2, 0, 0, 0, 0,
-		2, 2, 0, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 0, 0,
-		2, 2, 2, 2, 0,
-		2, 2, 2, 0, 1,
-		2, 2, 0, 1, 1,
-		2, 2, 0, 0, 0,
-		2, 0, 0, 0, 0,
 		1, 0, 0, 0, 1,
-	}
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		1, 0, 0, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 0, 1, 1, 0,
+		0, 1, 1, 0, 0,
+		1, 1, 0, 0, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 0, 1, 0, 1,
+
 };
-int BulletChip2[MAP_SIZE_Y][MAP_SIZE_X] =
+int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	2, 2, 2, 2, 2,
 	0, 0, 0, 2, 0,
@@ -544,96 +452,200 @@ void SetEnemyBullet()
 
 void SETBULLET()
 {
+
+
 	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
-
-	for (int j = 0; j < MAP_SIZE_X; j++)
+	StageLv = STAGE01;		//現在のステージ(テスト用)
+	if (nowY < MAP_SIZE_Y)
 	{
-		switch (BulletChip[0][nowY][j])
+
+		switch (StageLv)
 		{
-		case 0:
-			IsAtk = false;
-			break;
-		case 1:
-			switch (j)
+		case STAGE01:
+			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-			case 0:
-				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-				break;
-			case 1:
-				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-				break;
-			case 2:
-				atk = SCREEN_WIDTH / 2;
-				break;
-			case 3:
-				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-				break;
-			case 4:
-				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-				break;
-			default:
-				break;
-			}
-			if (IsAtk)
-			{
-				for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+				switch (StageBullet01[nowY][j])
 				{
-					if (g_EnemyBulletNomal[i].use == false)
+				case 0:
+					IsAtk = false;
+					break;
+				case 1:
+					switch (j)
 					{
-						g_EnemyBulletNomal[i].pos.x = atk;
-						g_EnemyBulletNomal[i].use = true;
+					case 0:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+						break;
+					case 1:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+						break;
+					case 2:
+						atk = SCREEN_WIDTH / 2;
+						break;
+					case 3:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+						break;
+					case 4:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+						break;
+					default:
 						break;
 					}
-				}
-			}
-			break;
-		case 2:
-			switch (j)
-			{
-			case 0:
-				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-				break;
-			case 1:
-				atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-				break;
-			case 2:
-				atk = SCREEN_WIDTH / 2;
-				break;
-			case 3:
-				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-				break;
-			case 4:
-				atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-				break;
-			default:
-				break;
-			}
-			if (IsAtk)
-			{
-				for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-				{
-					if (g_EnemyBulletLong[k].use == false)
+					if (IsAtk)
 					{
-						g_EnemyBulletLong[k].pos.x = atk;
-						g_EnemyBulletLong[k].use = true;
+						for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+						{
+							if (g_EnemyBulletNomal[i].use == false)
+							{
+								g_EnemyBulletNomal[i].pos.x = atk;
+								g_EnemyBulletNomal[i].use = true;
+								break;
+							}
+						}
+					}
+					break;
+				case 2:
+					switch (j)
+					{
+					case 0:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+						break;
+					case 1:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+						break;
+					case 2:
+						atk = SCREEN_WIDTH / 2;
+						break;
+					case 3:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+						break;
+					case 4:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+						break;
+					default:
 						break;
 					}
+					if (IsAtk)
+					{
+						for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+						{
+							if (g_EnemyBulletLong[k].use == false)
+							{
+								g_EnemyBulletLong[k].pos.x = atk;
+								g_EnemyBulletLong[k].use = true;
+								break;
+							}
+						}
+					}
+					break;
+				case 3:
+					IsAtk = false;
+					break;
+				case 4:
+					IsAtk = false;
+					break;
+				default:
+					IsAtk = false;
+					break;
 				}
+				IsAtk = true;
+				atk = 0;
 			}
 			break;
-		case 3:
-			IsAtk = false;
-			break;
-		case 4:
-			IsAtk = false;
-			break;
-		default:
-			IsAtk = false;
+
+
+
+
+		case STAGE02:
+			for (int j = 0; j < MAP_SIZE_X; j++)
+			{
+				switch (StageBullet02[nowY][j])
+				{
+				case 0:
+					IsAtk = false;
+					break;
+				case 1:
+					switch (j)
+					{
+					case 0:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+						break;
+					case 1:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+						break;
+					case 2:
+						atk = SCREEN_WIDTH / 2;
+						break;
+					case 3:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+						break;
+					case 4:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+						break;
+					default:
+						break;
+					}
+					if (IsAtk)
+					{
+						for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+						{
+							if (g_EnemyBulletNomal[i].use == false)
+							{
+								g_EnemyBulletNomal[i].pos.x = atk;
+								g_EnemyBulletNomal[i].use = true;
+								break;
+							}
+						}
+					}
+					break;
+				case 2:
+					switch (j)
+					{
+					case 0:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
+						break;
+					case 1:
+						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
+						break;
+					case 2:
+						atk = SCREEN_WIDTH / 2;
+						break;
+					case 3:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
+						break;
+					case 4:
+						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
+						break;
+					default:
+						break;
+					}
+					if (IsAtk)
+					{
+						for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+						{
+							if (g_EnemyBulletLong[k].use == false)
+							{
+								g_EnemyBulletLong[k].pos.x = atk;
+								g_EnemyBulletLong[k].use = true;
+								break;
+							}
+						}
+					}
+					break;
+				case 3:
+					IsAtk = false;
+					break;
+				case 4:
+					IsAtk = false;
+					break;
+				default:
+					IsAtk = false;
+					break;
+				}
+				IsAtk = true;
+				atk = 0;
+			}
 			break;
 		}
-		IsAtk = true;
-		atk = 0;
 	}
-
 }
