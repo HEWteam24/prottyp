@@ -247,7 +247,6 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletLong[k].pos = D3DXVECTOR2(0, -40);
 		g_EnemyBulletLong[k].texNo = texno;
 		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
-
 	}
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
 	g_SE_Damage = LoadSound(file_SE_Damage);
