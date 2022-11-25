@@ -7,6 +7,7 @@
 #include "enemy.h"
 #include "texture.h"
 #include "sprite.h"
+#include "special.h"
 
 //================================
 //グローバル変数
@@ -69,11 +70,11 @@ void UpdateBullet()
 					)
 				{
 					if (GetEnemyNum() > 0) {
-						pEnemy->hp -= 90 / (GetEnemyNum() * 1.5);
+						pEnemy->hp -= Damage() / (GetEnemyNum() * 1.5);
 						g_Bullet[i].use = false;
 					}
 					else {
-						pEnemy->hp -= 90;
+						pEnemy->hp -= Damage();
 						g_Bullet[i].use = false;
 					}
 					//if (pEnemy->hp <= 0)
@@ -136,5 +137,26 @@ void SetBullet(D3DXVECTOR2 pos)
 			g_Bullet[i].use = true;
 			return;
 		}
+	}
+}
+
+//ダメージの計算　returnでダメージの数値を返す
+int Damage()
+{
+	SPECIAL* sp = GetSpecial();
+
+	int damage;
+
+	//当該special発動中のダメージの増加
+	if (sp->damage_up == true)
+	{
+		damage = 450;
+		return damage;
+	}
+	//非発動時のデフォルト数値
+	else
+	{
+		damage = 90;
+		return damage;
 	}
 }
