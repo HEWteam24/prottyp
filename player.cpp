@@ -359,7 +359,7 @@ void PlayerCheck(void)
 		SpecialPlus();
 		ScorePlus(10 * GetComboScoreUp());
 		g_Player.flag = true;
-		ReleaseNotes();
+		//ReleaseNotes();
 	}
 	else  //BAD•]‰¿
 	{

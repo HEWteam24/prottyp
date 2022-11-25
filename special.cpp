@@ -143,7 +143,7 @@ void UpdateSpecial()
 	}
 
 	//30秒で終了
-	if (timer >= 1800)
+	if (timer >= 300)
 	{
 		//スペシャルを追加する場合はここにそのスペシャルの終了処理を追加
 		sp.get_damage_down = false;
@@ -156,7 +156,7 @@ void UpdateSpecial()
 		sp.charge = 0;
 		sp.UseOk = false;
 		colorR = 1.0f;
-		colorG = 0.0f;
+		colorG = 1.0f;
 		colorB = 1.0f;
 	}
 
@@ -178,9 +178,9 @@ void DrawSpecial()
 		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//HPバー
-	DrawSpriteColor(g_SpecialNowTexture, 
+	DrawSpriteColor(g_SpecialNowTexture,
 		SPECIAL_POS_X,
-		SPECIAL_POS_Y,
+		SPECIAL_POS_Y +((SPECIAL_MAX - sp.charge) * 15)/2,
 		SPECIAL_SIZE_X,
 		SPECIAL_SIZE_Y - ((SPECIAL_MAX - sp.charge) * 15),
 		0.0f,
