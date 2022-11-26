@@ -119,13 +119,13 @@ void UpdateStageSelect(void)
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		
-		SceneTransition(SCENE_GAME);
+		SceneTransition(SCENE_SKILLSELECT);
 		//SceneTransition(NowSelect+6);
 	}
 	//コントローラーBボタン押したらSCENE_GAMEへ移行
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
-		SceneTransition(SCENE_GAME);
+		SceneTransition(SCENE_SKILLSELECT);
 		//SceneTransition(NowSelect+6);
 	}
 	for (int i = 0; i < STAGE_MAX; i++)

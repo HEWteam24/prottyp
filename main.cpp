@@ -21,6 +21,7 @@ pでポーズ、mで再開
 #include "Over.h"
 #include "Result.h"
 #include "stage_select.h"
+#include "skill_select.h"
 
 #include "fade.h"
 #include "frame.h"
@@ -324,6 +325,9 @@ void Update(void)
 		case SCENE_STAGESELECT:
 			UpdateStageSelect();
 			break;
+		case SCENE_SKILLSELECT:
+			UpdateSkillSelect();
+			break;
 		case SCENE_GAME:
 			UpdateGame();
 			break;
@@ -362,7 +366,9 @@ void Draw(void)
 	case SCENE_STAGESELECT:
 		DrawStageSelect();
 		break;
-
+	case SCENE_SKILLSELECT:
+		DrawSkillSelect();
+		break;
 	case SCENE_GAME:
 		DrawGame();
 		break;
@@ -438,6 +444,9 @@ void SetScene(int nextScene)
 	case SCENE_STAGESELECT:
 		UninitStageSelect();
 		break;
+	case SCENE_SKILLSELECT:
+		UninitSkillSelect();
+		break;
 	case SCENE_GAME:
 		UninitGame();
 		break;
@@ -460,6 +469,9 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_STAGESELECT:
 		InitStageSelect();
+		break;
+	case SCENE_SKILLSELECT:
+		InitSkillSelect();
 		break;
 	case SCENE_GAME:
 		InitGame();
