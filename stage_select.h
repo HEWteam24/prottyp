@@ -8,7 +8,7 @@
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
-#define STAGE_MAX (10+1)
+#define STAGE_MAX (6)
 
 enum STAGE
 {
@@ -55,7 +55,8 @@ struct STAGE_PANEL
 	float spd;
 	D3DXVECTOR2 size;
 	D3DXCOLOR	col;
-	int texno;
+	int texnoA;
+	int texnoB;
 	int direction;
 	int NowLane;
 	bool moving;
