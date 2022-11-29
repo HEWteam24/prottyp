@@ -238,7 +238,6 @@ HRESULT InitEnemyBullet()
 	g_EnemyBulletNomalTex = LoadTexture(g_TextureEnemyBulletNomalName);
 	g_EnemyBulletLongTex = LoadTexture(g_TextureEnemyBulletLongName);
 
-	nowY = 0;
 	//\‘¢‘Ì‚Ì‰Šú‰»
 	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
 	{

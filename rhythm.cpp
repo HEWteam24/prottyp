@@ -38,14 +38,14 @@ static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
 int Notestipindex;
 int Notestip[10]
 {//15フレームごと
+	0,
+	1,
+	1,
 	1,
 	0,
 	1,
-	0,
 	1,
-	0,
 	1,
-	0,
 };
 HRESULT InitRhythm()
 {
