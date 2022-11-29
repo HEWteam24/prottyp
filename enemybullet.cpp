@@ -36,11 +36,12 @@ int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
 
-STAGE StageLv = STAGE01;
 
 //================================
 //マップチップ
 //================================
+<<<<<<< HEAD
+=======
 int StageBullet[2][MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
@@ -227,7 +228,9 @@ int StageBullet[2][MAP_SIZE_Y][MAP_SIZE_X] =
 	1, 0, 0, 0, 1,
 	}
 };
+>>>>>>> a4a45fedb8e0968d7d33bfdae31efe7f87a30f62
 
+STAGE StageLv = STAGE01;
 
 //================================
 //初期化
