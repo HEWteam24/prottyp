@@ -75,7 +75,7 @@ void InitSpecial()
 	IconcolorB = 1.0f;
 	sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
-	sp.charge = 25;		//スペシャルの初期値。提出時には0にしてください。
+	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
 	sp.UseOk = false;
 	sp.damage_up = false;
 	sp.get_damage_down = false;

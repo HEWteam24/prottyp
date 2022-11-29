@@ -35,6 +35,18 @@ static	char	*g_TextureNameNotesCenter= NOTES_TEX_CENTER;//テクスチャ名
 static	ID3D11ShaderResourceView	*g_TextureNotesLane;
 static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
 
+int Notestipindex;
+int Notestip[10]
+{//15フレームごと
+	1,
+	0,
+	1,
+	0,
+	1,
+	0,
+	1,
+	0,
+};
 HRESULT InitRhythm()
 {
 	for (int i = 0; i < NOTES_MAX; i+=2) 
@@ -101,21 +113,33 @@ HRESULT InitRhythm()
 	GameSoundNo = LoadSound(filename);
 
 	Frame = 0;
-
+	Notestipindex = 0;
 	return	S_OK;
 }
 
 void UpdateRhythm()
 {
+	
 	Frame++;
-	if (Frame / 120 == 0.0f){
+	if (Frame / 120 == 0.0f)
+	{
 		PlaySound(GameSoundNo, -1);
 	}
 	else {
 		//ノーツのセット(BPM120の時は30フレームごと)
-		if ((Frame % (60 / (NowBPM / 60))) * NOTES_DIST == 0.0f)
+		/*if ((Frame % (60 / (NowBPM / 60))) * NOTES_DIST == 0.0f)
 		{
 			SetNotes();
+		}*/
+
+		if (Frame % 15 == 0.0f) 
+		{
+			if (Notestip[Notestipindex%8] == 1) 
+			{
+				SetNotes();
+				
+			}
+			Notestipindex++;
 		}
 
 		for (int i = 0; i < NOTES_MAX; i++)
@@ -218,11 +242,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame-3)  % (60 / (NowBPM / 60)) <= 4.0f) && ((Frame-3) % (60 / (NowBPM / 60)) >= 00.0f))
+	if ((Frame % 15 <= 4.0f) && (Frame % 15 >= 0.0f) && Notestip[(Notestipindex-3)%8] == 1)
 	{
 		return true;
 	}
-	else if (((Frame-3) % (60 / (NowBPM / 60)) <= 29.0f) && ((Frame-3) % (60 / (NowBPM / 60)) >= 26.0f))
+	else if ((Frame % 15 <= 14.0f) && (Frame  % 15 >= 11.0f) && Notestip[(Notestipindex-3)%8] == 1)
 	{
 		return true;
 	}

@@ -217,7 +217,7 @@ void UpdatePlayer(void)
 			//g_Player.hp -= 30.0f;
 			
 		}
-		fire_dist = 20;
+		fire_dist = 10;
 	}
 	if (fire_dist > 0)
 	{
