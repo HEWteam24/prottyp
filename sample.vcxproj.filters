@@ -90,7 +90,14 @@
     <ClCompile Include="stage_select.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="mapchip.cpp">
+=======
+    <ClCompile Include="special.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="skill_select.cpp">
+>>>>>>> a4a45fedb8e0968d7d33bfdae31efe7f87a30f62
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -170,7 +177,14 @@
     <ClInclude Include="stage_select.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="mapchip.h">
+=======
+    <ClInclude Include="special.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="skill_select.h">
+>>>>>>> a4a45fedb8e0968d7d33bfdae31efe7f87a30f62
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

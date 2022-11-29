@@ -46,5 +46,7 @@ int		GetFreame();
 void	ReleaseNotes();
 bool	MusicEnd();
 
+int  BGM_RE();
+
 #endif // RHYTHM_H_
 

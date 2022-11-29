@@ -149,7 +149,9 @@
     <ClCompile Include="rhythm.cpp" />
     <ClCompile Include="scene.cpp" />
     <ClCompile Include="score.cpp" />
+    <ClCompile Include="skill_select.cpp" />
     <ClCompile Include="sound.cpp" />
+    <ClCompile Include="special.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="stage_select.cpp" />
     <ClCompile Include="texture.cpp" />
@@ -177,7 +179,9 @@
     <ClInclude Include="rhythm.h" />
     <ClInclude Include="scene.h" />
     <ClInclude Include="score.h" />
+    <ClInclude Include="skill_select.h" />
     <ClInclude Include="sound.h" />
+    <ClInclude Include="special.h" />
     <ClInclude Include="sprite.h" />
     <ClInclude Include="stage_select.h" />
     <ClInclude Include="texture.h" />

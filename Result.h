@@ -24,4 +24,5 @@ typedef struct
 	float	rad;
 	int		rank;
 	D3DXCOLOR	col;
+	D3DXCOLOR	TextCol;
 }COIN;

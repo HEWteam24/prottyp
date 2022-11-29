@@ -11,8 +11,10 @@
 #include "sound.h"
 #include "collision.h"
 #include "rhythm.h"
+#include "special.h"
 #include <time.h>
 #include <stdlib.h>
+
 
 //================================
 //グローバル変数
@@ -20,6 +22,15 @@
 ENEMYBULLET g_EnemyBulletNomal[ENEMYBULLETNOMAL_MAX];
 ENEMYBULLET g_EnemyBulletLong[ENEMYBULLETLONG_MAX];
 PLAYER* pPlayer;
+
+//テクスチャのロード
+int g_EnemyBulletNomalTex;
+static	ID3D11ShaderResourceView* g_TextureEnemyBulletNomal;
+static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\bullet00.png";//テクスチャ名
+
+int g_EnemyBulletLongTex;
+static	ID3D11ShaderResourceView* g_TextureEnemyBulletLong;
+static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\EnemyBullet01.png";//テクスチャ名
 
 int nowY = 0;	//マップのその時の縦列数
 
@@ -29,6 +40,195 @@ static int g_SE_Damage;		//ダメージサウンド
 //================================
 //マップチップ
 //================================
+<<<<<<< HEAD
+=======
+int StageBullet[2][MAP_SIZE_Y][MAP_SIZE_X] =
+{
+	//1個め
+	{
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 0, 1,
+		0, 1, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 0, 0, 1,
+		0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 0, 0, 1,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		1, 0, 0, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 1, 2, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 0, 1, 1, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 0, 1, 1, 0,
+		0, 1, 1, 0, 0,
+		1, 1, 0, 0, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 2, 0, 0,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 0, 0, 1, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		1, 0, 0, 1, 0,
+		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 1, 0, 0,
+		0, 1, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		0, 1, 2, 0, 0,
+		1, 1, 0, 0, 0,
+		0, 0, 1, 1, 0,
+		0, 1, 0, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 1,
+		1, 0, 1, 0, 0,
+		0, 0, 1, 0, 1,
+	},
+	{
+	2, 2, 2, 2, 2,
+	0, 0, 0, 2, 0,
+	0, 2, 1, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 2, 0, 0, 1,
+	0, 0, 1, 0, 0,
+	0, 0, 1, 0, 1,
+	0, 1, 0, 0, 1,
+	0, 0, 2, 1, 0,
+	1, 0, 0, 0, 0,
+	0, 2, 0, 0, 0,
+	0, 0, 0, 1, 2,
+	0, 0, 1, 0, 0,
+	2, 0, 2, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 1, 2, 0, 0,
+	1, 0, 0, 0, 2,
+	0, 0, 0, 1, 0,
+	1, 0, 2, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 2,
+	0, 0, 0, 1, 2,
+	2, 0, 0, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 2, 0, 0,
+	0, 1, 0, 1, 0,
+	0, 0, 0, 0, 0,
+	2, 0, 0, 0, 2,
+	0, 2, 0, 2, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 2, 0, 0,
+	0, 2, 0, 0, 1,
+	0, 1, 0, 0, 0,
+	1, 0, 0, 1, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 0, 0, 2,
+	0, 0, 1, 0, 2,
+	1, 0, 0, 1, 2,
+	0, 1, 0, 0, 2,
+	0, 1, 0, 1, 2,
+	1, 0, 1, 0, 2,
+	1, 0, 1, 0, 2,
+	0, 0, 0, 0, 1,
+	0, 1, 0, 0, 0,
+	0, 2, 0, 1, 0,
+	0, 0, 0, 0, 1,
+	1, 0, 0, 1, 1,
+	1, 1, 0, 0, 2,
+	0, 0, 0, 2, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 0, 2, 0,
+	0, 0, 2, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 2, 0, 1, 0,
+	0, 0, 0, 0, 1,
+	1, 0, 0, 1, 0,
+	0, 1, 0, 0, 2,
+	0, 2, 0, 0, 0,
+	2, 0, 0, 0, 2,
+	2, 2, 0, 2, 2,
+	2, 2, 0, 2, 2,
+	2, 2, 0, 2, 2,
+	2, 0, 0, 0, 2,
+	0, 0, 0, 0, 0,
+	0, 1, 0, 1, 0,
+	1, 0, 1, 0, 1,
+	0, 1, 0, 1, 0,
+	1, 0, 1, 0, 1,
+	0, 2, 0, 2, 0,
+	0, 0, 0, 0, 0,
+	2, 2, 1, 0, 0,
+	0, 0, 0, 1, 2,
+	1, 2, 1, 0, 0,
+	0, 0, 0, 0, 0,
+	0, 0, 0, 1, 0,
+	0, 1, 0, 0, 0,
+	0, 0, 2, 0, 1,
+	2, 0, 0, 0, 0,
+	2, 2, 0, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 0, 0,
+	2, 2, 2, 2, 0,
+	2, 2, 2, 0, 1,
+	2, 2, 0, 1, 1,
+	2, 2, 0, 0, 0,
+	2, 0, 0, 0, 0,
+	1, 0, 0, 0, 1,
+	}
+};
+>>>>>>> a4a45fedb8e0968d7d33bfdae31efe7f87a30f62
 
 STAGE StageLv = STAGE01;
 
@@ -38,8 +238,10 @@ STAGE StageLv = STAGE01;
 
 HRESULT InitEnemyBullet()
 {
-	//テクスチャのロード
-	int texno = LoadTexture((char*)"data\\TEXTURE\\Back.JPG");
+	g_EnemyBulletNomalTex = LoadTexture(g_TextureEnemyBulletNomalName);
+	g_EnemyBulletLongTex = LoadTexture(g_TextureEnemyBulletLongName);
+
+	nowY = 0;
 	//構造体の初期化
 	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
 	{
@@ -48,7 +250,6 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletNomal[i].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletNomal[i].h = ENEMYBULLET_SIZE_H;
 		g_EnemyBulletNomal[i].pos = D3DXVECTOR2(0, -10);
-		g_EnemyBulletNomal[i].texNo = texno;
 		g_EnemyBulletNomal[i].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
 	}
 	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
@@ -58,7 +259,6 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletLong[k].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletLong[k].h = ENEMYBULLET_SIZE_H * 3;
 		g_EnemyBulletLong[k].pos = D3DXVECTOR2(0, -40);
-		g_EnemyBulletLong[k].texNo = texno;
 		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
 
 	}
@@ -66,18 +266,29 @@ HRESULT InitEnemyBullet()
 	g_SE_Damage = LoadSound(file_SE_Damage);
 
 	pPlayer = GetPlayer();
-
+	nowY = 0;
 	return S_OK;
 }
 
 //終了処理
 void UninitEnemyBullet()
 {
+	if (g_TextureEnemyBulletNomal)
+	{
+		g_TextureEnemyBulletNomal->Release();
+		g_TextureEnemyBulletNomal = NULL;
+	}
+	if (g_TextureEnemyBulletLong)
+	{
+		g_TextureEnemyBulletLong->Release();
+		g_TextureEnemyBulletLong = NULL;
+	}
 }
 
 //更新処理
 void UpdateEnemyBullet()
 {
+	SPECIAL* sp = GetSpecial();
 	
 	int eFreame = GetFreame();
 
@@ -99,10 +310,19 @@ void UpdateEnemyBullet()
 				g_EnemyBulletNomal[i].pos.y = -10.0f;
 			}
 
-			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), pPlayer->size))
+			if (CollisionBB(g_EnemyBulletNomal[i].pos, pPlayer->pos - D3DXVECTOR2(0.0f,pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletNomal[i].w, g_EnemyBulletNomal[i].h), D3DXVECTOR2(pPlayer->size.x,1.0f)))
 			{
 				g_EnemyBulletNomal[i].use = false;
-				pPlayer->hp -= 25.0f;
+				//スペシャルの被ダメ減少
+				if (sp->get_damage_down == true)
+				{
+					pPlayer->hp -= 5.0f;
+				}
+				else
+				{
+					pPlayer->hp -= 25.0f*1;
+				}
+
 				g_EnemyBulletNomal[i].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
@@ -124,7 +344,14 @@ void UpdateEnemyBullet()
 			if (CollisionBB(g_EnemyBulletLong[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletLong[k].w, g_EnemyBulletLong[k].h), pPlayer->size/2))
 			{
 				g_EnemyBulletLong[k].use = false;
-				pPlayer->hp -= 15.0f;
+				if (sp->get_damage_down == true)
+				{
+					pPlayer->hp -= 3.0f;
+				}
+				else
+				{
+					pPlayer->hp -= 15.0f;
+				}
 				g_EnemyBulletLong[k].pos.y = -10.0f;
 				PlaySound(g_SE_Damage, 0);
 			}
@@ -140,7 +367,7 @@ void DrawEnemyBullet()
 	{
 		if (g_EnemyBulletNomal[x].use)
 		{
-			DrawSpriteColor(g_EnemyBulletNomal[x].texNo, g_EnemyBulletNomal[x].pos.x, g_EnemyBulletNomal[x].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
+			DrawSpriteColor(g_EnemyBulletNomalTex, g_EnemyBulletNomal[x].pos.x, g_EnemyBulletNomal[x].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
@@ -149,7 +376,7 @@ void DrawEnemyBullet()
 	{
 		if (g_EnemyBulletLong[y].use)
 		{
-			DrawSpriteColor(g_EnemyBulletLong[y].texNo, g_EnemyBulletLong[y].pos.x, g_EnemyBulletLong[y].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
+			DrawSpriteColor(g_EnemyBulletLongTex, g_EnemyBulletLong[y].pos.x, g_EnemyBulletLong[y].pos.y, ENEMYBULLET_SIZE_W, ENEMYBULLET_SIZE_H * 3,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
@@ -165,108 +392,8 @@ ENEMYBULLET* GetEnemyBulletLong()
 	return &g_EnemyBulletLong[0];
 }
 
-void SetEnemyBullet()
-{
-	//srand((unsigned int)time(NULL));
-	//int num,numm;		//乱数用
-	//int atk = 0,atkk = 0;	//敵の攻撃用
-	//num = rand() % 9;
-	//numm = rand() % 2;
-
-	//switch (num)
-	//{
-	//case 0:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 1:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 2:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2;
-	//	break;
-	//case 3:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	break;
-	//case 4:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-	//	break;
-	//case 5:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	break;
-	//case 6:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-	//	break;
-	//case 7:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-	//	break;
-	//case 8:
-	//	if (numm == 0)
-	//		atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-	//	else
-	//		atkk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-	//	break;
-	//default:
-	//	break;
-
-	//}
-
-
-	//if (atkk == 0)
-	//{
-	//	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
-	//	{
-	//		if (g_EnemyBulletNomal[i].use == false)
-	//		{
-	//			g_EnemyBulletNomal[i].pos.x = atk;
-	//			g_EnemyBulletNomal[i].use = true;
-	//			return;
-	//		}
-	//	}
-	//}
-	//else
-	//{
-	//	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-	//	{
-	//		if (g_EnemyBulletLong[k].use == false)
-	//		{
-	//			g_EnemyBulletLong[k].pos.x = atkk;
-	//			g_EnemyBulletLong[k].use = true;
-	//			return;
-	//		}
-
-	//	}
-	//}
-}
-
-
 void SETBULLET()
 {
-
-
 	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
 	StageLv = STAGE01;		//現在のステージ(テスト用)
@@ -278,7 +405,7 @@ void SETBULLET()
 		case STAGE01:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet01[nowY][j])
+				switch (StageBullet[0][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
@@ -372,7 +499,7 @@ void SETBULLET()
 		case STAGE02:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet02[nowY][j])
+				switch (StageBullet[1][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
