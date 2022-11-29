@@ -141,7 +141,6 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="lane.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="mapchip.cpp" />
     <ClCompile Include="Over.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="renderer.cpp" />
@@ -171,7 +170,6 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="lane.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="mapchip.h" />
     <ClInclude Include="Over.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="renderer.h" />
