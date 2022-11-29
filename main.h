@@ -149,6 +149,7 @@ enum SCENE
 	SCENE_RESULT,		//リザルト画面
 	SCENE_GAMEOVER,		//ゲームオーバー
 	SCENE_STAGESELECT,	//セレクト
+	SCENE_SKILLSELECT,	//スキルセレクト
 	SCENE_STAGE_0,
 
 	SCENE_NUM,		//終端コード

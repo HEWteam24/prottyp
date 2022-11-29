@@ -291,3 +291,8 @@ bool	MusicEnd()
 		return true;
 	}
 }
+
+int BGM_RE()
+{
+	return GameSoundNo;
+}

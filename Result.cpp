@@ -59,11 +59,7 @@ HRESULT InitResult(void)
 
 	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins_1200x200_B.png");
 	g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_clear.png");
-	if (pPlayerOne->dead)
-	{
-		g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_failed.png");
-		g_Coin.TextCol = D3DXCOLOR(0.8f, 0.5f, 1.0f, 1.0f);
-	}
+
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back.JPG");
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
 
@@ -93,6 +89,12 @@ HRESULT InitResult(void)
 		g_Coin.rank = 0;
 	}
 
+	if (pPlayerOne->dead)
+	{
+		g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_failed.png");
+		g_Coin.TextCol = D3DXCOLOR(0.8f, 0.5f, 1.0f, 1.0f);
+		g_Coin.rank = 5;
+	}
 
 
 	InitScoreResult();

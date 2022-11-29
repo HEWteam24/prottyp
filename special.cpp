@@ -73,7 +73,7 @@ void InitSpecial()
 	IconcolorR = 1.0f;
 	IconcolorG = 1.0f;
 	IconcolorB = 1.0f;
-	sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
+	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
 	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
 	sp.UseOk = false;
