@@ -5,7 +5,7 @@
 
 
 
-int StageBullet01[110][5] =
+int StageBullet01[110][4] =
 {
 	//1ŒÂ‚ß
 
@@ -120,7 +120,7 @@ int StageBullet01[110][5] =
 		0, 0, 1, 0, 1,
 
 };
-int StageBullet02[90][5] =
+int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	2, 2, 2, 2, 2,
 	0, 0, 0, 2, 0,
