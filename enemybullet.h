@@ -51,5 +51,5 @@ void	DrawEnemyBullet();
 
 ENEMYBULLET* GetEnemyBulletNomal();
 ENEMYBULLET* GetEnemyBulletLong();
-void	SetEnemyBullet();	//íeî≠ê∂
+//void	SetEnemyBullet();	//íeî≠ê∂
 void	SETBULLET();
