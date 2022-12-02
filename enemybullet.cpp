@@ -154,6 +154,11 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 		0, 1, 0, 0, 1,
 		1, 0, 1, 0, 0,
 		0, 0, 1, 0, 1,
+		0, 1, 0, 1, 0,
+		1, 0, 0, 0, 1,
+		0, 1, 0, 1, 1,
+		0, 1, 1, 0, 0,
+		0, 0, 1, 1, 0,
 
 };
 int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
