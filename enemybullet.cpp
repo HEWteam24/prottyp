@@ -26,7 +26,7 @@ PLAYER* pPlayer;
 //テクスチャのロード
 int g_EnemyBulletNomalTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletNomal;
-static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\bullet00.png";//テクスチャ名
+static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\rank_coins_1200x200_B.png";//テクスチャ名
 
 int g_EnemyBulletLongTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletLong;
@@ -45,11 +45,11 @@ int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
 
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 1, 0, 1,
+		1, 0, 0, 1, 0,
+		0, 1, 1, 0, 0,
+		0, 0, 0, 1, 0,
+		1, 0, 0, 0, 0,
+		1, 0, 1, 0, 1,
 		0, 1, 0, 1, 0,
 		1, 0, 1, 0, 0,
 		0, 1, 0, 0, 1,
