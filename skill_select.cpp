@@ -35,6 +35,7 @@ int NowSSelect = SKILL_1;
 float Salpha;
 float Scolor;
 int changeN;
+bool movingSp;
 SKILL_PANEL g_SkillPanel[SKILL_MAX];
 
 //=============================================================================
@@ -73,6 +74,7 @@ HRESULT InitSkillSelect(void)
 	changeN = 60;
 
 	NowSSelect = 1;
+	movingSp = false;
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
@@ -113,15 +115,17 @@ void UpdateSkillSelect(void)
 	}
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		if ((Keyboard_IsKeyDown(KK_D))&&(g_SkillPanel[i].moving==false))
+		if ((Keyboard_IsKeyDown(KK_D)) && (movingSp == false) && (NowSSelect < 2))
 		{
 			NowSSelect+=1;
-			g_SkillPanel[i].moving = true;
+			//g_SkillPanel[i].moving = true;
+			movingSp = true;
 		}
-		if ((Keyboard_IsKeyDown(KK_A)) && (g_SkillPanel[i].moving == false))
+		if ((Keyboard_IsKeyDown(KK_A)) && (movingSp == false) && (NowSSelect > 0))
 		{
 			NowSSelect-=1;
-			g_SkillPanel[i].moving = true;
+			//g_SkillPanel[i].moving = true;
+			movingSp = true;
 		}
 		
 		if (i == NowSSelect)
@@ -135,17 +139,19 @@ void UpdateSkillSelect(void)
 			g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f);
 		}	
 
-		if (g_SkillPanel[i].moving)
+		if (movingSp==true)
 		{
 			changeN -= 1;
 			if (changeN <= 0)
 			{
-				changeN = 60;
-				g_SkillPanel[i].moving = false;
+				changeN = 30;
+				//g_SkillPanel[i].moving = false;
+				movingSp = false;
 			}
 		}
 	}
-	if (NowSSelect >= 3 )
+
+	if (NowSSelect >= 3)
 	{
 		NowSSelect = 0;
 	}
@@ -153,6 +159,7 @@ void UpdateSkillSelect(void)
 	{
 		NowSSelect = 2;
 	}
+
 
 }
 
