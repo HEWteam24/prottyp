@@ -38,14 +38,14 @@ static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
 int Notestipindex;
 int Notestip[10]
 {//15フレームごと
-	0,
-	1,
-	1,
 	1,
 	0,
 	1,
+	0,
 	1,
+	0,
 	1,
+	0,
 };
 HRESULT InitRhythm()
 {
@@ -144,38 +144,38 @@ void UpdateRhythm()
 
 		for (int i = 0; i < NOTES_MAX; i++)
 		{
-			if (Notes[i].use)
+			if (!Notes[i].use) continue;
+
+			Notes[i].pos.x += Notes[i].sp.x;
+			Notes[i].alpha -= 0.005f * NOTES_DIST;
+			if (i % 2 == 0)
 			{
-				Notes[i].pos.x += Notes[i].sp.x;
-				Notes[i].alpha -= 0.005f * NOTES_DIST;
-				if (i % 2 == 0)
+				//ノーツ左が真ん中に来た時消える
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 20.0f)
 				{
-					//ノーツ左が真ん中に来た時消える
-					if (Notes[i].pos.x + NOTES_SIZE_X / 2 > SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2 + NOTES_SP * 3)
-					{
-						Notes[i].use = false;
-						Notes[i + 1].use = false;
-					}
-					//ノーツ左が消えてる時右も消える
-					if (!Notes[i + 1].use)
-					{
-						Notes[i].use = false;
-					}
+					Notes[i].use = false;
+					Notes[i + 1].use = false;
 				}
-				if (i % 2 == 1)
+				//ノーツ左が消えてる時右も消える
+				if (!Notes[i + 1].use)
 				{
-					//ノーツ右が真ん中に来た時消える
-					if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
-					{
-						Notes[i].use = false;
-					}
-					////ノーツ右が消えてる時左も消える
-					//if (Notes[i - 1].use)
-					//{
-					//	Notes[i - 1].use = false;
-					//}
+					Notes[i].use = false;
 				}
 			}
+			//if (i % 2 == 1)
+			//{
+			//	//ノーツ右が真ん中に来た時消える
+			//	if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
+			//	{
+			//		Notes[i].use = false;
+			//	}
+			//	////ノーツ右が消えてる時左も消える
+			//	//if (Notes[i - 1].use)
+			//	//{
+			//	//	Notes[i - 1].use = false;
+			//	//}
+			//}
+
 		}
 	}
 
@@ -209,11 +209,11 @@ void DrawRhythm()
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 0.4, 1.0));
 	for (int i = 0; i < NOTES_MAX; i++)
 	{
-		if (Notes[i].use)
-		{
-			DrawSpriteColor(Notes[i].texno, Notes[i].pos.x, Notes[i].pos.y, Notes[i].size.x, Notes[i].size.y,
-				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0- Notes[i].alpha));
-		}
+		if (!Notes[i].use) continue;
+
+		DrawSpriteColor(Notes[i].texno, Notes[i].pos.x, Notes[i].pos.y, Notes[i].size.x, Notes[i].size.y,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0 - Notes[i].alpha));
+
 	}
 
 
@@ -223,7 +223,7 @@ void SetNotes()
 {
 	for (int n = 0; n < NOTES_MAX; n+=2)
 	{
-		if (Notes[n].use==false) 
+		if (!Notes[n].use) 
 		{
 			Notes[n].pos = D3DXVECTOR2(NOTES_POS_X_1, NOTES_POS_Y);
 			Notes[n].use = true;
@@ -242,11 +242,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if ((Frame % 15 <= 4.0f) && (Frame % 15 >= 0.0f) && Notestip[(Notestipindex-3)%8] == 1)
+	if ((Frame % 15 <= 3.0f) && (Frame % 15 >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}
-	else if ((Frame % 15 <= 14.0f) && (Frame  % 15 >= 11.0f) && Notestip[(Notestipindex-3)%8] == 1)
+	else if ((Frame % 15 <= 14.0f) && (Frame  % 15 >= 12.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}
@@ -270,13 +270,13 @@ void ReleaseNotes()
 {//一番真ん中に近いノーツを消す関数
 	int		Min = Notes[0].num, Index = 0;
 
-	for (int i = 2; i < NOTES_MAX; i+=2) {
-		if (Notes[i].use) {
-			if (Notes[i].num < Min) {
-				Min = Notes[i].num;
-				Index = i;
-			}
+	for (int i = 2; i < NOTES_MAX; i += 2) {
+		if (!Notes[i].use) continue;
+		if (Notes[i].num < Min) {
+			Min = Notes[i].num;
+			Index = i;
 		}
+
 	}
 	Notes[Index].use = false;
 	Notes[Index + 1].use = false;
