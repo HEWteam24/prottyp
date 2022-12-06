@@ -41,6 +41,7 @@ enum DIRECTION	//移動の向き
 {
 	D_LEFT  = 0,
 	D_RIGHT = 1,
+	D_NONE = 2,
 };
 enum CHECK		//タイミング評価
 {
@@ -115,7 +116,8 @@ void InitPlayer(void)
 	g_Player.hp = PLAYER_HP_DEFAULT;			//HP
 
 	g_Player.moving		= false;	//移動中フラグ
-	g_Player.direction	= D_LEFT;	//移動方向
+	g_Player.shooting	= false;	//移動中フラグ
+	g_Player.direction	= D_NONE;	//移動方向
 	g_Player.NowLane	= LANE_3;	//初期レーン
 	g_Player.flag		= false;
 	g_Player.dead = false;	
@@ -172,7 +174,7 @@ void UpdatePlayer(void)
 	//----------------------------------------
 	// コントローラー入力
 	// ---------------------------------------
-	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false))
+	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false) && (g_Player.shooting == false))
 	{
 		PlayerCheck();
 		if (g_Player.flag) 
@@ -211,22 +213,21 @@ void UpdatePlayer(void)
 	// キーボード入力
 	// ---------------------------------------
 	//弾発射
-	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false)&&(fire_dist==0))
+	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false) && (g_Player.shooting == false))
 	{
-		g_Player.moving = true;
+		g_Player.shooting = true;
 		PlayerCheck();
 		if (g_Player.flag) {
 			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
 			PlaySound(g_SE_Bullet, 0);
-			//g_Player.hp -= 30.0f;
-			
 		}
-		fire_dist = 10;
+
 	}
-	if (fire_dist > 0)
-	{
-		fire_dist--;
+	if (Keyboard_IsKeyUp(KK_SPACE) && (g_Player.shooting == true)) {
+		g_Player.shooting = false;
 	}
+
+
 
 	//Aキーで右移動
 	if ((Keyboard_IsKeyDown(KK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
