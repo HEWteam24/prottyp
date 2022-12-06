@@ -35,7 +35,7 @@ struct NOTESLANE
 };
 
 
-HRESULT	InitRhythm();
+HRESULT	InitRhythm(int stagenum);
 void	UpdateRhythm();
 void	UninitRhythm();
 void	DrawRhythm();
