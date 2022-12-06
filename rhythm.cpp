@@ -14,7 +14,7 @@
 
 
 //曲のBPMのパターン
-#define		BPM1				(60)
+#define		BPM1				(150)
 #define		BPM2				(120)
 #define		BPM3				(90)
 
@@ -24,6 +24,7 @@ int			GameSoundNo;
 int			NotesNum = 0;
 int			Frame;
 
+int			NotesT = 0;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
 
@@ -42,19 +43,41 @@ int Notestip[10]
 	0,
 	1,
 	0,
-	1,
 	0,
+	1,
 	1,
 	0,
 };
-HRESULT InitRhythm()
+//BPM90は24フレームで一個
+HRESULT InitRhythm(int stagenum)
 {
-	for (int i = 0; i < NOTES_MAX; i+=2) 
+	int sp;
+	switch (stagenum)
+	{
+	case 0:
+		sp = 7.425f;
+		NowBPM = BPM3;
+		NotesT = ((60 / (NowBPM / 60)) / 2);
+		break;
+	case 1:
+		sp = NOTES_SP;
+		NowBPM = BPM2;
+		NotesT = ((60 / (NowBPM / 60)) / 2);
+		break;
+	case 3:
+		sp = 12.375f;
+		NowBPM = BPM1;
+		NotesT = ((60 / (NowBPM / 60)) / 2);
+		break;
+	default:
+		break;
+	}
+	for (int i = 0; i < NOTES_MAX; i += 2) 
 	{
 		//ノーツ左の初期化
 			Notes[i].pos = D3DXVECTOR2(NOTES_POS_X_1, NOTES_POS_Y);
 			Notes[i].size = D3DXVECTOR2(NOTES_SIZE_X, NOTES_SIZE_Y);
-			Notes[i].sp = D3DXVECTOR2(NOTES_SP, 0.0f);
+			Notes[i].sp = D3DXVECTOR2(sp, 0.0f);
 			Notes[i].rot = 0.0f;
 			Notes[i].alpha = 1.0f;
 			Notes[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - Notes[i].alpha);
@@ -73,7 +96,7 @@ HRESULT InitRhythm()
 		//ノーツ右の初期化
 			Notes[i + 1].pos = D3DXVECTOR2(NOTES_POS_X_2, NOTES_POS_Y);
 			Notes[i + 1].size = D3DXVECTOR2(NOTES_SIZE_X, NOTES_SIZE_Y);
-			Notes[i + 1].sp = D3DXVECTOR2(-NOTES_SP, 0.0f);
+			Notes[i + 1].sp = D3DXVECTOR2(-sp, 0.0f);
 			Notes[i + 1].rot = 0.0f;
 			Notes[i + 1].alpha = 1.0f;
 			Notes[i + 1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - Notes[i + 1].alpha);
@@ -109,7 +132,7 @@ HRESULT InitRhythm()
 
 	//仮で固定のBGM
 	NowBPM = BPM2;
-	char	filename[] = "data\\BGM\\sample.wav";
+	char	filename[] = "data\\BGM\\ザリガニ90.wav";
 	GameSoundNo = LoadSound(filename);
 
 	Frame = 0;
@@ -121,23 +144,17 @@ void UpdateRhythm()
 {
 	
 	Frame++;
-	if (Frame / 120 == 0.0f)
+	if (Frame == NowBPM)
 	{
 		PlaySound(GameSoundNo, -1);
 	}
-	else {
-		//ノーツのセット(BPM120の時は30フレームごと)
-		/*if ((Frame % (60 / (NowBPM / 60))) * NOTES_DIST == 0.0f)
-		{
-			SetNotes();
-		}*/
-
-		if (Frame % 15 == 0.0f) 
+	if (Frame >= NowBPM)
+	{
+		if (Frame % NotesT == 0.0f)
 		{
 			if (Notestip[Notestipindex%8] == 1) 
 			{
 				SetNotes();
-				
 			}
 			Notestipindex++;
 		}
@@ -150,6 +167,9 @@ void UpdateRhythm()
 			Notes[i].alpha -= 0.005f * NOTES_DIST;
 			if (i % 2 == 0)
 			{
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 - NOTES_SIZE_X/2) {
+					int g = 0;
+				}
 				//ノーツ左が真ん中に来た時消える
 				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 20.0f)
 				{
@@ -242,11 +262,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if ((Frame % 15 <= 3.0f) && (Frame % 15 >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	if ((Frame % NotesT <= 3.0f) && (Frame % NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}
-	else if ((Frame % 15 <= 14.0f) && (Frame  % 15 >= 12.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	else if ((Frame % NotesT <= NotesT-1.0f) && (Frame  % NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}

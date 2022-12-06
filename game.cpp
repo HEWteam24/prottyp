@@ -46,13 +46,13 @@ HRESULT InitGame(void)
 {
 	InitPlayer();
 	InitBullet();
-	InitEnemy();
-	InitEnemyBullet();
-	InitRhythm();
 	InitScore();
 	InitCombo();
-	InitSpecial();
 
+	InitSpecial();
+	InitEnemy();
+	InitEnemyBullet();
+	InitRhythm(0);
 	// 背景の初期化
 	InitBG();
 	InitLane();
@@ -76,7 +76,6 @@ void UninitGame(void)
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();
-	//UninitScore();
 	UninitCombo();
 	UninitSpecial();
 
