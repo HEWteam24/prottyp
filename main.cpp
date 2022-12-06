@@ -60,6 +60,7 @@ bool pause = false;
 bool restart = false;
 
 static int PauseTexture;
+static int PauseTextTexture;
 static int PauseCntTexture;
 
 int pause_frame = 0;
@@ -243,6 +244,7 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	InitFrame();
 
 	PauseTexture = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
+	PauseTextTexture = LoadTexture((char*)"data/TEXTURE/text_pause.png");
 	PauseCntTexture = LoadTexture((char*)"data/TEXTURE/number.png");
 
 	// サウンドの初期化
@@ -383,6 +385,7 @@ void Draw(void)
 
 	if (pause == true)
 	{
+		//暗転
 		DrawSpriteColor(PauseTexture,
 			0.0f,
 			0.0f,
@@ -393,6 +396,18 @@ void Draw(void)
 			1.0f,
 			1.0f,
 			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
+
+		//PAUSEテキスト
+		DrawSpriteColor(PauseTextTexture,
+			CENTER_X,
+			CENTER_Y,
+			500.0f,
+			100.0f,
+			0.0f,
+			0.0f,
+			1.0f,
+			1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 
 	if (restart == true)
