@@ -42,7 +42,7 @@ static int g_BGMGame;
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitGame(void)
+HRESULT InitGame(int StageNum)
 {
 	InitPlayer();
 	InitBullet();
@@ -52,7 +52,7 @@ HRESULT InitGame(void)
 	InitSpecial();
 	InitEnemy();
 	InitEnemyBullet();
-	InitRhythm(0);
+	InitRhythm(StageNum);
 	// 背景の初期化
 	InitBG();
 	InitLane();

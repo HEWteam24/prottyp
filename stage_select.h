@@ -68,3 +68,4 @@ HRESULT InitStageSelect(void);
 void UninitStageSelect(void);
 void UpdateStageSelect(void);
 void DrawStageSelect(void);
+int GetGemeStageNum(void);

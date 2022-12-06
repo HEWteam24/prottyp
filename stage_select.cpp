@@ -30,7 +30,7 @@
 
 static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
 static int g_BGMNo;//タイトル用BGMの識別子
-int NowSelect = STAGE_1;
+int NowSelect = (int)STAGE_1;
 float alpha;
 float color;
 STAGE_PANEL g_StagePanel[STAGE_MAX];
@@ -188,19 +188,19 @@ void UpdateStageSelect(void)
 		}
 
 		//右移動完了
-		if ((g_StagePanel[i].spd <= 15.0f) && (g_StagePanel[i].direction == D_RIGHT))
+		if ((g_StagePanel[i].spd <= 15.0f) && (g_StagePanel[i].direction == D_RIGHT)&& (g_StagePanel[i].moving = true))
 		{
 			g_StagePanel[i].pos.x = -480.0f*2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
-			NowSelect++;	//選択ステージ変更
+			//NowSelect++;	//選択ステージ変更
 			
 		}
 		//左移動完了
-		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT))
+		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT) && (g_StagePanel[i].moving = true))
 		{
 			g_StagePanel[i].pos.x = -480.0f*2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
-			NowSelect--;	//選択ステージ変更
+			//NowSelect--;	//選択ステージ変更
 		
 		}
 
@@ -213,7 +213,7 @@ void UpdateStageSelect(void)
 				alpha = 1.0f;
 				g_TextureBgStageSelect[0] = g_StagePanel[i].texnoA;
 			}
-
+			NowSelect = i;
 			//g_TextureBgStageSelect[1] = g_StagePanel[i].texnoA;
 		}
 		else
@@ -283,4 +283,9 @@ void DrawStageSelect(void)
 				0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
 		}
 	}
+}
+
+int GetGemeStageNum(void)
+{
+	return NowSelect;
 }

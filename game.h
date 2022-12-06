@@ -12,7 +12,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitGame(void);
+HRESULT InitGame(int StageNum);
 void UninitGame(void);
 void UpdateGame(void);
 void DrawGame(void);

@@ -9,7 +9,6 @@ pでポーズ、mで再開
 #include "main.h"
 #include <time.h>
 #include "renderer.h"
-//#include "input.h"
 #include "inputx.h"
 #include "keyboard.h"
 #include "sound.h"
@@ -489,7 +488,7 @@ void SetScene(int nextScene)
 		InitSkillSelect();
 		break;
 	case SCENE_GAME:
-		InitGame();
+		InitGame(GetGemeStageNum());
 		break;
 	case SCENE_GAMEOVER:
 		InitOver();

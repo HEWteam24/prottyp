@@ -24,9 +24,11 @@ int			GameSoundNo;
 int			NotesNum = 0;
 int			Frame;
 
+int			sp;
 int			NotesT = 0;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
+
 
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureNotes;
@@ -43,23 +45,30 @@ int Notestip[10]
 	0,
 	1,
 	0,
-	0,
 	1,
+	0,
 	1,
 	0,
 };
 //BPM90は24フレームで一個
 HRESULT InitRhythm(int stagenum)
 {
-	int sp;
+	char	filename1[] = "data\\BGM\\ザリガニ90.wav";
+	char	filename2[] = "data\\BGM\\sample.wav";
 	switch (stagenum)
 	{
 	case 0:
+
+		GameSoundNo = LoadSound(filename1);
+
 		sp = 7.425f;
 		NowBPM = BPM3;
 		NotesT = ((60 / (NowBPM / 60)) / 2);
 		break;
 	case 1:
+
+		GameSoundNo = LoadSound(filename2);
+
 		sp = NOTES_SP;
 		NowBPM = BPM2;
 		NotesT = ((60 / (NowBPM / 60)) / 2);
@@ -131,9 +140,7 @@ HRESULT InitRhythm(int stagenum)
 	}
 
 	//仮で固定のBGM
-	NowBPM = BPM2;
-	char	filename[] = "data\\BGM\\ザリガニ90.wav";
-	GameSoundNo = LoadSound(filename);
+
 
 	Frame = 0;
 	Notestipindex = 0;
