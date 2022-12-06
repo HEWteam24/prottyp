@@ -398,16 +398,19 @@ void Draw(void)
 			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
 
 		//PAUSEテキスト
-		DrawSpriteColor(PauseTextTexture,
-			CENTER_X,
-			CENTER_Y,
-			500.0f,
-			100.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			1.0f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		if (restart == false)
+		{
+			DrawSpriteColor(PauseTextTexture,
+				CENTER_X,
+				CENTER_Y,
+				500.0f,
+				100.0f,
+				0.0f,
+				0.0f,
+				1.0f,
+				1.0f,
+				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		}
 	}
 
 	if (restart == true)
