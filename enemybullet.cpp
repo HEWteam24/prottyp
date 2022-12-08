@@ -442,7 +442,7 @@ ENEMYBULLET* GetEnemyBulletLong()
 
 void SETBULLET()
 {
-	int atk = 0;	//敵の攻撃用
+	float atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
 	StageLv = STAGE02;		//現在のステージ(テスト用)
 	if (nowY < MAP_SIZE_Y)
