@@ -12,6 +12,7 @@
 #include "collision.h"
 #include "rhythm.h"
 #include "special.h"
+#include "MapChip.h"
 #include <time.h>
 #include <stdlib.h>
 
@@ -41,6 +42,7 @@ STAGE StageLv = STAGE01;
 //================================
 //マップチップ
 //================================
+/*
 int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
@@ -279,6 +281,10 @@ int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 0, 1, 2, 0, 2,
 1, 0, 2, 0, 0, 
 };
+*/
+
+
+
 
 
 //================================
@@ -442,9 +448,9 @@ ENEMYBULLET* GetEnemyBulletLong()
 
 void SETBULLET()
 {
-	float atk = 0;	//敵の攻撃用
+	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
-	StageLv = STAGE02;		//現在のステージ(テスト用)
+	StageLv = STAGE01;		//現在のステージ(テスト用)
 	if (nowY < MAP_SIZE_Y)
 	{
 
@@ -453,7 +459,7 @@ void SETBULLET()
 		case STAGE01:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet01[nowY][j])
+				switch (StageBullet[STAGE01][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
@@ -547,7 +553,7 @@ void SETBULLET()
 		case STAGE02:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet02[nowY][j])
+				switch (StageBullet[STAGE02][nowY][j])
 				{
 				case 0:
 					IsAtk = false;

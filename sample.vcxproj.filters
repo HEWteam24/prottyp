@@ -82,6 +82,9 @@
     <ClCompile Include="title.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="MapChip .cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -165,6 +168,7 @@
     <ClInclude Include="title.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="MapChip.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="ヘッダーファイル">
