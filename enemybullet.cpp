@@ -13,6 +13,8 @@
 #include "rhythm.h"
 #include "special.h"
 #include "MapChip.h"
+#include "stage_select.h"
+
 #include <time.h>
 #include <stdlib.h>
 
@@ -37,7 +39,7 @@ int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
 
-STAGE StageLv = STAGE01;
+//STAGE StageLv = STAGE01;
 
 //================================
 //マップチップ
@@ -450,16 +452,17 @@ void SETBULLET()
 {
 	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
-	StageLv = STAGE01;		//現在のステージ(テスト用)
+
+	int NowStage = GetGemeStageNum();
 	if (nowY < MAP_SIZE_Y)
 	{
 
-		switch (StageLv)
+		switch (NowStage)
 		{
-		case STAGE01:
+		case 0:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet[STAGE01][nowY][j])
+				switch (StageBullet[0][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
@@ -550,10 +553,10 @@ void SETBULLET()
 
 
 
-		case STAGE02:
+		case 1:
 			for (int j = 0; j < MAP_SIZE_X; j++)
 			{
-				switch (StageBullet[STAGE02][nowY][j])
+				switch (StageBullet[1][nowY][j])
 				{
 				case 0:
 					IsAtk = false;
