@@ -37,7 +37,7 @@ HRESULT InitTitle(void)
 	//テクスチャを読み込んで識別子を受け取る
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Title.png");
 	//音声ファイルを読み込んで識別子を受け取る
-	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
+	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
@@ -51,7 +51,7 @@ HRESULT InitTitle(void)
 //=============================================================================
 void UninitTitle(void)
 {
-	StopSound(g_BGMNo);
+	//StopSound(g_BGMNo);
 }
 
 //=============================================================================
