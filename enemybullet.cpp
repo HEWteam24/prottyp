@@ -456,8 +456,6 @@ void SETBULLET()
 	int NowStage = GetGemeStageNum();
 	if (nowY < MAP_SIZE_Y)
 	{
-
-
 		for (int j = 0; j < MAP_SIZE_X; j++)
 		{
 			switch (StageBullet[NowStage][nowY][j])
@@ -546,7 +544,5 @@ void SETBULLET()
 			IsAtk = true;
 			atk = 0;
 		}
-
-
 	}
 }
