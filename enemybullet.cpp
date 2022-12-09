@@ -12,6 +12,9 @@
 #include "collision.h"
 #include "rhythm.h"
 #include "special.h"
+#include "MapChip.h"
+#include "stage_select.h"
+
 #include <time.h>
 #include <stdlib.h>
 
@@ -36,11 +39,12 @@ int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
 
-STAGE StageLv = STAGE01;
+//STAGE StageLv = STAGE01;
 
 //================================
 //マップチップ
 //================================
+/*
 int StageBullet01[MAP_SIZE_Y][MAP_SIZE_X] =
 {
 	//1個め
@@ -279,6 +283,10 @@ int StageBullet02[MAP_SIZE_Y][MAP_SIZE_X] =
 0, 1, 2, 0, 2,
 1, 0, 2, 0, 0, 
 };
+*/
+
+
+
 
 
 //================================
@@ -444,196 +452,97 @@ void SETBULLET()
 {
 	int atk = 0;	//敵の攻撃用
 	bool IsAtk = true;
-	StageLv = STAGE02;		//現在のステージ(テスト用)
+
+	int NowStage = GetGemeStageNum();
 	if (nowY < MAP_SIZE_Y)
 	{
-
-		switch (StageLv)
+		for (int j = 0; j < MAP_SIZE_X; j++)
 		{
-		case STAGE01:
-			for (int j = 0; j < MAP_SIZE_X; j++)
+			switch (StageBullet[NowStage][nowY][j])
 			{
-				switch (StageBullet01[nowY][j])
+			case 0:
+				IsAtk = false;
+				break;
+			case 1:
+				switch (j)
 				{
 				case 0:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
 					break;
 				case 1:
-					switch (j)
-					{
-					case 0:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-						break;
-					case 1:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-						break;
-					case 2:
-						atk = SCREEN_WIDTH / 2;
-						break;
-					case 3:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-						break;
-					case 4:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-						break;
-					default:
-						break;
-					}
-					if (IsAtk)
-					{
-						for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
-						{
-							if (g_EnemyBulletNomal[i].use == false)
-							{
-								g_EnemyBulletNomal[i].pos.x = atk;
-								g_EnemyBulletNomal[i].use = true;
-								break;
-							}
-						}
-					}
+					atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
 					break;
 				case 2:
-					switch (j)
-					{
-					case 0:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-						break;
-					case 1:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-						break;
-					case 2:
-						atk = SCREEN_WIDTH / 2;
-						break;
-					case 3:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-						break;
-					case 4:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-						break;
-					default:
-						break;
-					}
-					if (IsAtk)
-					{
-						for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-						{
-							if (g_EnemyBulletLong[k].use == false)
-							{
-								g_EnemyBulletLong[k].pos.x = atk;
-								g_EnemyBulletLong[k].use = true;
-								break;
-							}
-						}
-					}
+					atk = SCREEN_WIDTH / 2;
 					break;
 				case 3:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
 					break;
 				case 4:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
 					break;
 				default:
-					IsAtk = false;
 					break;
 				}
-				IsAtk = true;
-				atk = 0;
-			}
-			break;
-
-
-
-
-		case STAGE02:
-			for (int j = 0; j < MAP_SIZE_X; j++)
-			{
-				switch (StageBullet02[nowY][j])
+				if (IsAtk)
+				{
+					for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
+					{
+						if (g_EnemyBulletNomal[i].use == false)
+						{
+							g_EnemyBulletNomal[i].pos.x = atk;
+							g_EnemyBulletNomal[i].use = true;
+							break;
+						}
+					}
+				}
+				break;
+			case 2:
+				switch (j)
 				{
 				case 0:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
 					break;
 				case 1:
-					switch (j)
-					{
-					case 0:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-						break;
-					case 1:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-						break;
-					case 2:
-						atk = SCREEN_WIDTH / 2;
-						break;
-					case 3:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-						break;
-					case 4:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-						break;
-					default:
-						break;
-					}
-					if (IsAtk)
-					{
-						for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
-						{
-							if (g_EnemyBulletNomal[i].use == false)
-							{
-								g_EnemyBulletNomal[i].pos.x = atk;
-								g_EnemyBulletNomal[i].use = true;
-								break;
-							}
-						}
-					}
+					atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
 					break;
 				case 2:
-					switch (j)
-					{
-					case 0:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X * 2;
-						break;
-					case 1:
-						atk = SCREEN_WIDTH / 2 - LANE_SIZE_X;
-						break;
-					case 2:
-						atk = SCREEN_WIDTH / 2;
-						break;
-					case 3:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
-						break;
-					case 4:
-						atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
-						break;
-					default:
-						break;
-					}
-					if (IsAtk)
-					{
-						for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
-						{
-							if (g_EnemyBulletLong[k].use == false)
-							{
-								g_EnemyBulletLong[k].pos.x = atk;
-								g_EnemyBulletLong[k].use = true;
-								break;
-							}
-						}
-					}
+					atk = SCREEN_WIDTH / 2;
 					break;
 				case 3:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 + LANE_SIZE_X;
 					break;
 				case 4:
-					IsAtk = false;
+					atk = SCREEN_WIDTH / 2 + LANE_SIZE_X * 2;
 					break;
 				default:
-					IsAtk = false;
 					break;
 				}
-				IsAtk = true;
-				atk = 0;
+				if (IsAtk)
+				{
+					for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
+					{
+						if (g_EnemyBulletLong[k].use == false)
+						{
+							g_EnemyBulletLong[k].pos.x = atk;
+							g_EnemyBulletLong[k].use = true;
+							break;
+						}
+					}
+				}
+				break;
+			case 3:
+				IsAtk = false;
+				break;
+			case 4:
+				IsAtk = false;
+				break;
+			default:
+				IsAtk = false;
+				break;
 			}
-			break;
+			IsAtk = true;
+			atk = 0;
 		}
 	}
 }

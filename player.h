@@ -27,6 +27,7 @@ struct PLAYER
 	int		NowLane;		//現在のレーン
 	float	hp;				//体力
 	bool	moving;			//移動中フラグ
+	bool	shooting;		//射撃中flag
 
 	int		animeIndex;		//アニメーション枚数
 	int		animeWait;		//アニメーション

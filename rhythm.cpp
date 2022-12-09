@@ -269,11 +269,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//ƒŠƒYƒ€‚É‡‚Á‚Ä‚¢‚é‚©‚Ì”»’è
-	if ((Frame % NotesT <= 3.0f) && (Frame % NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	if (((Frame-2) % NotesT <= 3.0f) && ((Frame-2) % NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}
-	else if ((Frame % NotesT <= NotesT-1.0f) && (Frame  % NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	else if (((Frame-2) % NotesT <= NotesT-1.0f) && ((Frame-2)  % NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}

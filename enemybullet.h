@@ -21,12 +21,12 @@
 //グローバル変数
 //==================================
 
-enum STAGE
-{
-	STAGE01,
-	STAGE02,
-
-};
+//enum STAGE
+//{
+//	STAGE01,
+//	STAGE02,
+//
+//};
 
 //構造体
 struct ENEMYBULLET
