@@ -85,7 +85,7 @@ void UninitGame(void)
 void UpdateGame(void)
 {
 	//エンターキーが押されたらSCENE_GAMEへ移行する
-	if (Keyboard_IsKeyDown(KK_ENTER))
+	if (Keyboard_IsKeyDown(KK_G))
 	{
 		SceneTransition(SCENE_TITLE);
 	}

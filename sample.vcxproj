@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MapChip .cpp" />
     <ClCompile Include="Over.cpp" />
+    <ClCompile Include="pause.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="renderer.cpp" />
     <ClCompile Include="Result.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="MapChip.h" />
     <ClInclude Include="Over.h" />
+    <ClInclude Include="pause.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="renderer.h" />
     <ClInclude Include="Result.h" />

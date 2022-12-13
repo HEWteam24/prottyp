@@ -26,6 +26,8 @@ pでポーズ、mで再開
 #include "frame.h"
 #include "rhythm.h"
 
+#include "pause.h"
+
 
 //*****************************************************************************
 // マクロ定義
@@ -54,16 +56,6 @@ void Draw(void);
 #ifdef _DEBUG
 int		g_CountFPS;							// FPSカウンタ
 char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
-
-bool pause = false;
-bool restart = false;
-
-static int PauseTexture;
-static int PauseTextTexture;
-static int PauseCntTexture;
-
-int pause_frame = 0;
-
 #endif
 
 
@@ -241,11 +233,6 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	Keyboard_Initialize();
 
 	InitFrame();
-
-	PauseTexture = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
-	PauseTextTexture = LoadTexture((char*)"data/TEXTURE/text_pause.png");
-	PauseCntTexture = LoadTexture((char*)"data/TEXTURE/number.png");
-
 	// サウンドの初期化
 	InitSound(hWnd);
 
@@ -257,6 +244,8 @@ HRESULT Init(HINSTANCE hInstance, HWND hWnd, BOOL bWindow)
 	//シーンの初期化（タイトルからスタート）
 	SetFadeColor(0.0f, 0.0f, 0.0f);
 	SceneFadeIn(SCENE_TITLE);
+
+	InitPause();
 
 	return S_OK;
 }
@@ -288,37 +277,11 @@ void Uninit(void)
 //=============================================================================
 void Update(void)
 {
+	PAUSE* pa = GetPause();
+
 	// 入力処理の更新処理
 	UpdateInput();
-
-	if (Keyboard_IsKeyDown(KK_P) && pause == false)
-	{
-		PauseSound(BGM_RE());
-		pause = true;
-	}
-
-	if (Keyboard_IsKeyDown(KK_M) && pause == true)
-	{
-		restart = true;
-	}
-
-	if (restart == true)
-	{
-		pause_frame++;
-	}
-
-	if (pause_frame == 180)
-	{
-		pause_frame = 0;
-		restart = false;
-		pause = false;
-		RePlaySound(BGM_RE());
-	}
-	
-	if (pause == false)
-	{
-
-		switch (g_Scene)
+		switch (g_Scene) 
 		{
 		case SCENE_TITLE:
 			UpdateTitle();
@@ -330,7 +293,10 @@ void Update(void)
 			UpdateSkillSelect();
 			break;
 		case SCENE_GAME:
-			UpdateGame();
+			if (pa->pause == false){
+				UpdateGame();
+			}
+			UpdatePause();
 			break;
 		case SCENE_GAMEOVER:
 			UpdateOver();
@@ -339,7 +305,6 @@ void Update(void)
 			UpdateResult();
 			break;
 		}
-	}
 
 	UpdateFade();
 }
@@ -372,6 +337,7 @@ void Draw(void)
 		break;
 	case SCENE_GAME:
 		DrawGame();
+		DrawPause();
 		break;
 
 	case SCENE_GAMEOVER:
@@ -382,65 +348,7 @@ void Draw(void)
 		break;
 	}
 
-	if (pause == true)
-	{
-		//暗転
-		DrawSpriteColor(PauseTexture,
-			0.0f,
-			0.0f,
-			10000.0f,
-			10000.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			1.0f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
-
-		//PAUSEテキスト
-		if (restart == false)
-		{
-			DrawSpriteColor(PauseTextTexture,
-				CENTER_X,
-				CENTER_Y,
-				500.0f,
-				100.0f,
-				0.0f,
-				0.0f,
-				1.0f,
-				1.0f,
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		}
-	}
-
-	if (restart == true)
-	{
-		/*DrawSpriteColor(PauseCntTexture,
-			SCREEN_WIDTH / 2,
-			SCREEN_HEIGHT /2,
-			300.0f,
-			300.0f,
-			0.0f,
-			0.0f,
-			1.0f,
-			1.0f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));*/
-		GetDeviceContext()->PSSetShaderResources(0, 1,
-			GetTexture(PauseCntTexture));
-		for (int i = 0; i < SCOER_DIGIT; i++) {
-			DrawSpriteColorRotation(
-				SCREEN_WIDTH / 2,
-				SCREEN_HEIGHT / 2,
-				300.0f,
-				300.0f,
-				0.0f,
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f),
-				(3.0f - (pause_frame / 60)),
-				0.2f,
-				0.2f,
-				5
-			);
-		}
-	}
+	
 
 	//フェードの描画
 	DrawFade();
@@ -466,6 +374,7 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_GAME:
 		UninitGame();
+		UninitPause();
 		break;
 	case SCENE_GAMEOVER:
 		UninitOver();

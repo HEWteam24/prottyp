@@ -115,23 +115,18 @@ void UpdateStageSelect(void)
 
 	}
 
-	//エンターキーが押されたらSCENE_GAMEへ移行する
-	if (Keyboard_IsKeyDown(KK_ENTER))
+	//エンターキー、またはBボタンが押されたらSCENE_GAMEへ移行する
+	if (Keyboard_IsKeyDown(KK_ENTER) || IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		
 		SceneTransition(SCENE_SKILLSELECT);
 		//SceneTransition(NowSelect+6);
 	}
-	//コントローラーBボタン押したらSCENE_GAMEへ移行
-	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
-	{
-		SceneTransition(SCENE_SKILLSELECT);
-		//SceneTransition(NowSelect+6);
-	}
+
 	for (int i = 0; i < STAGE_MAX; i++)
 	{
-		//スティックで移動
-		if ((GetThumbLeftX(0) < -0.3f) &&(g_StagePanel[i].moving == false))
+		//右に移動
+		if (((Keyboard_IsKeyDown(KK_A)) || (GetThumbLeftX(0) < -0.3f)) && (g_StagePanel[i].moving == false))
 		{
 			g_StagePanel[i].moving = true;				//移動中
 			g_StagePanel[i].NowLane++;
@@ -139,8 +134,8 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].direction = D_RIGHT;		//右移動
 			alpha = 1.0f;
 		}
-		//左
-		if ((GetThumbLeftX(0) > 0.3f) && (g_StagePanel[i].moving == false))
+		//左に移動
+		if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f)) && (g_StagePanel[i].moving == false))
 		{
 			g_StagePanel[i].moving = true;				//移動中
 			g_StagePanel[i].NowLane--;
@@ -149,25 +144,6 @@ void UpdateStageSelect(void)
 			alpha = 1.0f;
 		}
 
-		//Dキーで右移動
-		if ((Keyboard_IsKeyDown(KK_D)) && (g_StagePanel[i].moving == false))
-		{
-			g_StagePanel[i].moving = true;				//移動中
-			g_StagePanel[i].NowLane--;
-			g_StagePanel[i].spd = -60.0f;		//スピードを-に
-			g_StagePanel[i].direction = D_LEFT;		//左移動
-			alpha = 1.0f;
-		}
-
-		//Aキー で左移動
-		if ((Keyboard_IsKeyDown(KK_A)) && (g_StagePanel[i].moving == false))
-		{
-			g_StagePanel[i].moving = true;				//移動中
-			g_StagePanel[i].NowLane++;
-			g_StagePanel[i].spd = 60.0f;			//スピードを+に
-			g_StagePanel[i].direction = D_RIGHT;		//右移動
-			alpha = 1.0f;
-		}
 
 		//選択移動
 		if ((g_StagePanel[i].moving))
