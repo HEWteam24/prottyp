@@ -39,17 +39,12 @@ static	char	*g_TextureNameNotesCenter= NOTES_TEX_CENTER;//テクスチャ名
 static	ID3D11ShaderResourceView	*g_TextureNotesLane;
 static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
 
-int Notestipindex;
-int Notestip[10]
+int Notestipindex1, Notestipindex2,indexNum;
+int Notestip[10][10]
 {//15フレームごと
-	1,
-	0,
-	1,
-	0,
-	1,
-	0,
-	0,
-	1,
+	{1,0,1,0,1,0,1,0},
+	{1,0,1,0,1,0,1,0},
+	{1,0,1,0,1,0,1,0},
 };
 //BPM90は24フレームで一個
 HRESULT InitRhythm(int stagenum)
@@ -64,24 +59,31 @@ HRESULT InitRhythm(int stagenum)
 
 		GameSoundNo = LoadSound(filename1);
 
-		sp = 7.425f;
+		Notestipindex1 = 0;
+		indexNum = 8;
+		errors = -3;
+		sp = 7.5625f;
 		NowBPM = BPM3;
-		NotesT = (60 / (NowBPM / 60)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
 	case 1:
 
 		GameSoundNo = LoadSound(filename2);
 
-		errors = -2;
-		sp = NOTES_SP;
+		Notestipindex1 = 1;
+		indexNum = 8;
+		errors = 0;
+		sp = 10.8f;
 		NowBPM = BPM2;
-		NotesT = (60 / (NowBPM / 60)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
 	case 2:
 
 		GameSoundNo = LoadSound(filename3);
 
-		errors = 0;
+		Notestipindex1 = 2;
+		indexNum = 8;
+		errors = -1;
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
@@ -151,7 +153,8 @@ HRESULT InitRhythm(int stagenum)
 
 
 	Frame = 0;
-	Notestipindex = 0;
+
+	Notestipindex2 = 0;
 	return	S_OK;
 }
 
@@ -167,11 +170,11 @@ void UpdateRhythm()
 	{
 		if ((Frame) % (int)NotesT == 0.0f)
 		{
-			if (Notestip[Notestipindex % 8] == 1)
+			if (Notestip[Notestipindex1][Notestipindex2 % indexNum] == 1)
 			{
 				SetNotes();
 			}
-			Notestipindex++;
+			Notestipindex2++;
 		}
 
 		for (int i = 0; i < NOTES_MAX; i++)
@@ -182,11 +185,9 @@ void UpdateRhythm()
 			Notes[i].alpha -= 0.01f * NOTES_DIST;
 			if (i % 2 == 0)
 			{
-				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 - NOTES_SIZE_X/2) {
-					Notes[i].alpha += 0.065f * NOTES_DIST;
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2) {
+ 					Notes[i].alpha += 0.065f * NOTES_DIST;
 					Notes[i+1].alpha += 0.065f * NOTES_DIST;
-					float g = SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2;
-					g = 0.0f;
 				}
 				//ノーツ左が真ん中に来た時消える
 				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 25.0f)
@@ -280,11 +281,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame+ errors) % (int)NotesT <= 3.0f) && ((Frame+ errors) % (int)NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	if (((Frame + errors) % (int)NotesT <= 3.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
 	{
 		return true;
 	}
-	else if (((Frame+ errors) % (int)NotesT <= NotesT-1.0f) && ((Frame+ errors)  % (int)NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 3.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
 	{
   		return true;
 	}

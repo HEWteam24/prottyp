@@ -65,7 +65,7 @@
 
 
 //ƒm[ƒc‚Ì‰Šú’l
-#define		NOTES_MAX			(20)
+#define		NOTES_MAX			(6)
 #define		NOTES_POS_X_1		(582.5f)
 #define		NOTES_POS_X_2		(1337.5f)
 #define		NOTES_POS_Y			(SCREEN_HEIGHT-100)
