@@ -57,9 +57,6 @@ HRESULT InitGame(int StageNum)
 	InitBG();
 	InitLane();
 
-	//音声ファイルを読み込んで識別子を受け取る
-	g_BGMGame = LoadSound((char*)"data/BGM/BGM_Tanbo120.wav");
-	//PlaySound(g_BGMGame, -1);
 	return S_OK;
 }
 

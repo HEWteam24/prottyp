@@ -54,7 +54,7 @@ int Notestip[10]
 HRESULT InitRhythm(int stagenum)
 {
 	char	filename1[] = "data\\BGM\\ザリガニ90.wav";
-	char	filename2[] = "data\\BGM\\sample.wav";
+	char	filename2[] = "data\\BGM\\01_ザリガニ_BPM120.wav";
 	switch (stagenum)
 	{
 	case 0:

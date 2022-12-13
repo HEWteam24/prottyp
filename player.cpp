@@ -376,7 +376,7 @@ void PlayerCheck(void)
 		}
 		else
 		{
-			//g_Player.hp -= 10.0f;
+			g_Player.hp -= 10.0f;
 		}
 		PlaySound(g_SE_Damage, 0);
 		ResetCombo();
