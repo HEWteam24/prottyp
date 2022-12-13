@@ -25,7 +25,8 @@ int			NotesNum = 0;
 int			Frame;
 
 int			sp;
-int			NotesT = 0;
+float		NotesT = 0.0f;
+int			errors = 0;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
 
@@ -47,14 +48,16 @@ int Notestip[10]
 	0,
 	1,
 	0,
-	1,
 	0,
+	1,
 };
 //BPM90は24フレームで一個
 HRESULT InitRhythm(int stagenum)
 {
 	char	filename1[] = "data\\BGM\\ザリガニ90.wav";
-	char	filename2[] = "data\\BGM\\01_ザリガニ_BPM120.wav";
+	char	filename2[] = "data\\BGM\\sample.wav";
+	char	filename3[] = "data\\BGM\\シオカラ.wav";
+
 	switch (stagenum)
 	{
 	case 0:
@@ -63,20 +66,25 @@ HRESULT InitRhythm(int stagenum)
 
 		sp = 7.425f;
 		NowBPM = BPM3;
-		NotesT = ((60 / (NowBPM / 60)) / 2);
+		NotesT = (60 / (NowBPM / 60)) / 2;
 		break;
 	case 1:
 
 		GameSoundNo = LoadSound(filename2);
 
+		errors = -2;
 		sp = NOTES_SP;
 		NowBPM = BPM2;
-		NotesT = ((60 / (NowBPM / 60)) / 2);
+		NotesT = (60 / (NowBPM / 60)) / 2;
 		break;
-	case 3:
-		sp = 12.375f;
+	case 2:
+
+		GameSoundNo = LoadSound(filename3);
+
+		errors = 0;
+		sp = 12.0f;
 		NowBPM = BPM1;
-		NotesT = ((60 / (NowBPM / 60)) / 2);
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	default:
 		break;
@@ -151,15 +159,15 @@ void UpdateRhythm()
 {
 	
 	Frame++;
-	if (Frame == NowBPM)
+	if (Frame == 120)
 	{
 		PlaySound(GameSoundNo, -1);
 	}
-	if (Frame >= NowBPM)
+	if (Frame >= 120)
 	{
-		if (Frame % NotesT == 0.0f)
+		if ((Frame) % (int)NotesT == 0.0f)
 		{
-			if (Notestip[Notestipindex%8] == 1) 
+			if (Notestip[Notestipindex % 8] == 1)
 			{
 				SetNotes();
 			}
@@ -171,14 +179,17 @@ void UpdateRhythm()
 			if (!Notes[i].use) continue;
 
 			Notes[i].pos.x += Notes[i].sp.x;
-			Notes[i].alpha -= 0.005f * NOTES_DIST;
+			Notes[i].alpha -= 0.01f * NOTES_DIST;
 			if (i % 2 == 0)
 			{
 				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 - NOTES_SIZE_X/2) {
-					int g = 0;
+					Notes[i].alpha += 0.065f * NOTES_DIST;
+					Notes[i+1].alpha += 0.065f * NOTES_DIST;
+					float g = SCREEN_WIDTH / 2 - NOTES_SIZE_X / 2;
+					g = 0.0f;
 				}
 				//ノーツ左が真ん中に来た時消える
-				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 20.0f)
+				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 25.0f)
 				{
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
@@ -269,13 +280,13 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame-2) % NotesT <= 3.0f) && ((Frame-2) % NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	if (((Frame+ errors) % (int)NotesT <= 3.0f) && ((Frame+ errors) % (int)NotesT >= 0.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
 		return true;
 	}
-	else if (((Frame-2) % NotesT <= NotesT-1.0f) && ((Frame-2)  % NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
+	else if (((Frame+ errors) % (int)NotesT <= NotesT-1.0f) && ((Frame+ errors)  % (int)NotesT >= NotesT-3.0f) && Notestip[(Notestipindex - 3) % 8] == 1)
 	{
-		return true;
+  		return true;
 	}
 	else
 	{
