@@ -47,7 +47,7 @@ static LANE g_Lane[5];
 //=============================================================================
 void InitLane(void)
 {
-	g_TextureLane = LoadTexture((char*)"data/TEXTURE/lane.png");
+	g_TextureLane = LoadTexture((char*)"data/TEXTURE/lane_new.png");
 
 	
 	//‰Šú‰»
@@ -79,11 +79,11 @@ void UpdateLane(void)
 	{
 		if (pPlayer->NowLane == g_Lane[i].LaneNumber)
 		{
-			g_Lane[i].alpha = 0.8f;
+			g_Lane[i].alpha = 0.9f;
 		}
 		else
 		{
-			g_Lane[i].alpha = 0.4f;
+			g_Lane[i].alpha = 0.5f;
 		}
 	}
 }

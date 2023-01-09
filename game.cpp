@@ -50,11 +50,11 @@ HRESULT InitGame(int StageNum)
 	InitCombo();
 
 	InitSpecial();
-	InitEnemy();
+	InitEnemy(StageNum);
 	InitEnemyBullet();
 	InitRhythm(StageNum);
 	// 背景の初期化
-	InitBG();
+	InitBG(StageNum);
 	InitLane();
 
 	return S_OK;

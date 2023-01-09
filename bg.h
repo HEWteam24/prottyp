@@ -11,7 +11,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitBG(void);
+HRESULT InitBG(int StageNum);
 void UninitBG(void);
 void UpdateBG(void);
 void DrawBG(void);

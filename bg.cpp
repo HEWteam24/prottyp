@@ -27,14 +27,55 @@ static int g_TextureUICtrl;
 //=============================================================================
 // èâä˙âªèàóù
 //=============================================================================
-HRESULT InitBG(void)
+HRESULT InitBG(int StageNum)
 {
 	ID3D11Device *pDevice = GetDevice();
 
-	g_TextureBg = LoadTexture((char*)"data/TEXTURE/Back_Game.JPG");
+	g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
 	g_TextureUIBack = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
 	g_TextureUICtrl = LoadTexture((char*)"data/TEXTURE/UI_ctrl.png");
 	
+	switch (StageNum)
+	{
+	default:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+
+	case 0:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 1:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_SeaCity.png");
+		break;
+	case 2:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 3:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_SeaRock.png");
+		break;
+	case 4:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_Bubbles.png");
+		break;
+	case 5:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 6:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 7:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 8:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 9:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	case 10:
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		break;
+	}
+
 	return S_OK;
 }
 

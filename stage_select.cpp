@@ -119,8 +119,16 @@ void UpdateStageSelect(void)
 	if (Keyboard_IsKeyDown(KK_ENTER) || IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		
-		SceneTransition(SCENE_SKILLSELECT);
-		//SceneTransition(NowSelect+6);
+
+		if (NowSelect == 0)
+		{
+			SceneTransition(SCENE_TUTO);
+		}
+		else
+		{
+			SceneTransition(SCENE_SKILLSELECT);
+			//SceneTransition(NowSelect+6);
+		}
 	}
 
 	for (int i = 0; i < STAGE_MAX; i++)

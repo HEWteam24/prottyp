@@ -55,7 +55,7 @@ struct ENEMYHP
 	float			texnoB;
 };
 
-HRESULT		InitEnemy();
+HRESULT		InitEnemy(int StageNum);
 void		UninitEnemy();
 void		UpdateEnemy();
 void		DrawEnemy();

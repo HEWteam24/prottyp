@@ -23,6 +23,7 @@ int			EnemyNum;
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureEnemy;
 static	char	*g_TextureNameEnemy = ENEMY_TEX;//テクスチャ名
+static  int		g_TextureEnemyID;
 static	ID3D11ShaderResourceView	*g_TextureEnemyHp;
 static	char	*g_TextureNameEnemyHpA = ENEMY_HP_TEX_A;//テクスチャ名
 static	char	*g_TextureNameEnemyHpB = ENEMY_HP_TEX_B;//テクスチャ名
@@ -30,8 +31,9 @@ static	char	*g_TextureNameEnemyHpB = ENEMY_HP_TEX_B;//テクスチャ名
 //===================================================
 //　初期化
 //===================================================
-HRESULT InitEnemy()
+HRESULT InitEnemy(int StageNum)
 {
+
 
 	Enemy.size = D3DXVECTOR2(ENEMY_SIZE_X, ENEMY_SIZE_Y);
 	Enemy.pos = D3DXVECTOR2(ENEMY_SPAWN_POS_X, ENEMY_SPAWN_POS_Y);
@@ -42,6 +44,48 @@ HRESULT InitEnemy()
 	Enemy.use = true;
 
 	//テクスチャのロード
+	switch (StageNum)
+	{
+	default:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+		break;
+
+		case 0:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+		break;
+		case 1:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani.png");
+			break;
+		case 2:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagi.png");
+			break;
+		case 3:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_octopus.png");
+			break;
+		case 4:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shark.png");
+			break;
+		case 5:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shishamo muscle.png");
+			break;
+		case 6:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_chara_zarigani_shirokuro.png");
+			break;
+		case 7:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagidon_yankee.png");
+			break;
+		case 8:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+			break;
+		case 9:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shark_yankee.png");
+			break;
+		case 10:
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_mm meka(combinated).png");
+			break;
+	}
+	
+
 	Enemy.texno = LoadTexture(g_TextureNameEnemy);
 	if (Enemy.texno == -1)
 	{//ロードエラー
@@ -131,8 +175,10 @@ void UpdateEnemy()
 void DrawEnemy()
 {
 
-		DrawSprite(Enemy.texno, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
-			0.0f, 0.0f, 1.0f, 1.0f);
+		//DrawSprite(Enemy.texno, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
+		//	0.0f, 0.0f, 1.0f, 1.0f);
+		DrawSprite(g_TextureEnemyID, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
+		0.0f, 0.0f, 1.0f, 1.0f);
 
 		DrawSpriteColor(EnemyHp.texnoB, EnemyHp.pos.x, EnemyHp.pos.y, EnemyHp.size.x + 10.0f, EnemyHp.size.y + 10.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));

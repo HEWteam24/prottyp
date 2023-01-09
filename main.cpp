@@ -21,6 +21,7 @@ pでポーズ、mで再開
 #include "Result.h"
 #include "stage_select.h"
 #include "skill_select.h"
+#include "tuto.h"
 
 #include "fade.h"
 #include "frame.h"
@@ -304,6 +305,9 @@ void Update(void)
 		case SCENE_RESULT:
 			UpdateResult();
 			break;
+		case SCENE_TUTO:
+			UpdateTuto();
+			break;
 		}
 
 	UpdateFade();
@@ -346,6 +350,9 @@ void Draw(void)
 	case SCENE_RESULT:
 		DrawResult();
 		break;
+	case SCENE_TUTO:
+		DrawTuto();
+		break;
 	}
 
 	
@@ -382,6 +389,9 @@ void SetScene(int nextScene)
 	case SCENE_RESULT:
 		UninitResult();
 		break;
+	case SCENE_TUTO:
+		UninitTuto();
+		break;
 	}
 
 	//動作するシーンを更新する
@@ -407,6 +417,9 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_RESULT:
 		InitResult();
+		break;
+	case SCENE_TUTO:
+		InitTuto();
 		break;
 	}
 }
