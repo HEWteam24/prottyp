@@ -11,8 +11,29 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define			ENEMY_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
-#define			ENEMY_SIZE_Y		(ENEMY_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY00_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY00_SIZE_Y		(ENEMY00_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY01_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY01_SIZE_Y		(ENEMY01_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY02_SIZE_X		(LANE_SIZE_X*2)								//エネミーサイズX
+#define			ENEMY02_SIZE_Y		(ENEMY02_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY03_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY03_SIZE_Y		(ENEMY03_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY04_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY04_SIZE_Y		(ENEMY04_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY05_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY05_SIZE_Y		(ENEMY05_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY06_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY06_SIZE_Y		(ENEMY06_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY07_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY07_SIZE_Y		(ENEMY07_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY08_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY08_SIZE_Y		(ENEMY08_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY09_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY09_SIZE_Y		(ENEMY09_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY10_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
+#define			ENEMY10_SIZE_Y		(ENEMY10_SIZE_X*1.5)							//エネミーサイズY
+
 #define			ENEMY_SP			(1.5f)										//エネミースピード
 #define			ENEMY_HP			(500)										//エネミーHP初期値
 #define			ENEMY_TEX			((char*)"data\\texture\\ZARI_BOSS_1.png")			//エネミーテクスチャ

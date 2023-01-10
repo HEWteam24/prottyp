@@ -35,7 +35,6 @@ HRESULT InitEnemy(int StageNum)
 {
 
 
-	Enemy.size = D3DXVECTOR2(ENEMY_SIZE_X, ENEMY_SIZE_Y);
 	Enemy.pos = D3DXVECTOR2(ENEMY_SPAWN_POS_X, ENEMY_SPAWN_POS_Y);
 	Enemy.sp = D3DXVECTOR2(ENEMY_SP, ENEMY_SP);
 	Enemy.rot = 0.0f;
@@ -48,40 +47,52 @@ HRESULT InitEnemy(int StageNum)
 	{
 	default:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+			Enemy.size = D3DXVECTOR2(ENEMY00_SIZE_X, ENEMY00_SIZE_Y);
 		break;
 
 		case 0:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+			Enemy.size = D3DXVECTOR2(ENEMY00_SIZE_X, ENEMY00_SIZE_Y);
 		break;
 		case 1:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani.png");
+			Enemy.size = D3DXVECTOR2(ENEMY01_SIZE_X, ENEMY01_SIZE_Y);
 			break;
 		case 2:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagi.png");
+			Enemy.size = D3DXVECTOR2(ENEMY02_SIZE_X, ENEMY02_SIZE_Y);
 			break;
 		case 3:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_octopus.png");
+			Enemy.size = D3DXVECTOR2(ENEMY03_SIZE_X, ENEMY03_SIZE_Y);
 			break;
 		case 4:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shark.png");
+			Enemy.size = D3DXVECTOR2(ENEMY04_SIZE_X, ENEMY04_SIZE_Y);
 			break;
 		case 5:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shishamo muscle.png");
+			Enemy.size = D3DXVECTOR2(ENEMY05_SIZE_X, ENEMY05_SIZE_Y);
 			break;
 		case 6:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_chara_zarigani_shirokuro.png");
+			Enemy.size = D3DXVECTOR2(ENEMY06_SIZE_X, ENEMY06_SIZE_Y);
 			break;
 		case 7:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagidon_yankee.png");
+			Enemy.size = D3DXVECTOR2(ENEMY07_SIZE_X, ENEMY07_SIZE_Y);
 			break;
 		case 8:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+			Enemy.size = D3DXVECTOR2(ENEMY08_SIZE_X, ENEMY08_SIZE_Y);
 			break;
 		case 9:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shark_yankee.png");
+			Enemy.size = D3DXVECTOR2(ENEMY09_SIZE_X, ENEMY09_SIZE_Y);
 			break;
 		case 10:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_mm meka(combinated).png");
+			Enemy.size = D3DXVECTOR2(ENEMY10_SIZE_X, ENEMY10_SIZE_Y);
 			break;
 	}
 	
