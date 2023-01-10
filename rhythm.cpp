@@ -69,6 +69,17 @@ HRESULT InitRhythm(int stagenum)
 		break;
 	case 1:
 
+		GameSoundNo = LoadSound(filename1);
+
+		Notestipindex1 = 0;
+		indexNum = 8;
+		errors = -3;
+		sp = 7.5625f;
+		NowBPM = BPM3;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		break;
+	case 2:
+
 		GameSoundNo = LoadSound(filename2);
 
 		Notestipindex1 = 1;
@@ -78,7 +89,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
-	case 2:
+	case 3:
 
 		GameSoundNo = LoadSound(filename3);
 
@@ -89,7 +100,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 3:
+	case 4:
 
 		GameSoundNo = LoadSound(filename3);
 

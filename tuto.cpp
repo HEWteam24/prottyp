@@ -38,12 +38,18 @@
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
 static int g_BGMGame;
+static int g_TextureTutoDark;
+bool stop;
+
+CIRCLE circle;
 
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
 HRESULT InitTuto(void)
 {
+	g_TextureTutoDark = LoadTexture((char*)"data/TEXTURE/Tuto.png");
+
 	InitPlayer();
 	InitBullet();
 	InitScore();
@@ -56,6 +62,11 @@ HRESULT InitTuto(void)
 	// ”wŒi‚Ì‰Šú‰»
 	InitBG(0);
 	InitLane();
+
+	stop = false;
+
+	circle.size = D3DXVECTOR2(1920.0f,1920.0f*3);
+	circle.pos  = D3DXVECTOR2(CENTER_X, 0.0f-450.0f);
 
 	return S_OK;
 }
@@ -89,11 +100,17 @@ void UpdateTuto(void)
 	{
 		SceneTransition(SCENE_TITLE);
 	}
-	UpdateRhythm();
 
-	if (GetFreame() > 120) {
+	if (stop == false)
+	{
+		UpdateRhythm();
+	}
+
+	if ((GetFreame() > 120)&&(stop==false)) {
 
 		if (!MusicEnd()) {
+			
+
 			UpdateBG();
 			UpdateLane();
 
@@ -108,6 +125,19 @@ void UpdateTuto(void)
 		else {
 			SceneTransition(SCENE_STAGESELECT);
 		}
+	}
+
+	if (GetFreame() == 121)
+	{
+		PauseSound(BGM_RE());
+		stop = true;
+	}
+
+
+	if (((Keyboard_IsKeyDown(KK_ENTER)))&&(stop == true))
+	{
+		RePlaySound(BGM_RE());
+		stop = false;
 	}
 
 
@@ -132,4 +162,8 @@ void DrawTuto(void)
 	DrawSpecial();
 	DrawScore();
 
+	if (stop == true) {
+		DrawSpriteColor(g_TextureTutoDark, circle.pos.x, circle.pos.y, circle.size.x, circle.size.y,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
+	}
 }

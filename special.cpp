@@ -80,6 +80,20 @@ void InitSpecial()
 	sp.damage_up = false;
 	sp.get_damage_down = false;
 	start_timer = false;
+
+	switch (sp.type) {
+	case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
+		g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/icon_damage.png");
+		break;
+
+	case SP_TYPE::HEAL:		//プレイヤーの体力回復
+		g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/icon_heal.png");
+		break;
+
+	case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
+		g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
+		break;
+	}
 }
 
 void UninitSpecial()
@@ -90,26 +104,26 @@ void UpdateSpecial()
 {
 	PLAYER* player = GetPlayer();
 
-	switch (sp.type) {
-	case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
+	//switch (sp.type) {
+	//case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
 
-		IconcolorR = 1.0f;
-		IconcolorG = 0.0f;
-		IconcolorB = 0.0f;
-		break;
+	//	IconcolorR = 1.0f;
+	//	IconcolorG = 0.0f;
+	//	IconcolorB = 0.0f;
+	//	break;
 
-	case SP_TYPE::HEAL:		//プレイヤーの体力回復
-		IconcolorR = 0.0f;
-		IconcolorG = 1.0f;
-		IconcolorB = 0.0f;
-		break;
+	//case SP_TYPE::HEAL:		//プレイヤーの体力回復
+	//	IconcolorR = 0.0f;
+	//	IconcolorG = 1.0f;
+	//	IconcolorB = 0.0f;
+	//	break;
 
-	case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
-		IconcolorR = 0.0f;
-		IconcolorG = 0.0f;
-		IconcolorB = 1.0f;
-		break;
-	}
+	//case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
+	//	IconcolorR = 0.0f;
+	//	IconcolorG = 0.0f;
+	//	IconcolorB = 1.0f;
+	//	break;
+	//}
 
 	//スペシャルゲージがたまりきったら発動可能
 	if (sp.charge >= SPECIAL_MAX)
@@ -209,7 +223,7 @@ void DrawSpecial()
 		0.0f,
 		1.0f,
 		1.0f,
-		D3DXCOLOR(IconcolorR, IconcolorG, IconcolorB, 1.0f));
+		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 //スペシャルの増加

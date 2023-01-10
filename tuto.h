@@ -16,3 +16,11 @@ HRESULT InitTuto(void);
 void UninitTuto(void);
 void UpdateTuto(void);
 void DrawTuto(void);
+
+struct CIRCLE
+{
+	D3DXVECTOR2		size;
+	D3DXVECTOR2		pos;
+	D3DXCOLOR		col;
+	bool			use;
+};

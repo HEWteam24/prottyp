@@ -47,14 +47,9 @@ HRESULT InitSkillSelect(void)
 	g_TextureBgStageSelect[0] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
 	g_TextureBgStageSelect[1] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
 
-	g_SkillPanel[SKILL_0].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel0.png");
-	g_SkillPanel[SKILL_1].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel1.png");
-	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel2.png");
-	//g_SkillPanel[STAGE_6].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel6.png");
-	//g_SkillPanel[STAGE_7].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel7.png");
-	//g_SkillPanel[STAGE_8].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel8.png");
-	//g_SkillPanel[STAGE_9].texno = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
-	//g_SkillPanel[STAGE_10].texno= LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
+	g_SkillPanel[SKILL_0].texno = LoadTexture((char*)"data/TEXTURE/icon_heal.png");
+	g_SkillPanel[SKILL_1].texno = LoadTexture((char*)"data/TEXTURE/icon_damage.png");
+	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
 
 	//ç\ë¢ëÃÇÃèâä˙âª
 	for (int i = 0; i < SKILL_MAX; i++)
@@ -136,7 +131,7 @@ void UpdateSkillSelect(void)
 		else
 		{
 			g_SkillPanel[i].size = D3DXVECTOR2(340.0f, 340.0f);
-			g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f);
+			g_SkillPanel[i].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
 		}	
 
 		if (movingSp==true)
