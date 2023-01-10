@@ -29,8 +29,10 @@
 
 
 static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
+static int g_TextureNamePlate;
 static int g_BGMNo;//タイトル用BGMの識別子
 int NowSelect = (int)STAGE_1;
+int PlateSl;
 float alpha;
 float color;
 STAGE_PANEL g_StagePanel[STAGE_MAX];
@@ -46,6 +48,8 @@ HRESULT InitStageSelect(void)
 	//テクスチャを読み込んで識別子を受け取る
 	g_TextureBgStageSelect[0] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
 	g_TextureBgStageSelect[1] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
+
+	g_TextureNamePlate = LoadTexture((char*)"data/TEXTURE/BOSS_NAME.png");
 
 	g_StagePanel[STAGE_0].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel0.png");
 	g_StagePanel[STAGE_1].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel1_test.png");
@@ -85,6 +89,7 @@ HRESULT InitStageSelect(void)
 	color = 1.0f;
 	ura    = false;
 	change = false;
+	PlateSl = 0;
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
@@ -251,6 +256,18 @@ void DrawStageSelect(void)
 		0.0f, 0.0f, 1.0f, 1.0f,D3DXCOLOR(0.6f,0.6f,0.6f,1.0f));
 	DrawSpriteColor(g_TextureBgStageSelect[0], CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6f, 0.6f, 0.6f, alpha));
+
+	//ネームプレート
+	PlateSl = NowSelect;
+	if ((ura)&&(PlateSl>0))
+	{
+		PlateSl += 5;
+	}
+	if (color >= 1.0f)
+	{
+		DrawSpriteColor(g_TextureNamePlate, CENTER_X, CENTER_Y + 250.0f, 500.0f, 100.0f,
+			0.0f, (1.0f / 11) * PlateSl, 1.0f, (1.0f / 11), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	}
 
 
 	//ステージパネルの表示
