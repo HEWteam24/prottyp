@@ -52,6 +52,12 @@
 #define LANE_SIZE_X		(170.0f)						//レーンの幅
 #define LANE_SIZE_Y		(1080.0f)						//レーンの高さ
 
+#define BULLETLANE_1 (SCREEN_WIDTH / 2 - LANE_SIZE_X * 2)	//レーン1
+#define BULLETLANE_2 (SCREEN_WIDTH / 2 - LANE_SIZE_X)		//レーン2
+#define BULLETLANE_3 (SCREEN_WIDTH / 2)						//レーン3
+#define BULLETLANE_4 (SCREEN_WIDTH / 2 + LANE_SIZE_X)		//レーン4
+#define BULLETLANE_5 (SCREEN_WIDTH / 2 + LANE_SIZE_X * 2)	//レーン5
+
 #define PLAYER_SIZE_X	(100*0.6)						//プレイヤーの幅
 #define PLAYER_SIZE_Y	(360*0.6)						//プレイヤーの高さ
 

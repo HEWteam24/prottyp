@@ -118,12 +118,13 @@ void UpdateStageSelect(void)
 	//エンターキー、またはBボタンが押されたらSCENE_GAMEへ移行する
 	if (Keyboard_IsKeyDown(KK_ENTER) || IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
-		
+
 
 		if (NowSelect == 0)
 		{
 			SceneTransition(SCENE_TUTO);
 		}
+
 		else
 		{
 			SceneTransition(SCENE_SKILLSELECT);
@@ -222,6 +223,7 @@ void UpdateStageSelect(void)
 				if (ura)
 				{
 					ura = false;
+					
 				}
 				else
 				{
@@ -271,5 +273,10 @@ void DrawStageSelect(void)
 
 int GetGemeStageNum(void)
 {
+	if ((ura)&&(NowSelect>0))
+	{
+		NowSelect += 5;
+	}
+
 	return NowSelect;
 }
