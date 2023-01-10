@@ -69,7 +69,7 @@ HRESULT InitEnemy(int StageNum)
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shishamo muscle.png");
 			break;
 		case 6:
-			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_chara_zarigani_shirokuro.png");
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_shirokuro.png");
 			break;
 		case 7:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagidon_yankee.png");
