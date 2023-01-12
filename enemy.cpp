@@ -22,7 +22,6 @@ int			EnemyNum;
 
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureEnemy;
-static	char	*g_TextureNameEnemy = ENEMY_TEX;//テクスチャ名
 static  int		g_TextureEnemyID;
 static	ID3D11ShaderResourceView	*g_TextureEnemyHp;
 static	char	*g_TextureNameEnemyHpA = ENEMY_HP_TEX_A;//テクスチャ名
@@ -97,7 +96,6 @@ HRESULT InitEnemy(int StageNum)
 	}
 	
 
-	Enemy.texno = LoadTexture(g_TextureNameEnemy);
 	if (Enemy.texno == -1)
 	{//ロードエラー
 		exit(999);
