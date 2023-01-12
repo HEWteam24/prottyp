@@ -37,10 +37,12 @@ int NowSelect = (int)STAGE_1;
 int PlateSl;
 float alpha;
 float color;
+
 float octRot[2];
 STAGE_PANEL g_StagePanel[STAGE_MAX];
 
 D3DXCOLOR ARROW_COL[2];
+D3DXCOLOR PLATE_COL;
 bool ura;
 bool change;
 
@@ -97,11 +99,12 @@ HRESULT InitStageSelect(void)
 	ura = false;
 	change = false;
 	PlateSl = 0;
-	octRot[0] = 0.0f;
-	octRot[1] = 0.05f;
+	octRot[0] = 1.0f;
+	octRot[1] = 0.1f;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	PLATE_COL	 = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
@@ -276,6 +279,7 @@ void UpdateStageSelect(void)
 
 
 		octRot[0] += octRot[1];
+
 	}
 }
 
@@ -299,7 +303,7 @@ void DrawStageSelect(void)
 	if (color >= 1.0f)
 	{
 		DrawSpriteColor(g_TextureNamePlate, CENTER_X, CENTER_Y + 250.0f, 500.0f, 100.0f,
-			0.0f, (1.0f / 11) * PlateSl, 1.0f, (1.0f / 11), D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			0.0f, (1.0f / 11) * PlateSl, 1.0f, (1.0f / 11), PLATE_COL);
 	}
 
 	//矢印
