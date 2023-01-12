@@ -30,22 +30,27 @@ float num;
 bool already;
 
 PAUSE hoge;
+D3DXCOLOR COL[3];
 
 void InitPause()
 {
 	PauseTexture = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
 	PauseTextTexture = LoadTexture((char*)"data/TEXTURE/text_pause.png");
 	PauseCntTexture = LoadTexture((char*)"data/TEXTURE/number.png");
-	RetryTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	BackTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	ContinueTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	ArrowTexture = LoadTexture((char*)"data/TEXTURE/notes_right.png");
+	RetryTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	BackTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	ContinueTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	ArrowTexture = LoadTexture((char*)"data/TEXTURE/arrow.png");
 
 	hoge.pause = false;		//PAUSE中かどうかの判定
 	hoge.restart = false;	//コンティニュー判定
 	hoge.pause_frame = 0;	//PAUSEから復帰するまでの時間(3秒)
 	hoge.PauseAction = 0;	//PAUSEで選択した機能、及び矢印の場所(Continue、Retry、BackTitle)
 	already = false;		//PAUSEでUIの操作をTrriger化するためのフラグ
+
+	COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	COL[2] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 }
 
 void UninitPause()
@@ -133,6 +138,27 @@ void UpdatePause()
 			break;
 		}
 	}
+
+	switch (hoge.PauseAction)
+	{
+	case eContinue:
+		COL[0] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		COL[1] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		COL[2] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		break;
+
+	case eReTry:
+		COL[0] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		COL[1] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		COL[2] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		break;
+
+	case eBack:
+		COL[0] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		COL[1] = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+		COL[2] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+		break;
+	}
 }
 
 void DrawPause()
@@ -158,8 +184,8 @@ void DrawPause()
 		{
 			DrawSpriteColor(PauseTextTexture,
 				CENTER_X,
-				CENTER_Y - 300,
-				400.0f,
+				CENTER_Y - 400,
+				500.0f,
 				100.0f,
 				0.0f,
 				0.0f,
@@ -179,8 +205,8 @@ void DrawPause()
 				0.0f,
 				0.0f,
 				1.0f,
-				1.0f,
-				D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f));
+				1.0f/3,
+				COL[0]);
 		}
 
 		//リトライ
@@ -192,10 +218,10 @@ void DrawPause()
 				500.0f,
 				100.0f,
 				0.0f,
-				0.0f,
+				1.0f/3,
 				1.0f,
-				1.0f,
-				D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f));
+				1.0f/3,
+				COL[1]);
 		}
 
 		//back
@@ -207,10 +233,10 @@ void DrawPause()
 				500.0f,
 				100.0f,
 				0.0f,
-				0.0f,
+				1.0f/3*2,
 				1.0f,
-				1.0f,
-				D3DXCOLOR(0.0f, 1.0f, 1.0f, 1.0f));
+				1.0f/3,
+				COL[2]);
 		}
 
 		//矢印
@@ -221,9 +247,9 @@ void DrawPause()
 				CENTER_Y - 150 + (hoge.PauseAction * 150),
 				100.0f,
 				100.0f,
+				0.25f,
 				0.0f,
-				0.0f,
-				1.0f,
+				0.25f,
 				1.0f,
 				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
