@@ -220,19 +220,19 @@ bool BadEnd()
 {
 	if (!BadFlag) {
 		Enemy.sp.x = 0;
-		Enemy.pos.y -= Enemy.sp.y * 4;
+		Enemy.pos.y -= Enemy.sp.y * 4.2;
 		if (Enemy.pos.y + Enemy.size.y < 0) {
 			BadFlag = true;
 		}
 	}
 	else {
-		Enemy.size.x = Enemy.size.x * 1.1;
-		Enemy.size.y = Enemy.size.y * 1.1;
+		Enemy.size.x = Enemy.size.x * 1.05;
+		Enemy.size.y = Enemy.size.y * 1.05;
 
 		Enemy.pos.x = ENEMY_SPAWN_POS_X;
-		Enemy.pos.y -= Enemy.sp.y * 1.5;
+		Enemy.pos.y -= Enemy.sp.y * 2.0;
 
-		if (Enemy.pos.y < 1080+200) {
+		if (Enemy.pos.y < 1080) {
 			return true;
 		}
 		else {
