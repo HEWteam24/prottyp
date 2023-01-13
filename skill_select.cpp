@@ -105,6 +105,7 @@ void UpdateSkillSelect(void)
 	//コントローラーBボタン押したらSCENE_GAMEへ移行
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
+		pSp->type = NowSSelect;
 		SceneTransition(SCENE_GAME);
 		//SceneTransition(NowSSelect+6);
 	}
