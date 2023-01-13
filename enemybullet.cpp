@@ -110,16 +110,6 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletLong[k].hp = 1;
 
 	}
-	for (int j = 0; j < ENEMYBULLET_HP_MAX; j++)
-	{
-		//Hp
-		g_EnemyBulletHp[j].use = false;
-		g_EnemyBulletHp[j].w = ENEMYBULLET_SIZE_W * 2;
-		g_EnemyBulletHp[j].h = ENEMYBULLET_SIZE_H * 2;
-		g_EnemyBulletHp[j].pos = D3DXVECTOR2(0, -20);
-		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
-		g_EnemyBulletHp[j].hp = 3;
-	}
 	for (int j = 0; j < ENEMYBULLET_TRANSLUCENT_MAX; j++)
 	{
 		//Trans
@@ -129,6 +119,16 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletTrans[j].pos = D3DXVECTOR2(0, -10);
 		g_EnemyBulletTrans[j].mov = D3DXVECTOR2(0, BulletSp);
 		g_EnemyBulletTrans[j].hp = 1;
+	}
+	for (int j = 0; j < ENEMYBULLET_HP_MAX; j++)
+	{
+		//Hp
+		g_EnemyBulletHp[j].use = false;
+		g_EnemyBulletHp[j].w = ENEMYBULLET_SIZE_W * 2;
+		g_EnemyBulletHp[j].h = ENEMYBULLET_SIZE_H * 2;
+		g_EnemyBulletHp[j].pos = D3DXVECTOR2(0, -20);
+		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
+		g_EnemyBulletHp[j].hp = 3;
 	}
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
 	g_SE_Damage = LoadSound(file_SE_Damage);
@@ -151,15 +151,15 @@ void UninitEnemyBullet()
 		g_TextureEnemyBulletLong->Release();
 		g_TextureEnemyBulletLong = NULL;
 	}
-	if (g_TextureEnemyBulletHp)
-	{
-		g_TextureEnemyBulletHp->Release();
-		g_TextureEnemyBulletHp = NULL;
-	}						
 	if (g_TextureEnemyBulletTrans)
 	{						
 		g_TextureEnemyBulletTrans->Release();
 		g_TextureEnemyBulletTrans = NULL;
+	}
+	if (g_TextureEnemyBulletHp)
+	{
+		g_TextureEnemyBulletHp->Release();
+		g_TextureEnemyBulletHp = NULL;
 	}
 }
 
@@ -234,51 +234,6 @@ void UpdateEnemyBullet()
 		}
 	}
 	
-	for (int j = 0; j < ENEMYBULLET_HP_MAX; j++)
-	{
-		if (g_EnemyBulletHp[j].use == true)
-		{
-			g_EnemyBulletHp[j].pos += g_EnemyBulletHp[j].mov;	//ˆÚ“®
-
-			if (g_EnemyBulletHp[j].pos.y > SCREEN_HEIGHT - g_EnemyBulletHp[j].h / 2)
-			{
-				g_EnemyBulletHp[j].use = false;
-			}
-			
-			for (int h = 0; h < BULLET_MAX; h++)
-			{
-				if ((pBullet + h)->use)
-				{
- 					if (CollisionBB(g_EnemyBulletHp[j].pos, (pBullet + h)->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), D3DXVECTOR2((pBullet + h)->w / 2, (pBullet + h)->h / 2)))
-					{
-						g_EnemyBulletHp[j].hp--;
-						(pBullet + h)->use = false;
-		
-						if (g_EnemyBulletHp[j].hp <= 0)
-						{
-							g_EnemyBulletHp[j].use = false;
-						}
-					}
-				}
-			}
-
-			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size/2))
-			{
-				g_EnemyBulletHp[j].use = false;
-				if (sp->get_damage_down == true)
-				{
-					pPlayer->hp -= 7.0f;
-				}
-				else
-				{
-					pPlayer->hp -= 35.0f;
-				}
-				g_EnemyBulletHp[j].pos -= g_EnemyBulletHp[j].mov;
-				PlaySound(g_SE_Damage, 0);
-			}
-
-		}
-	}
 
 	for (int k = 0; k < ENEMYBULLET_TRANSLUCENT_MAX; k++)
 	{
@@ -337,6 +292,51 @@ void UpdateEnemyBullet()
 
 		}
 	}
+	for (int j = 0; j < ENEMYBULLET_HP_MAX; j++)
+	{
+		if (g_EnemyBulletHp[j].use == true)
+		{
+			g_EnemyBulletHp[j].pos += g_EnemyBulletHp[j].mov;	//ˆÚ“®
+
+			if (g_EnemyBulletHp[j].pos.y > SCREEN_HEIGHT - g_EnemyBulletHp[j].h / 2)
+			{
+				g_EnemyBulletHp[j].use = false;
+			}
+
+			for (int h = 0; h < BULLET_MAX; h++)
+			{
+				if ((pBullet + h)->use)
+				{
+					if (CollisionBB(g_EnemyBulletHp[j].pos, (pBullet + h)->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), D3DXVECTOR2((pBullet + h)->w / 2, (pBullet + h)->h / 2)))
+					{
+						g_EnemyBulletHp[j].hp--;
+						(pBullet + h)->use = false;
+
+						if (g_EnemyBulletHp[j].hp <= 0)
+						{
+							g_EnemyBulletHp[j].use = false;
+						}
+					}
+				}
+			}
+
+			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
+			{
+				g_EnemyBulletHp[j].use = false;
+				if (sp->get_damage_down == true)
+				{
+					pPlayer->hp -= 7.0f;
+				}
+				else
+				{
+					pPlayer->hp -= 35.0f;
+				}
+				g_EnemyBulletHp[j].pos -= g_EnemyBulletHp[j].mov;
+				PlaySound(g_SE_Damage, 0);
+			}
+
+		}
+	}
 
 }
 
@@ -361,21 +361,20 @@ void DrawEnemyBullet()
 		}
 	}
 
-	for (int z = 0; z < ENEMYBULLET_HP_MAX; z++)
-	{
-		if (g_EnemyBulletHp[z].use)
-		{
-			DrawSpriteColor(g_EnemyBulletHpTex, g_EnemyBulletHp[z].pos.x, g_EnemyBulletHp[z].pos.y, g_EnemyBulletHp[z].w, g_EnemyBulletHp[z].h,
-				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
-		}
-	}
-
 	for (int w = 0; w < ENEMYBULLET_TRANSLUCENT_MAX; w++)
 	{
 		if (g_EnemyBulletTrans[w].use)
 		{
 			DrawSpriteColor(g_EnemyBulletTransTex, g_EnemyBulletTrans[w].pos.x, g_EnemyBulletTrans[w].pos.y, g_EnemyBulletTrans[w].w, g_EnemyBulletTrans[w].h,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, EnemyAlfa));
+		}
+	}
+	for (int z = 0; z < ENEMYBULLET_HP_MAX; z++)
+	{
+		if (g_EnemyBulletHp[z].use)
+		{
+			DrawSpriteColor(g_EnemyBulletHpTex, g_EnemyBulletHp[z].pos.x, g_EnemyBulletHp[z].pos.y, g_EnemyBulletHp[z].w, g_EnemyBulletHp[z].h,
+				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
 }
@@ -488,14 +487,13 @@ void SETBULLET()
 				}
 				if (IsAtk)
 				{
-					for (int k = 0; k < ENEMYBULLET_HP_MAX; k++)
+					for (int i = 0; i < ENEMYBULLET_TRANSLUCENT_MAX; i++)
 					{
-						if (g_EnemyBulletHp[k].use == false)
+						if (g_EnemyBulletTrans[i].use == false)
 						{
-							g_EnemyBulletHp[k].pos.x = atk;
-							g_EnemyBulletHp[k].pos.y = -20.0f;
-							g_EnemyBulletHp[k].hp = 3;
-							g_EnemyBulletHp[k].use = true;
+							g_EnemyBulletTrans[i].pos.x = atk;
+							g_EnemyBulletTrans[i].pos.y = -10.0f;
+							g_EnemyBulletTrans[i].use = true;
 							break;
 						}
 					}
@@ -524,13 +522,14 @@ void SETBULLET()
 				}
 				if (IsAtk)
 				{
-					for (int i = 0; i < ENEMYBULLET_TRANSLUCENT_MAX; i++)
+					for (int k = 0; k < ENEMYBULLET_HP_MAX; k++)
 					{
-						if (g_EnemyBulletTrans[i].use == false)
-						{				 
-							g_EnemyBulletTrans[i].pos.x = atk;
-							g_EnemyBulletTrans[i].pos.y = -10.0f;
-							g_EnemyBulletTrans[i].use = true;
+						if (g_EnemyBulletHp[k].use == false)
+						{
+							g_EnemyBulletHp[k].pos.x = atk;
+							g_EnemyBulletHp[k].pos.y = -20.0f;
+							g_EnemyBulletHp[k].hp = 3;
+							g_EnemyBulletHp[k].use = true;
 							break;
 						}
 					}
