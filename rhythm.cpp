@@ -52,7 +52,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename0[] = "data\\BGM\\ザリガニ90.wav";
 	char	filename1[] = "data\\BGM\\ザリガニ90.wav";
 	char	filename2[] = "data\\BGM\\sample.wav";
-	char	filename3[] = "data\\BGM\\シオカラ.wav";
+	char	filename3[] = "data\\BGM\\シオカラ_150.wav";
 
 	switch (stagenum)
 	{
@@ -101,6 +101,17 @@ HRESULT InitRhythm(int stagenum)
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	case 4:
+
+		GameSoundNo = LoadSound(filename3);
+
+		Notestipindex1 = 2;
+		indexNum = 8;
+		errors = -1;
+		sp = 12.0f;
+		NowBPM = BPM1;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		break;
+	case 8:
 
 		GameSoundNo = LoadSound(filename3);
 
