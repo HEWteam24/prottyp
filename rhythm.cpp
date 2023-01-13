@@ -10,6 +10,7 @@
 #include "sprite.h"
 #include "main.h"
 #include "keyboard.h"
+#include "enemybullet.h"
 
 
 
@@ -207,6 +208,9 @@ void UpdateRhythm()
 			if (Notestip[Notestipindex1][Notestipindex2 % indexNum] == 1)
 			{
 				SetNotes();
+			}
+			if ((Frame) % ((int)NotesT * 4) == 0.0f) {
+				SETBULLET();
 			}
 			Notestipindex2++;
 		}
