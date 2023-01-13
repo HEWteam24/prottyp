@@ -105,18 +105,19 @@ void UpdateSkillSelect(void)
 	//コントローラーBボタン押したらSCENE_GAMEへ移行
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
+		pSp->type = NowSSelect;
 		SceneTransition(SCENE_GAME);
 		//SceneTransition(NowSSelect+6);
 	}
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		if ((Keyboard_IsKeyDown(KK_D)) && (movingSp == false) && (NowSSelect < 2))
+		if (((GetThumbLeftX(0) > 0.3f)||(Keyboard_IsKeyDown(KK_D))) && (movingSp == false) && (NowSSelect < 2))
 		{
 			NowSSelect+=1;
 			//g_SkillPanel[i].moving = true;
 			movingSp = true;
 		}
-		if ((Keyboard_IsKeyDown(KK_A)) && (movingSp == false) && (NowSSelect > 0))
+		if (((GetThumbLeftX(0) < -0.3f) || (Keyboard_IsKeyDown(KK_A))) && (movingSp == false) && (NowSSelect > 0))
 		{
 			NowSSelect-=1;
 			//g_SkillPanel[i].moving = true;

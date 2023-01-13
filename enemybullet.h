@@ -1,6 +1,4 @@
 #pragma once
-
-#pragma once
 #include "main.h"
 #include "renderer.h"
 
@@ -15,6 +13,7 @@
 #define	ENEMYBULLET_SPEED3	16.3/2	//弾のスピードBPM150
 #define	ENEMYBULLET_SIZE_W	140		//弾の横サイズ
 #define	ENEMYBULLET_SIZE_H	60		//弾の縦サイズ
+#define ENEMYBULLET_ALFA_CHANGE	0.002f	//アルファ値変更
 
 //以下マップチップ用
 #define	MAP_SIZE_X	5	//横レーン数
@@ -23,13 +22,6 @@
 //==================================
 //グローバル変数
 //==================================
-
-//enum STAGE
-//{
-//	STAGE01,
-//	STAGE02,
-//
-//};
 
 //構造体
 struct ENEMYBULLET
@@ -51,9 +43,4 @@ void	UninitEnemyBullet();
 void	UpdateEnemyBullet();
 void	DrawEnemyBullet();
 
-
-
-ENEMYBULLET* GetEnemyBulletNomal();
-ENEMYBULLET* GetEnemyBulletLong();
-//void	SetEnemyBullet();	//弾発生
 void	SETBULLET();
