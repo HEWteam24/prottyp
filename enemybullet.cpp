@@ -53,6 +53,7 @@ float EnemyAlfa = 1.0f;
 bool AddAlfa = true;
 bool HitBullet = true;
 
+static float	 BulletSp;
 //================================
 //èâä˙âª
 //================================
@@ -116,7 +117,7 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletHp[j].w = ENEMYBULLET_SIZE_W * 2;
 		g_EnemyBulletHp[j].h = ENEMYBULLET_SIZE_H * 2;
 		g_EnemyBulletHp[j].pos = D3DXVECTOR2(0, -20);
-		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED / 2.0f);
+		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
 		g_EnemyBulletHp[j].hp = 3;
 	}
 	for (int j = 0; j < ENEMYBULLET_TRANSLUCENT_MAX; j++)
@@ -126,7 +127,7 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletTrans[j].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletTrans[j].h = ENEMYBULLET_SIZE_H * 2;
 		g_EnemyBulletTrans[j].pos = D3DXVECTOR2(0, -10);
-		g_EnemyBulletTrans[j].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
+		g_EnemyBulletTrans[j].mov = D3DXVECTOR2(0, BulletSp);
 		g_EnemyBulletTrans[j].hp = 1;
 	}
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";

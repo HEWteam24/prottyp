@@ -5,9 +5,11 @@
 //==================================
 //マクロ定義
 //==================================
-#define	ENEMYBULLETNOMAL_MAX		20		//弾の最大数
-#define	ENEMYBULLETLONG_MAX		20		//弾の最大数
-#define	ENEMYBULLETWIDE_MAX		30		//弾の最大数
+#define	ENEMYBULLET_NOMAL_MAX		20		//弾の最大数
+#define	ENEMYBULLET_LONG_MAX		20		//弾の最大数
+#define	ENEMYBULLET_WIDE_MAX		20		//弾の最大数
+#define ENEMYBULLET_HP_MAX			20
+#define ENEMYBULLET_TRANSLUCENT_MAX 20
 #define	ENEMYBULLET_SPEED1	10.0/2	//弾のスピードBPM90
 #define	ENEMYBULLET_SPEED2	13.0f/2	//弾のスピードBPM120
 #define	ENEMYBULLET_SPEED3	16.3/2	//弾のスピードBPM150
