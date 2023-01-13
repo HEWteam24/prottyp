@@ -133,7 +133,10 @@ void UpdateStageSelect(void)
 	if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))) && (change == false))
 	{
 		change = true;
-
+	}
+	if (((GetThumbLeftY(0) < -0.3f)|| (GetThumbLeftY(0) > 0.3f)) && (change == false))
+	{
+		change = true;
 	}
 
 	//エンターキー、またはBボタンが押されたらSCENE_GAMEへ移行する
