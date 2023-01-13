@@ -267,7 +267,7 @@ void UpdateEnemyBullet()
 			}
 			g_EnemyBulletTrans[k].pos += g_EnemyBulletTrans[k].mov;	//ˆÚ“®
 
-			if (g_EnemyBulletTrans[k].pos.y > SCREEN_HEIGHT - g_EnemyBulletTrans[k].h / 2)
+			if (g_EnemyBulletTrans[k].pos.y > SCREEN_HEIGHT - g_EnemyBulletTrans[k].h)
 			{
 				g_EnemyBulletTrans[k].use = false;
 			}
