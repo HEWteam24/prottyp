@@ -120,8 +120,7 @@ void UpdateEnemyBullet()
 
 	if (eFreame % 60*1.5 == 0.0f)
 	{
-		SETBULLET();
-		nowY++;
+		//nowY++;
 	}
 
 	for (int i = 0; i < ENEMYBULLETNOMAL_MAX; i++)
@@ -402,5 +401,6 @@ void SETBULLET()
 			IsAtk = true;
 			atk = 0;
 		}
+		nowY++;
 	}
 }
