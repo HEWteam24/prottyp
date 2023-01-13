@@ -22,6 +22,7 @@
 #include "inputx.h"
 #include "special.h"
 #include <algorithm>
+#include "enemy.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -168,112 +169,114 @@ void UpdatePlayer(void)
 	if (g_Player.hp <= 0)
 	{
 		g_Player.dead = true;
-		SceneTransition(SCENE_RESULT);
+		if (BadEnd()) {
+			SceneTransition(SCENE_RESULT);
+		}
 	}
-
-	//----------------------------------------
-	// コントローラー入力
-	// ---------------------------------------
-	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false) && (g_Player.shooting == false))
-	{
-		PlayerCheck();
-		if (g_Player.flag) 
+	else {
+		//----------------------------------------
+		// コントローラー入力
+		// ---------------------------------------
+		if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (g_Player.moving == false) && (g_Player.shooting == false))
 		{
-			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
-			PlaySound(g_SE_Bullet, 0);
-			//g_Player.hp -= 30.0f;
-		}
-	}
-
-
-	//スティックで移動
-	if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
-	{
-		g_Player.moving = true;				//移動中
-		g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
-
-		g_Player.speed.x = -50.0f;		//スピードを-に
-		g_Player.direction = D_LEFT;		//左移動
-		g_Player.NowLane -= 1;			//レーン変更
-		PlayerCheck();
-	}
-	//左
-	if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
-	{
-		g_Player.moving = true;				//移動中
-		g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
-
-		g_Player.speed.x = 50.0f;			//スピードを+に
-		g_Player.direction = D_RIGHT;		//右移動
-		g_Player.NowLane += 1;				//レーン変更
-		PlayerCheck();
-	}
-
-	//----------------------------------------
-	// キーボード入力
-	// ---------------------------------------
-	//弾発射
-	if ((Keyboard_IsKeyDown(KK_SPACE))&&(g_Player.moving==false) && (g_Player.shooting == false))
-	{
-		g_Player.shooting = true;
-		PlayerCheck();
-		if (g_Player.flag) {
-			SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
-			PlaySound(g_SE_Bullet, 0);
+			PlayerCheck();
+			if (g_Player.flag)
+			{
+				SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
+				PlaySound(g_SE_Bullet, 0);
+				//g_Player.hp -= 30.0f;
+			}
 		}
 
+
+		//スティックで移動
+		if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+		{
+			g_Player.moving = true;				//移動中
+			g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
+
+			g_Player.speed.x = -50.0f;		//スピードを-に
+			g_Player.direction = D_LEFT;		//左移動
+			g_Player.NowLane -= 1;			//レーン変更
+			PlayerCheck();
+		}
+		//左
+		if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+		{
+			g_Player.moving = true;				//移動中
+			g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
+
+			g_Player.speed.x = 50.0f;			//スピードを+に
+			g_Player.direction = D_RIGHT;		//右移動
+			g_Player.NowLane += 1;				//レーン変更
+			PlayerCheck();
+		}
+
+		//----------------------------------------
+		// キーボード入力
+		// ---------------------------------------
+		//弾発射
+		if ((Keyboard_IsKeyDown(KK_SPACE)) && (g_Player.moving == false) && (g_Player.shooting == false))
+		{
+			g_Player.shooting = true;
+			PlayerCheck();
+			if (g_Player.flag) {
+				SetBullet(D3DXVECTOR2(g_Player.pos.x, g_Player.pos.y - g_Player.size.y / 2));
+				PlaySound(g_SE_Bullet, 0);
+			}
+
+		}
+		if (Keyboard_IsKeyUp(KK_SPACE) && (g_Player.shooting == true)) {
+			g_Player.shooting = false;
+		}
+
+
+
+		//Aキーで右移動
+		if ((Keyboard_IsKeyDown(KK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+		{
+			g_Player.moving = true;				//移動中
+			g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
+
+			g_Player.speed.x = -50.0f;		//スピードを-に
+			g_Player.direction = D_LEFT;		//左移動
+			g_Player.NowLane -= 1;			//レーン変更
+			PlayerCheck();
+		}
+
+		// Dキー で右移動
+		if ((Keyboard_IsKeyDown(KK_D)) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+		{
+			g_Player.moving = true;				//移動中
+			g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
+
+			g_Player.speed.x = 50.0f;			//スピードを+に
+			g_Player.direction = D_RIGHT;		//右移動
+			g_Player.NowLane += 1;				//レーン変更
+			PlayerCheck();
+		}
+
+		//キャラクター移動
+		if ((g_Player.moving))
+		{
+			g_Player.pos.x += g_Player.speed.x;	//スピードを足して移動
+			g_Player.speed.x *= 0.7f;			//スピード減衰
+		}
+
+		//右移動完了
+		if ((g_Player.speed.x <= 1.0f) && (g_Player.direction == D_RIGHT))
+		{
+			g_Player.pos.x = CENTER_X + g_Player.NowLane * LANE_SIZE_X;	//レーンの中心に
+			g_Player.moving = false;
+		}
+		//左移動完了
+		if ((g_Player.speed.x >= -1.0f) && (g_Player.direction == D_LEFT))
+		{
+			g_Player.pos.x = CENTER_X + g_Player.NowLane * LANE_SIZE_X;	//レーンの中心に
+			g_Player.moving = false;
+		}
+
 	}
-	if (Keyboard_IsKeyUp(KK_SPACE) && (g_Player.shooting == true)) {
-		g_Player.shooting = false;
-	}
-
-
-
-	//Aキーで右移動
-	if ((Keyboard_IsKeyDown(KK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
-	{
-		g_Player.moving = true;				//移動中
-		g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
-		
-		g_Player.speed.x	=  -50.0f;		//スピードを-に
-		g_Player.direction	=  D_LEFT;		//左移動
-		g_Player.NowLane	-= 1;			//レーン変更
-		PlayerCheck();
-	}
-
-	// Dキー で右移動
-	if ((Keyboard_IsKeyDown(KK_D)) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
-	{
-		g_Player.moving = true;				//移動中
-		g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
-
-		g_Player.speed.x = 50.0f;			//スピードを+に
-		g_Player.direction = D_RIGHT;		//右移動
-		g_Player.NowLane += 1;				//レーン変更
-		PlayerCheck();
-	}
-
-	//キャラクター移動
-	if ((g_Player.moving))
-	{
-		g_Player.pos.x += g_Player.speed.x;	//スピードを足して移動
-		g_Player.speed.x *= 0.7f;			//スピード減衰
-	}
-
-	//右移動完了
-	if ((g_Player.speed.x <= 1.0f)&&(g_Player.direction	==	D_RIGHT))
-	{
-		g_Player.pos.x = CENTER_X + g_Player.NowLane*LANE_SIZE_X;	//レーンの中心に
-		g_Player.moving = false;
-	}
-	//左移動完了
-	if ((g_Player.speed.x >= -1.0f) && (g_Player.direction == D_LEFT))
-	{
-		g_Player.pos.x = CENTER_X + g_Player.NowLane*LANE_SIZE_X;	//レーンの中心に
-		g_Player.moving = false;
-	}
-
-
 
 }
 

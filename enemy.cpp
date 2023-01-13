@@ -20,6 +20,7 @@ ENEMY		Enemy;
 ENEMYHP		EnemyHp;
 int			EnemyNum;
 int			UnagiPosY;
+bool		BadFlag;
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureEnemy;
 static  int		g_TextureEnemyID;
@@ -118,6 +119,7 @@ HRESULT InitEnemy(int StageNum)
 		exit(999);
 	}
 
+	BadFlag = false;
 	EnemyNum = 1;
 	return S_OK;
 }
@@ -212,4 +214,29 @@ ENEMY * GetEnemy()
 int	GetEnemyNum()
 {
 	return EnemyNum;
+}
+
+bool BadEnd()
+{
+	if (!BadFlag) {
+		Enemy.sp.x = 0;
+		Enemy.pos.y -= Enemy.sp.y * 4;
+		if (Enemy.pos.y + Enemy.size.y < 0) {
+			BadFlag = true;
+		}
+	}
+	else {
+		Enemy.size.x = Enemy.size.x * 1.1;
+		Enemy.size.y = Enemy.size.y * 1.1;
+
+		Enemy.pos.x = ENEMY_SPAWN_POS_X;
+		Enemy.pos.y -= Enemy.sp.y * 1.5;
+
+		if (Enemy.pos.y < 1080) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }

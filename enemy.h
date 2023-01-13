@@ -82,6 +82,7 @@ void		UpdateEnemy();
 void		DrawEnemy();
 ENEMY*		GetEnemy();
 int			GetEnemyNum();
+bool		BadEnd();
 #endif // !EMEMY_H_
 
 
