@@ -57,7 +57,7 @@ HRESULT InitTuto(void)
 
 	InitSpecial();
 	InitEnemy(0);
-	InitEnemyBullet();
+	InitEnemyBullet(0);
 	InitRhythm(0);
 	// ”wŒi‚Ì‰Šú‰»
 	InitBG(0);
