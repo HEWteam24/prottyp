@@ -43,13 +43,34 @@ static	char *g_TextureEnemyBulletWideName = (char*)"data\\TEXTURE\\enemy_tooth.p
 int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
-
+static float BulletSp;
 //================================
 //初期化
 //================================
 
-HRESULT InitEnemyBullet()
+HRESULT InitEnemyBullet(int Stagenum)
 {
+
+	switch (Stagenum)
+	{
+	case 0:
+		BulletSp = ENEMYBULLET_SPEED2;
+	case 1:
+		BulletSp = ENEMYBULLET_SPEED2;
+	case 2:
+		BulletSp = ENEMYBULLET_SPEED2;
+	case 3:
+		BulletSp = ENEMYBULLET_SPEED3;
+	case 4:
+		BulletSp = ENEMYBULLET_SPEED3;
+	case 8:
+		BulletSp = ENEMYBULLET_SPEED3;
+	case 9:
+		BulletSp = ENEMYBULLET_SPEED1;
+	default:
+		break;
+	}
+
 	pBullet = GetBullet();
 
 	g_EnemyBulletNomalTex = LoadTexture(g_TextureEnemyBulletNomalName);
@@ -64,7 +85,7 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletNomal[i].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletNomal[i].h = ENEMYBULLET_SIZE_H;
 		g_EnemyBulletNomal[i].pos = D3DXVECTOR2(0, -10);
-		g_EnemyBulletNomal[i].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
+		g_EnemyBulletNomal[i].mov = D3DXVECTOR2(0, BulletSp);
 		g_EnemyBulletNomal[i].hp = 1;
 	}
 	for (int k = 0; k < ENEMYBULLETLONG_MAX; k++)
@@ -74,7 +95,7 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletLong[k].w = ENEMYBULLET_SIZE_W;
 		g_EnemyBulletLong[k].h = ENEMYBULLET_SIZE_H * 3;
 		g_EnemyBulletLong[k].pos = D3DXVECTOR2(0, -40);
-		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
+		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, BulletSp);
 		g_EnemyBulletLong[k].hp = 1;
 
 	}
@@ -85,7 +106,7 @@ HRESULT InitEnemyBullet()
 		g_EnemyBulletWide[j].w = ENEMYBULLET_SIZE_W * 2;
 		g_EnemyBulletWide[j].h = ENEMYBULLET_SIZE_H * 2;
 		g_EnemyBulletWide[j].pos = D3DXVECTOR2(0, -20);
-		g_EnemyBulletWide[j].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED / 2.0f);
+		g_EnemyBulletWide[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
 		g_EnemyBulletWide[j].hp = 3;
 	}
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";

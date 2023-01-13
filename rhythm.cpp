@@ -22,7 +22,7 @@
 int			NowBPM;
 int			GameSoundNo;
 
-int			NotesNum = 0;
+int			NotesNum = 1;
 int			Frame;
 
 int			sp;
@@ -147,7 +147,7 @@ HRESULT InitRhythm(int stagenum)
 			Notes[i].alpha = 1.0f;
 			Notes[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - Notes[i].alpha);
 			Notes[i].use = false;
-			Notes[i].num = 0;
+			Notes[i].num = -1;
 
 
 			//テクスチャのロード
@@ -166,7 +166,7 @@ HRESULT InitRhythm(int stagenum)
 			Notes[i + 1].alpha = 1.0f;
 			Notes[i + 1].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - Notes[i + 1].alpha);
 			Notes[i + 1].use = false;
-			Notes[i + 1].num = 0;
+			Notes[i + 1].num = -1;
 
 
 			//テクスチャのロード
@@ -244,11 +244,11 @@ void UpdateRhythm()
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
 				}
-				//ノーツ左が消えてる時右も消える
-				if (!Notes[i + 1].use)
-				{
-					Notes[i].use = false;
-				}
+				////ノーツ左が消えてる時右も消える
+				//if (!Notes[i + 1].use)
+				//{
+				//	Notes[i].use = false;
+				//}
 			}
 			//if (i % 2 == 1)
 			//{
@@ -360,7 +360,7 @@ void ReleaseNotes()
 
 	for (int i = 2; i < NOTES_MAX; i += 2) {
 		if (!Notes[i].use) continue;
-		if (Notes[i].num < Min) {
+		if (Notes[i].num < Min && Notes[i].num != -1) {
 			Min = Notes[i].num;
 			Index = i;
 		}

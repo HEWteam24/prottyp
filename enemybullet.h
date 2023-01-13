@@ -10,7 +10,9 @@
 #define	ENEMYBULLETNOMAL_MAX		20		//弾の最大数
 #define	ENEMYBULLETLONG_MAX		20		//弾の最大数
 #define	ENEMYBULLETWIDE_MAX		30		//弾の最大数
-#define	ENEMYBULLET_SPEED	8.0f	//弾のスピード
+#define	ENEMYBULLET_SPEED1	10.0/2	//弾のスピードBPM90
+#define	ENEMYBULLET_SPEED2	13.0f/2	//弾のスピードBPM120
+#define	ENEMYBULLET_SPEED3	16.3/2	//弾のスピードBPM150
 #define	ENEMYBULLET_SIZE_W	140		//弾の横サイズ
 #define	ENEMYBULLET_SIZE_H	60		//弾の縦サイズ
 
@@ -44,7 +46,7 @@ struct ENEMYBULLET
 //==================================
 //プロトタイプ宣言
 //==================================
-HRESULT InitEnemyBullet();
+HRESULT InitEnemyBullet(int Stagenum);
 void	UninitEnemyBullet();
 void	UpdateEnemyBullet();
 void	DrawEnemyBullet();
