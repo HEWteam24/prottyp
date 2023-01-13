@@ -54,6 +54,11 @@ HRESULT InitRhythm(int stagenum)
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
 	char	filename3[] = "data\\BGM\\08_Shiokara_150.wav";
+	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
+	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
+
+	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
+
 
 	switch (stagenum)
 	{
@@ -103,7 +108,20 @@ HRESULT InitRhythm(int stagenum)
 		break;
 	case 4:
 
-		GameSoundNo = LoadSound(filename3);
+
+		GameSoundNo = LoadSound(filename4);
+
+		Notestipindex1 = 1;
+		indexNum = 8;
+		errors = 0;
+		sp = 10.8f;
+		NowBPM = BPM2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		break;
+
+	case 5:
+
+		GameSoundNo = LoadSound(filename5);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
@@ -112,9 +130,9 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 8:
+	case 7:
 
-		GameSoundNo = LoadSound(filename3);
+		GameSoundNo = LoadSound(filename7);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
@@ -123,7 +141,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 9:
+	case 11:
 
 		GameSoundNo = LoadSound(filename1);
 
