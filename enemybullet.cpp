@@ -175,6 +175,34 @@ void UpdateEnemyBullet()
 		//nowY++;
 	}
 
+	if (EnemyAlfa >= 1.0f)
+	{
+		AddAlfa = false;
+	}
+	else if (EnemyAlfa <= 0.0f)
+	{
+		AddAlfa = true;
+	}
+
+	if (AddAlfa)
+	{
+		EnemyAlfa += ENEMYBULLET_ALFA_CHANGE;
+	}
+	else
+	{
+		EnemyAlfa -= ENEMYBULLET_ALFA_CHANGE;
+	}
+
+	if (EnemyAlfa >= 0.5f)
+	{
+		HitBullet = true;
+	}
+	else
+	{
+		HitBullet = false;
+	}
+
+
 	for (int i = 0; i < ENEMYBULLET_NOMAL_MAX; i++)
 	{
 		if (g_EnemyBulletNomal[i].use == true)
@@ -239,32 +267,6 @@ void UpdateEnemyBullet()
 	{
 		if (g_EnemyBulletTrans[k].use == true)
 		{
-			if (EnemyAlfa >= 1.0f)
-			{
-				AddAlfa = false;
-			}
-			else if (EnemyAlfa <= 0.0f)
-			{
-				AddAlfa = true;
-			}
-
-			if (AddAlfa)
-			{
-				EnemyAlfa += ENEMYBULLET_ALFA_CHANGE;
-			}
-			else
-			{
-				EnemyAlfa -= ENEMYBULLET_ALFA_CHANGE;
-			}
-
-			if (EnemyAlfa >= 0.5f)
-			{
-				HitBullet = true;
-			}
-			else
-			{
-				HitBullet = false;
-			}
 			g_EnemyBulletTrans[k].pos += g_EnemyBulletTrans[k].mov;	//ˆÚ“®
 
 			if (g_EnemyBulletTrans[k].pos.y > SCREEN_HEIGHT - g_EnemyBulletTrans[k].h)
