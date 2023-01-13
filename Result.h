@@ -23,6 +23,11 @@ typedef struct
 	float	v;
 	float	rad;
 	int		rank;
+	float	alpha;
+	
+	bool roted;
+	D3DXVECTOR2	size;
+
 	D3DXCOLOR	col;
 	D3DXCOLOR	TextCol;
 }COIN;
