@@ -238,6 +238,8 @@ void UpdateRhythm()
 			{
 				SetNotes();
 			}
+ 			else { int n = 0; }
+
 			if ((Frame) % ((int)NotesT * 4) == 0.0f) {
 				SETBULLET();
 			}
@@ -335,12 +337,13 @@ void SetNotes()
 			Notes[n].use = true;
 			Notes[n].num = NotesNum;
 			Notes[n].alpha = 1.0f;
+
 			Notes[n + 1].pos = D3DXVECTOR2(NOTES_POS_X_2, NOTES_POS_Y);
 			Notes[n + 1].use = true;
-
 			Notes[n + 1].alpha = 1.0f;
 			Notes[n + 1].num = NotesNum;
 			NotesNum++;
+
 			return;
 		}
 	}
@@ -376,7 +379,7 @@ void ReleaseNotes()
 {//àÍî‘ê^ÇÒíÜÇ…ãﬂÇ¢ÉmÅ[ÉcÇè¡Ç∑ä÷êî
 	int		Min = Notes[0].num, Index = 0;
 
-	for (int i = 2; i < NOTES_MAX; i += 2) {
+	for (int i = 2; i < NOTES_MAX-2; i += 2) {
 		if (!Notes[i].use) continue;
 		if (Notes[i].num < Min && Notes[i].num != -1) {
 			Min = Notes[i].num;
@@ -385,7 +388,7 @@ void ReleaseNotes()
 
 	}
 	Notes[Index].use = false;
-	Notes[Index + 1].use = false;
+ 	Notes[Index + 1].use = false;
 }
 
 bool	MusicEnd()
