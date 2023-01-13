@@ -51,7 +51,7 @@ HRESULT InitGame(int StageNum)
 
 	InitSpecial();
 	InitEnemy(StageNum);
-	InitEnemyBullet();
+	InitEnemyBullet(StageNum);
 	InitRhythm(StageNum);
 	// 背景の初期化
 	InitBG(StageNum);

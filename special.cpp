@@ -133,7 +133,7 @@ void UpdateSpecial()
 	}
 
 	//Yボタンでスペシャル発動
-	if (((IsButtonTriggered(0, XINPUT_GAMEPAD_Y)) || (Keyboard_IsKeyDown(KK_S))) && sp.UseOk == true)
+	if (((IsButtonTriggered(0, XINPUT_GAMEPAD_RIGHT_SHOULDER)) || (Keyboard_IsKeyDown(KK_S))) && sp.UseOk == true)
 	{
 		PlaySound(g_SE_Special, 0);
 

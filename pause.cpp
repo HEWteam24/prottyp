@@ -114,7 +114,7 @@ void UpdatePause()
 	}
 
 
-	if (Keyboard_IsKeyDown(KK_P) && hoge.pause == false)
+	if ((Keyboard_IsKeyDown(KK_P)|| (IsButtonTriggered(0, XINPUT_GAMEPAD_START))) && hoge.pause == false)
 	{
 		PauseSound(BGM_RE());
 		hoge.pause = true;
