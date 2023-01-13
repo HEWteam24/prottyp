@@ -103,7 +103,7 @@ HRESULT InitEnemyBullet()
 		//Trans
 		g_EnemyBulletTrans[j].use = false;
 		g_EnemyBulletTrans[j].w = ENEMYBULLET_SIZE_W;
-		g_EnemyBulletTrans[j].h = ENEMYBULLET_SIZE_H;
+		g_EnemyBulletTrans[j].h = ENEMYBULLET_SIZE_H * 2;
 		g_EnemyBulletTrans[j].pos = D3DXVECTOR2(0, -10);
 		g_EnemyBulletTrans[j].mov = D3DXVECTOR2(0, ENEMYBULLET_SPEED);
 		g_EnemyBulletTrans[j].hp = 1;
@@ -280,7 +280,7 @@ void UpdateEnemyBullet()
 				EnemyAlfa -= ENEMYBULLET_ALFA_CHANGE;
 			}
 
-			if (EnemyAlfa >= 0.7f)
+			if (EnemyAlfa >= 0.5f)
 			{
 				HitBullet = true;
 			}
