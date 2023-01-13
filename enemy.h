@@ -16,7 +16,7 @@
 #define			ENEMY01_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
 #define			ENEMY01_SIZE_Y		(ENEMY01_SIZE_X*1.5)							//エネミーサイズY
 #define			ENEMY02_SIZE_X		(LANE_SIZE_X*2)								//エネミーサイズX
-#define			ENEMY02_SIZE_Y		(ENEMY02_SIZE_X*1.5)							//エネミーサイズY
+#define			ENEMY02_SIZE_Y		(ENEMY02_SIZE_X*3.0)							//エネミーサイズY
 #define			ENEMY03_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
 #define			ENEMY03_SIZE_Y		(ENEMY03_SIZE_X*1.5)							//エネミーサイズY
 #define			ENEMY04_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
@@ -48,7 +48,7 @@
 #define			ENEMY_HP_TEX_A		((char*)"data\\texture\\HP_player_A.png")		//エネミーテクスチャ
 #define			ENEMY_HP_TEX_B		((char*)"data\\texture\\HP_player_B.png")		//エネミーテクスチャ
 #define			ENEMY_SPAWN_POS_X	(SCREEN_WIDTH/2)
-#define			ENEMY_SPAWN_POS_Y	(100.0f)
+#define			ENEMY_SPAWN_POS_Y	(20.0f)
 
 
 //*****************************************************************************
