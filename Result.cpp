@@ -96,6 +96,9 @@ HRESULT InitResult(void)
 		g_Coin.rank = 5;
 	}
 
+	g_Coin.alpha = 0.3f;
+	g_Coin.size = D3DXVECTOR2(300.0f, 300.0f);
+	g_Coin.roted = false;
 
 	InitScoreResult();
 
@@ -155,11 +158,26 @@ void UpdateResult(void)
 	{
 		g_Coin.rad+=10.0f;
 	}
+	else
+	{
+		g_Coin.roted = true;
+	}
+
 	g_Coin.col = D3DXCOLOR(0.0f + Addcol * 0.01f,
 		0.0f + Addcol * 0.01f,
 		0.0f + Addcol * 0.01f,
 		1.0f);
 
+	g_Coin.size.x += 12.0f;
+	g_Coin.size.y += 12.0f;
+	g_Coin.alpha -= 0.05f;
+
+	if (g_Coin.alpha <= 0.0f)
+	{
+		g_Coin.size.x = 300.0f;
+		g_Coin.size.y = 300.0f;
+		g_Coin.alpha = 0.3f;
+	}
 }
 
 //=============================================================================
@@ -192,6 +210,26 @@ void DrawResult(void)
 			1.0f,
 			6
 		);
+	}
+
+	if (g_Coin.roted)
+	{
+		GetDeviceContext()->PSSetShaderResources(0, 1,
+			GetTexture(g_TextureRankCoin));
+		for (int i = 0; i < SCOER_DIGIT; i++) {
+			DrawSpriteColorRotation(
+				CENTER_X,
+				CENTER_Y,
+				g_Coin.size.x,
+				g_Coin.size.y,
+				g_Coin.rad,
+				D3DXCOLOR(1.0f,1.0f,1.0f,g_Coin.alpha),
+				g_Coin.rank,
+				0.16665f,
+				1.0f,
+				6
+			);
+		}
 	}
 
 	DrawScore();

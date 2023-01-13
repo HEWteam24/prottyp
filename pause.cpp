@@ -28,6 +28,7 @@ static int ArrowTexture;
 int arrowNum;
 float num;
 bool already;
+int dist;
 
 PAUSE hoge;
 D3DXCOLOR COL[3];
@@ -51,6 +52,8 @@ void InitPause()
 	COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	COL[2] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	dist = 20;
 }
 
 void UninitPause()
@@ -108,8 +111,19 @@ void UpdatePause()
 	
 	}
 
-	if (Keyboard_IsKeyUp(KK_S) && Keyboard_IsKeyUp(KK_W))
+	//if (Keyboard_IsKeyUp(KK_S) && Keyboard_IsKeyUp(KK_W))
+	//{
+	//	already = false;
+	//}
+	
+	if (already)
 	{
+		dist -= 1;
+	}
+
+	if (dist <= 0)
+	{
+		dist = 20;
 		already = false;
 	}
 
