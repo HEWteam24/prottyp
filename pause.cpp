@@ -80,7 +80,7 @@ void UpdatePause()
 		RePlaySound(BGM_RE());
 	}
 
-	if (Keyboard_IsKeyDown(KK_W) && already == false)
+	if ((Keyboard_IsKeyDown(KK_W)|| (GetThumbLeftY(0) > 0.3f)) && already == false)
 	{
 
 		already = true;
@@ -95,7 +95,7 @@ void UpdatePause()
 
 	}
 
-	if (Keyboard_IsKeyDown(KK_S) && already == false)
+	if ((Keyboard_IsKeyDown(KK_S) || (GetThumbLeftY(0) < -0.3f)) && already == false)
 	{
 		already = true;
 
@@ -122,7 +122,7 @@ void UpdatePause()
 
 
 
-	if (Keyboard_IsKeyDown(KK_ENTER) && hoge.pause == true)
+	if ((Keyboard_IsKeyDown(KK_ENTER)|| (IsButtonTriggered(0, XINPUT_GAMEPAD_B))) && hoge.pause == true)
 	{
 		switch (hoge.PauseAction)
 		{
