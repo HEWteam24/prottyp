@@ -82,7 +82,7 @@ HRESULT InitEnemy(int StageNum)
 			Enemy.size = D3DXVECTOR2(ENEMY07_SIZE_X, ENEMY07_SIZE_Y);
 			break;
 		case 8:
-			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_zarigani_dummy.png");
+			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shiokara_musha.png");
 			Enemy.size = D3DXVECTOR2(ENEMY08_SIZE_X, ENEMY08_SIZE_Y);
 			break;
 		case 9:

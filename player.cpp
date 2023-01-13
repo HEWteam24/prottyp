@@ -120,7 +120,7 @@ void InitPlayer(void)
 	g_Player.direction	= D_NONE;	//移動方向
 	g_Player.NowLane	= LANE_3;	//初期レーン
 	g_Player.flag		= false;
-	g_Player.dead = false;	
+	g_Player.dead		= false;	
 
 	//effectPosを初期化
 	for (int i = 0; i <= 9; i++)
@@ -161,7 +161,7 @@ void UpdatePlayer(void)
 	effectPos[0] = g_Player.pos.x;
 
 	//****************************************************************************
-	g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);	//デバッグ用HP自動回復
+	//g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);	//デバッグ用HP自動回復
 	//****************************************************************************
 
 	//体力0でゲームオーバー
