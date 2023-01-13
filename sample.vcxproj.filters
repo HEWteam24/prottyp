@@ -85,8 +85,10 @@
     <ClCompile Include="MapChip .cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="pause.cpp" />
     <ClCompile Include="tuto.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="pause.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>

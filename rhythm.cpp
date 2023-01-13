@@ -50,33 +50,33 @@ int Notestip[10][10]
 //BPM90は24フレームで一個
 HRESULT InitRhythm(int stagenum)
 {
-	char	filename0[] = "data\\BGM\\ザリガニ90.wav";
-	char	filename1[] = "data\\BGM\\ザリガニ90.wav";
-	char	filename2[] = "data\\BGM\\sample.wav";
-	char	filename3[] = "data\\BGM\\シオカラ_150.wav";
+	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
+	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
+	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
+	char	filename3[] = "data\\BGM\\02_Unagi_120.wav";
 
 	switch (stagenum)
 	{
 	case 0:
 
-		GameSoundNo = LoadSound(filename1);
+		GameSoundNo = LoadSound(filename0);
 
-		Notestipindex1 = 0;
+		Notestipindex1 = 1;
 		indexNum = 8;
-		errors = -3;
-		sp = 7.5625f;
-		NowBPM = BPM3;
+		errors = 0;
+		sp = 10.8f;
+		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
 	case 1:
 
 		GameSoundNo = LoadSound(filename1);
 
-		Notestipindex1 = 0;
+		Notestipindex1 = 1;
 		indexNum = 8;
-		errors = -3;
-		sp = 7.5625f;
-		NowBPM = BPM3;
+		errors = 0;
+		sp = 10.8f;
+		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
 	case 2:
@@ -122,6 +122,17 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		break;
+	case 9:
+
+		GameSoundNo = LoadSound(filename1);
+
+		Notestipindex1 = 0;
+		indexNum = 8;
+		errors = -3;
+		sp = 7.5625f;
+		NowBPM = BPM3;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
 		break;
 	default:
 		break;
@@ -319,11 +330,11 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame + errors) % (int)NotesT <= 4.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
+	if (((Frame + errors) % (int)NotesT <= 5.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
 	{
 		return true;
 	}
-	else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 4.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
+	else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 5.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
 	{
   		return true;
 	}

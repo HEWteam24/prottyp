@@ -19,7 +19,8 @@
 ENEMY		Enemy;
 ENEMYHP		EnemyHp;
 int			EnemyNum;
-
+int			UnagiPosY;
+bool		BadFlag;
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureEnemy;
 static  int		g_TextureEnemyID;
@@ -32,14 +33,7 @@ static	char	*g_TextureNameEnemyHpB = ENEMY_HP_TEX_B;//テクスチャ名
 //===================================================
 HRESULT InitEnemy(int StageNum)
 {
-
-
-	Enemy.pos = D3DXVECTOR2(ENEMY_SPAWN_POS_X, ENEMY_SPAWN_POS_Y);
-	Enemy.sp = D3DXVECTOR2(ENEMY_SP, ENEMY_SP);
-	Enemy.rot = 0.0f;
-	Enemy.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	Enemy.hp = ENEMY_HP;
-	Enemy.use = true;
+	UnagiPosY = 0;
 
 	//テクスチャのロード
 	switch (StageNum)
@@ -60,6 +54,7 @@ HRESULT InitEnemy(int StageNum)
 		case 2:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_unagi.png");
 			Enemy.size = D3DXVECTOR2(ENEMY02_SIZE_X, ENEMY02_SIZE_Y);
+			UnagiPosY = 100;
 			break;
 		case 3:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_octopus.png");
@@ -95,6 +90,13 @@ HRESULT InitEnemy(int StageNum)
 			break;
 	}
 	
+	Enemy.pos = D3DXVECTOR2(ENEMY_SPAWN_POS_X, ENEMY_SPAWN_POS_Y - UnagiPosY);
+	Enemy.sp = D3DXVECTOR2(ENEMY_SP, ENEMY_SP);
+	Enemy.rot = 0.0f;
+	Enemy.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	Enemy.hp = ENEMY_HP;
+	Enemy.use = true;
+
 
 	if (Enemy.texno == -1)
 	{//ロードエラー
@@ -117,6 +119,7 @@ HRESULT InitEnemy(int StageNum)
 		exit(999);
 	}
 
+	BadFlag = false;
 	EnemyNum = 1;
 	return S_OK;
 }
@@ -164,7 +167,7 @@ void UpdateEnemy()
 	if(!Enemy.use)
 	{
 		Enemy.pos.y += Enemy.sp.y;
-		if (Enemy.pos.y >= ENEMY_SPAWN_POS_Y) 
+		if (Enemy.pos.y >= ENEMY_SPAWN_POS_Y - UnagiPosY)
 		{
 			Enemy.hp  = ENEMY_HP ;
 			Enemy.use = true;
@@ -211,4 +214,29 @@ ENEMY * GetEnemy()
 int	GetEnemyNum()
 {
 	return EnemyNum;
+}
+
+bool BadEnd()
+{
+	if (!BadFlag) {
+		Enemy.sp.x = 0;
+		Enemy.pos.y -= Enemy.sp.y * 4;
+		if (Enemy.pos.y + Enemy.size.y < 0) {
+			BadFlag = true;
+		}
+	}
+	else {
+		Enemy.size.x = Enemy.size.x * 1.1;
+		Enemy.size.y = Enemy.size.y * 1.1;
+
+		Enemy.pos.x = ENEMY_SPAWN_POS_X;
+		Enemy.pos.y -= Enemy.sp.y * 1.5;
+
+		if (Enemy.pos.y < 1080) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 }
