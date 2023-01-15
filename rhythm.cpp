@@ -307,7 +307,6 @@ void UninitRhythm()
 
 void DrawRhythm()
 {
-
 	//ノーツレーンの表示
 	DrawSpriteColor(NotesLane.texno, NotesLane.pos.x, NotesLane.pos.y, NotesLane.size.x, NotesLane.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
@@ -321,10 +320,7 @@ void DrawRhythm()
 
 		DrawSpriteColor(Notes[i].texno, Notes[i].pos.x, Notes[i].pos.y, Notes[i].size.x, Notes[i].size.y,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0 - Notes[i].alpha));
-
 	}
-
-
 }
 
 void SetNotes()
@@ -381,14 +377,18 @@ void ReleaseNotes()
 
 	for (int i = 2; i < NOTES_MAX-2; i += 2) {
 		if (!Notes[i].use) continue;
-		if (Notes[i].num < Min && Notes[i].num != -1) {
-			Min = Notes[i].num;
-			Index = i;
+		if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 6.0f))&& Notes[i].pos.x > (880 - (Notes[i].sp.x * 6.0f))) {
+			Notes[i].use = false;
+			Notes[i + 1].use = false;
+			break;
 		}
-
+		//if (Notes[i].num < Min && Notes[i].num != -1) {
+		//	Min = Notes[i].num;
+		//	Index = i;
+		//}
 	}
-	Notes[Index].use = false;
- 	Notes[Index + 1].use = false;
+	//Notes[Index].use = false;
+ //	Notes[Index + 1].use = false;
 }
 
 bool	MusicEnd()

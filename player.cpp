@@ -162,7 +162,7 @@ void UpdatePlayer(void)
 	effectPos[0] = g_Player.pos.x;
 
 	//****************************************************************************
-	//g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);	//デバッグ用HP自動回復
+	g_Player.hp = min(g_Player.hp += 1, PLAYER_HP_DEFAULT);	//デバッグ用HP自動回復
 	//****************************************************************************
 
 	//体力0でゲームオーバー
@@ -275,9 +275,7 @@ void UpdatePlayer(void)
 			g_Player.pos.x = CENTER_X + g_Player.NowLane * LANE_SIZE_X;	//レーンの中心に
 			g_Player.moving = false;
 		}
-
 	}
-
 }
 
 //=============================================================================
