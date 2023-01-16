@@ -109,8 +109,6 @@ void UpdateGame(void)
 			SceneTransition(SCENE_RESULT);
 		}
 	}
-	
-
 }
 
 //=============================================================================
@@ -126,10 +124,9 @@ void DrawGame(void)
 	DrawBullet();
 	DrawPlayer();
 	DrawEnemyBullet();
-	DrawEnemy();
 	DrawRhythm();
 	DrawHp();
 	DrawSpecial();
 	DrawScore();
-
+	DrawEnemy();
 }

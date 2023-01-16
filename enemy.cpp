@@ -232,7 +232,7 @@ bool BadEnd()
 		Enemy.pos.x = ENEMY_SPAWN_POS_X;
 		Enemy.pos.y -= Enemy.sp.y * 2.0;
 
-		if (Enemy.pos.y < 1080) {
+		if (Enemy.pos.y < 1080-200) {
 			return true;
 		}
 		else {
