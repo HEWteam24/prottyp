@@ -27,6 +27,8 @@
 #include "keyboard.h"
 #include "special.h"
 
+#include "effect.h"
+
 #include "pause.h"
 
 //*****************************************************************************
@@ -57,6 +59,7 @@ HRESULT InitGame(int StageNum)
 	InitEnemy(StageNum);
 	InitEnemyBullet(StageNum);
 	InitRhythm(StageNum);
+	InitEffect();
 	// 背景の初期化
 	InitBG(StageNum);
 	InitLane();
@@ -87,6 +90,7 @@ void UninitGame(void)
 	UninitRhythm();
 	UninitCombo();
 	UninitSpecial();
+	UninitEffect();
 
 	StopSound(g_BGMGame);
 }
@@ -142,6 +146,8 @@ void UpdateGame(void)
 	{
 		pPause->alpha = 0.7f;
 	}
+
+	UpdateEffect();
 }
 
 //=============================================================================
@@ -162,4 +168,5 @@ void DrawGame(void)
 	DrawSpecial();
 	DrawScore();
 	DrawEnemy();
+	DrawEffect();
 }
