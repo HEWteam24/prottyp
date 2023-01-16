@@ -300,7 +300,7 @@ void ReTry()
 
 void Back()
 { 
-	SceneTransition(SCENE_TITLE);
+	SceneTransition(SCENE_STAGESELECT);
 }
 
 PAUSE* GetPause()
