@@ -95,7 +95,7 @@ static float g_AnimeTable[4] =
 //=============================================================================
 void InitPlayer(void)
 {
-	g_TexturePlayer  = LoadTexture((char*)"data/TEXTURE/player02.png");
+	g_TexturePlayer  = LoadTexture((char*)"data/TEXTURE/player.png");
 	g_TextureHp		 = LoadTexture((char*)"data/TEXTURE/Hp.png");
 	g_TextureHpGrid	 = LoadTexture((char*)"data/TEXTURE/HpGrid.png");
 	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
@@ -267,13 +267,18 @@ void UpdatePlayer(void)
 		if ((g_Player.speed.x <= 1.0f) && (g_Player.direction == D_RIGHT))
 		{
 			g_Player.pos.x = CENTER_X + g_Player.NowLane * LANE_SIZE_X;	//レーンの中心に
-			g_Player.moving = false;
+			
+			if (Keyboard_IsKeyUp(KK_D) && (g_Player.moving == true)) {
+				g_Player.moving = false;
+			}
 		}
 		//左移動完了
 		if ((g_Player.speed.x >= -1.0f) && (g_Player.direction == D_LEFT))
 		{
 			g_Player.pos.x = CENTER_X + g_Player.NowLane * LANE_SIZE_X;	//レーンの中心に
-			g_Player.moving = false;
+			if (Keyboard_IsKeyUp(KK_A) && (g_Player.moving == true)) {
+				g_Player.moving = false;
+			}
 		}
 	}
 }
