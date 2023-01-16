@@ -10,6 +10,7 @@
 #include "texture.h"
 #include "sprite.h"
 #include "player.h"
+
 #include "bg.h"
 #include "collision.h"
 #include "input.h"
@@ -26,6 +27,8 @@
 #include "keyboard.h"
 #include "special.h"
 
+#include "pause.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -38,6 +41,7 @@
 // グローバル変数
 //*****************************************************************************
 static int g_BGMGame;
+bool start;
 
 //=============================================================================
 // 初期化処理
@@ -56,6 +60,14 @@ HRESULT InitGame(int StageNum)
 	// 背景の初期化
 	InitBG(StageNum);
 	InitLane();
+
+	//*****************************************************************************************************************
+	//  ゲーム開始カウント
+	//	true  = あり
+	//	false = なし
+
+		start = true;
+	//*****************************************************************************************************************
 
 	return S_OK;
 }
@@ -84,6 +96,8 @@ void UninitGame(void)
 //=============================================================================
 void UpdateGame(void)
 {
+	PAUSE* pPause = GetPause();
+
 	//エンターキーが押されたらSCENE_GAMEへ移行する
 	if (Keyboard_IsKeyDown(KK_G))
 	{
@@ -92,6 +106,14 @@ void UpdateGame(void)
 	UpdateRhythm();
 
 	if (GetFreame() > 120) {
+	
+		if (start)
+		{
+			pPause->pause = true;
+			pPause->restart = true;
+			pPause->pause_frame = 0;
+			pPause->alpha = 0.2f;
+		}
 
 		if (!MusicEnd()) {
 			UpdateBG();
@@ -104,10 +126,21 @@ void UpdateGame(void)
 			UpdateScore();
 			UpdateCombo();
 			UpdateSpecial();
+
+			if (start)
+			{		
+				start = false;		
+			}
+
 		}
 		else {
 			SceneTransition(SCENE_RESULT);
 		}
+	}
+
+	if (!pPause->restart)
+	{
+		pPause->alpha = 0.7f;
 	}
 }
 

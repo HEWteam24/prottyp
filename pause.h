@@ -15,6 +15,7 @@ typedef struct
 	bool pause;
 	bool restart;
 	int pause_frame;
+	float alpha;
 
 	int PauseAction;
 

@@ -47,6 +47,7 @@ void InitPause()
 	hoge.restart = false;	//コンティニュー判定
 	hoge.pause_frame = 0;	//PAUSEから復帰するまでの時間(3秒)
 	hoge.PauseAction = 0;	//PAUSEで選択した機能、及び矢印の場所(Continue、Retry、BackTitle)
+	hoge.alpha = 0.7f;		//暗転具合
 	already = false;		//PAUSEでUIの操作をTrriger化するためのフラグ
 
 	COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -191,7 +192,7 @@ void DrawPause()
 			0.0f,
 			1.0f,
 			1.0f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, hoge.alpha));
 
 		//pauseテキスト
 		if (hoge.restart == false)
