@@ -36,11 +36,9 @@ enum S_DIRECTION_PANEL	//ˆÚ“®‚ÌŒü‚«
 struct SKILL_PANEL
 {
 	D3DXVECTOR2 pos;
-	float spd;
 	D3DXVECTOR2 size;
 	D3DXCOLOR	col;
 	int texno;
-	int direction;
 	bool moving;
 };
 //*****************************************************************************

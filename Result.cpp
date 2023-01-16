@@ -130,12 +130,12 @@ void UpdateResult(void)
 	//エンターキーが押されたらSCENE_TITLEへ移行する
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
-		SceneTransition(SCENE_TITLE);
+		SceneTransition(SCENE_STAGESELECT);
 	}
 	//コントローラーBボタン押したらSCENE_TITLEへ移行
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
-		SceneTransition(SCENE_TITLE);
+		SceneTransition(SCENE_STAGESELECT);
 	}
 
 	//ししゃも移動

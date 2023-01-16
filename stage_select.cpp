@@ -33,6 +33,7 @@ static int g_TextureNamePlate;
 static int g_TextureArrow;
 static int g_TextureOct;
 static int g_BGMNo;//タイトル用BGMの識別子
+
 int NowSelect = (int)STAGE_1;
 int PlateSl;
 float alpha;
@@ -43,8 +44,9 @@ STAGE_PANEL g_StagePanel[STAGE_MAX];
 
 D3DXCOLOR ARROW_COL[2];
 D3DXCOLOR PLATE_COL;
-bool ura;
-bool change;
+bool ura = false;
+bool change = false;
+bool first = true;
 
 //=============================================================================
 // 初期化処理
@@ -73,30 +75,30 @@ HRESULT InitStageSelect(void)
 	g_StagePanel[STAGE_3].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel8.png");
 	g_StagePanel[STAGE_4].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
 	g_StagePanel[STAGE_5].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
-	//g_StagePanel[STAGE_6].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel6.png");
-	//g_StagePanel[STAGE_7].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel7.png");
-	//g_StagePanel[STAGE_8].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel8.png");
-	//g_StagePanel[STAGE_9].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
-	//g_StagePanel[STAGE_10].texnoA= LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
 
-	//構造体の初期化
-	for (int i = 0; i < STAGE_MAX; i++)
+	//初回のみ実行
+	if (first)
 	{
-		g_StagePanel[i].pos = D3DXVECTOR2(-480.0f * 2 + i * 480.0f, CENTER_Y - 50.0f);
-		g_StagePanel[i].spd = 10.0f;
-		g_StagePanel[i].size = D3DXVECTOR2(300.0f, 300.0f);
-		g_StagePanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		g_StagePanel[i].direction = D_RIGHT;
-		g_StagePanel[i].moving = false;
-		g_StagePanel[i].NowLane = i + 3;
+		//構造体の初期化
+		for (int i = 0; i < STAGE_MAX; i++)
+		{
+			g_StagePanel[i].pos = D3DXVECTOR2(-480.0f * 2 + i * 480.0f, CENTER_Y - 50.0f);
+			g_StagePanel[i].spd = 10.0f;
+			g_StagePanel[i].size = D3DXVECTOR2(300.0f, 300.0f);
+			g_StagePanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			g_StagePanel[i].direction = D_RIGHT;
+			g_StagePanel[i].moving = false;
+			g_StagePanel[i].NowLane = i + 3;
+		}
+		ura = false;
+		first = false;
+
+		g_StagePanel[1].size = D3DXVECTOR2(395.0f, 395.0f);;
+		g_StagePanel[STAGE_5].NowLane = PLANE_1;
 	}
-
-	g_StagePanel[1].size = D3DXVECTOR2(395.0f, 395.0f);;
-	g_StagePanel[STAGE_5].NowLane = PLANE_1;
-
+	
 	alpha = 1.0f;
 	color = 1.0f;
-	ura = false;
 	change = false;
 	PlateSl = 0;
 	octRot[0] = 1.0f;
@@ -152,7 +154,6 @@ void UpdateStageSelect(void)
 		else
 		{
 			SceneTransition(SCENE_SKILLSELECT);
-			//SceneTransition(NowSelect+6);
 		}
 	}
 
