@@ -64,8 +64,8 @@ static int g_TextureHp;		//テクスチャのやつ
 static int g_TextureHpGrid;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
-static int g_TextureCGood;	//テクスチャのやつ
-static int g_TextureCBad;	//テクスチャのやつ
+
+static int g_TextureCText;	//テクスチャのやつ
 
 
 static int g_SE_Bullet;		//弾サウンド
@@ -100,8 +100,7 @@ void InitPlayer(void)
 	g_TextureHpGrid	 = LoadTexture((char*)"data/TEXTURE/HpGrid.png");
 	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
 	g_TextureHpB = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
-	g_TextureCGood	 = LoadTexture((char*)"data/TEXTURE/rythm_good.png");
-	g_TextureCBad	 = LoadTexture((char*)"data/TEXTURE/rythm_bad.png");
+	g_TextureCText	 = LoadTexture((char*)"data/TEXTURE/good_bad.png");
 
 	char	file_SE_Bullet[] = "data\\SE\\SE_bullet.wav";
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
@@ -332,13 +331,13 @@ void DrawHp(void)
 	}
 	if (good == C_GOOD)
 	{
-		DrawSpriteColor(g_TextureCGood, NOTESLANE_POS_X, NOTESLANE_POS_Y - 75.0f + (goodPosY), GOOD_BAD_X, GOOD_BAD_Y,
-			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 0.6, 0.4, goodAlpha));
+		DrawSpriteColor(g_TextureCText, NOTESLANE_POS_X, NOTESLANE_POS_Y - 75.0f + (goodPosY), GOOD_BAD_X, GOOD_BAD_Y,
+			0.0f, 0.0f, 1.0f, 0.5f, D3DXCOLOR(1.0, 0.6, 0.4, goodAlpha));
 	}
 	if (good == C_BAD)
 	{
-		DrawSpriteColor(g_TextureCBad, NOTESLANE_POS_X, NOTESLANE_POS_Y - 75.0f + (goodPosY), GOOD_BAD_X, GOOD_BAD_Y,
-			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.8, 0.5, 1.0, goodAlpha));
+		DrawSpriteColor(g_TextureCText, NOTESLANE_POS_X, NOTESLANE_POS_Y - 75.0f + (goodPosY), GOOD_BAD_X, GOOD_BAD_Y,
+			0.0f, 0.5f, 1.0f, 0.5f, D3DXCOLOR(0.8, 0.5, 1.0, goodAlpha));
 	}
 }
 
