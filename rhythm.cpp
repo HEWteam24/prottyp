@@ -71,7 +71,7 @@ HRESULT InitRhythm(int stagenum)
 		errors = 0;
 		sp = 10.8f;
 		NowBPM = BPM2;
-		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	case 1:
 
@@ -82,7 +82,7 @@ HRESULT InitRhythm(int stagenum)
 		errors = 0;
 		sp = 10.8f;
 		NowBPM = BPM2;
-		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	case 2:
 
@@ -93,7 +93,7 @@ HRESULT InitRhythm(int stagenum)
 		errors = 0;
 		sp = 10.8f;
 		NowBPM = BPM2;
-		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	case 3:
 
@@ -116,7 +116,7 @@ HRESULT InitRhythm(int stagenum)
 		errors = 0;
 		sp = 10.8f;
 		NowBPM = BPM2;
-		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 
 	case 5:
@@ -150,7 +150,7 @@ HRESULT InitRhythm(int stagenum)
 		errors = -3;
 		sp = 7.5625f;
 		NowBPM = BPM3;
-		NotesT = (60.0f / (NowBPM / 60.0f)) / 2;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	default:
 		break;
@@ -388,7 +388,7 @@ void ReleaseNotes()
 		//}
 	}
 	//Notes[Index].use = false;
- //	Notes[Index + 1].use = false;
+	//Notes[Index + 1].use = false;
 }
 
 bool	MusicEnd()
