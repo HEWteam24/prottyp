@@ -347,18 +347,28 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	if (((Frame + errors) % (int)NotesT <= 6.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	{
-		return true;
+	//if (((Frame + errors) % (int)NotesT <= 6.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
+	//{
+	//	return true;
+	//}
+	//else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 6.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
+	//{
+ // 		return true;
+	//}
+	//else
+	//{
+	//	return	false;
+	//}
+
+	//ノーツの座標で判定版
+	for (int i = 0; i < NOTES_MAX; i += 2) {
+		if (Notes[i].use) {
+			if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 5.0f)) && Notes[i].pos.x >(880 - (Notes[i].sp.x * 3.0f))) {
+				return true;
+			}
+		}
 	}
-	else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 6.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	{
-  		return true;
-	}
-	else
-	{
-		return	false;
-	}
+	return	false;
 }
 
 NOTES * GetNotes()
@@ -373,9 +383,9 @@ int  GetFreame()
 
 void ReleaseNotes()
 {//一番真ん中に近いノーツを消す関数
-	int		Min = Notes[0].num, Index = 0;
+	//int		Min = Notes[0].num, Index = 0;
 
-	for (int i = 2; i < NOTES_MAX-2; i += 2) {
+	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (!Notes[i].use) continue;
 		if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 6.0f))&& Notes[i].pos.x > (880 - (Notes[i].sp.x * 6.0f))) {
 			Notes[i].use = false;
