@@ -20,7 +20,11 @@
 // マクロ定義
 //*****************************************************************************
 
-#define RING_SIZE (400.0f)
+#define RING_SIZE  (400.0f)
+#define ICON_SIZE  (340.0f)
+#define ICON_ZOOM  (1.16f)
+#define ICON_SPACE (480.0f)
+#define ICON_POS_Y (CENTER_Y-50.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -34,14 +38,15 @@
 static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
 static int g_BGMNo;//BGMの識別子
-int NowSSelect = SKILL_1;
-float Salpha;
-float Scolor;
-float RingRot;
-float RingPosX;
 
-int changeN;
-bool movingSp;
+int NowSSelect = SKILL_1;
+
+float RingRot;	//リング角度
+float RingPosX;	//リングサイズ
+
+int changeN;	//移動猶予
+bool movingSp;	//移動フラグ
+
 SKILL_PANEL g_SkillPanel[SKILL_MAX];
 
 //=============================================================================
@@ -61,24 +66,17 @@ HRESULT InitSkillSelect(void)
 	//構造体の初期化
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		g_SkillPanel[i].pos = D3DXVECTOR2((CENTER_X-480.0f)+i*480.f, CENTER_Y - 50.0f);
-		g_SkillPanel[i].spd = 10.0f;
-		g_SkillPanel[i].size = D3DXVECTOR2(300.0f, 300.0f);
+		g_SkillPanel[i].pos = D3DXVECTOR2((CENTER_X-ICON_SPACE)+i*ICON_SPACE, ICON_POS_Y);
+		g_SkillPanel[i].size = D3DXVECTOR2(ICON_SIZE, ICON_SIZE);
 		g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		g_SkillPanel[i].direction = SD_RIGHT;
 		g_SkillPanel[i].moving = false;
 	}
 
-	g_SkillPanel[1].size = D3DXVECTOR2(395.0f, 395.0f);;
-
-	Salpha = 1.0f;
-	Scolor = 1.0f;
 	changeN = 60;
 
 	RingRot = 0.0f;
 	RingPosX = 0.0f;
 
-	NowSSelect = 1;
 	movingSp = false;
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
@@ -105,28 +103,31 @@ void UpdateSkillSelect(void)
 {
 	SPECIAL* pSp = GetSpecial();
 
-	//エンターキーが押されたらSCENE_GAMEへ移行する
+	//SCENE_GAMEへ
+	//エンターキー
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
 		pSp->type = NowSSelect;
 		SceneTransition(SCENE_GAME);
-		//SceneTransition(NowSSelect+6);
 	}
-	//コントローラーBボタン押したらSCENE_GAMEへ移行
+	//コントローラーBボタン
 	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		pSp->type = NowSSelect;
 		SceneTransition(SCENE_GAME);
-		//SceneTransition(NowSSelect+6);
 	}
+
+	
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
+		//右側に選択移動
 		if (((GetThumbLeftX(0) > 0.3f)||(Keyboard_IsKeyDown(KK_D))) && (movingSp == false) && (NowSSelect < 2))
 		{
 			NowSSelect+=1;
 			//g_SkillPanel[i].moving = true;
 			movingSp = true;
 		}
+		//左側に選択移動
 		if (((GetThumbLeftX(0) < -0.3f) || (Keyboard_IsKeyDown(KK_A))) && (movingSp == false) && (NowSSelect > 0))
 		{
 			NowSSelect-=1;
@@ -134,17 +135,19 @@ void UpdateSkillSelect(void)
 			movingSp = true;
 		}
 		
+		//選択されてたら拡大 & されてなかったら縮小
 		if (i == NowSSelect)
 		{
-			g_SkillPanel[i].size = D3DXVECTOR2(395.0f,395.0f);
+			g_SkillPanel[i].size = D3DXVECTOR2(ICON_SIZE * ICON_ZOOM, ICON_SIZE * ICON_ZOOM);
 			g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		}
 		else
 		{
-			g_SkillPanel[i].size = D3DXVECTOR2(340.0f, 340.0f);
+			g_SkillPanel[i].size = D3DXVECTOR2(ICON_SIZE,ICON_SIZE);
 			g_SkillPanel[i].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
 		}	
 
+		//選択移動猶予
 		if (movingSp==true)
 		{
 			changeN -= 1;
@@ -157,6 +160,7 @@ void UpdateSkillSelect(void)
 		}
 	}
 
+	//セレクト超過を抑える
 	if (NowSSelect >= 3)
 	{
 		NowSSelect = 0;
@@ -168,7 +172,7 @@ void UpdateSkillSelect(void)
 
 	//リングの処理
 	RingRot += 0.5f;
-	RingPosX = (CENTER_X - 480.0f) + NowSSelect * 480.f;
+	RingPosX = (CENTER_X - ICON_SPACE) + NowSSelect * ICON_SPACE;
 }
 
 //=============================================================================
@@ -192,7 +196,7 @@ void DrawSkillSelect(void)
 		GetTexture(g_TextureRing));
 	DrawSpriteColorRotation(
 		RingPosX,
-		CENTER_Y - 50.0f,
+		ICON_POS_Y,
 		RING_SIZE,
 		RING_SIZE,
 		RingRot,
@@ -207,7 +211,7 @@ void DrawSkillSelect(void)
 		GetTexture(g_TextureRing));
 	DrawSpriteColorRotation(
 		RingPosX,
-		CENTER_Y - 50.0f,
+		ICON_POS_Y,
 		RING_SIZE*1.15,
 		RING_SIZE*1.15,
 		RingRot*-1.5,
