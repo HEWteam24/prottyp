@@ -20,6 +20,8 @@
 // マクロ定義
 //*****************************************************************************
 
+#define RING_SIZE (400.0f)
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -29,11 +31,15 @@
 //*****************************************************************************
 
 
-static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
-static int g_BGMNo;//タイトル用BGMの識別子
+static int g_TextureBgStageSelect;//背景用テクスチャの識別子
+static int g_TextureRing;
+static int g_BGMNo;//BGMの識別子
 int NowSSelect = SKILL_1;
 float Salpha;
 float Scolor;
+float RingRot;
+float RingPosX;
+
 int changeN;
 bool movingSp;
 SKILL_PANEL g_SkillPanel[SKILL_MAX];
@@ -44,12 +50,13 @@ SKILL_PANEL g_SkillPanel[SKILL_MAX];
 HRESULT InitSkillSelect(void)
 {
 	//テクスチャを読み込んで識別子を受け取る
-	g_TextureBgStageSelect[0] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
-	g_TextureBgStageSelect[1] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
+	g_TextureBgStageSelect = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
 
 	g_SkillPanel[SKILL_0].texno = LoadTexture((char*)"data/TEXTURE/icon_heal.png");
 	g_SkillPanel[SKILL_1].texno = LoadTexture((char*)"data/TEXTURE/icon_damage.png");
 	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
+
+	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 
 	//構造体の初期化
 	for (int i = 0; i < SKILL_MAX; i++)
@@ -67,6 +74,9 @@ HRESULT InitSkillSelect(void)
 	Salpha = 1.0f;
 	Scolor = 1.0f;
 	changeN = 60;
+
+	RingRot = 0.0f;
+	RingPosX = 0.0f;
 
 	NowSSelect = 1;
 	movingSp = false;
@@ -156,7 +166,9 @@ void UpdateSkillSelect(void)
 		NowSSelect = 2;
 	}
 
-
+	//リングの処理
+	RingRot += 0.5f;
+	RingPosX = (CENTER_X - 480.0f) + NowSSelect * 480.f;
 }
 
 //=============================================================================
@@ -165,19 +177,44 @@ void UpdateSkillSelect(void)
 void DrawSkillSelect(void)
 {
 	//背景表示
-	DrawSpriteColor(g_TextureBgStageSelect[1], CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6f, 0.6f, 0.6f, 1.0f));
-	DrawSpriteColor(g_TextureBgStageSelect[0], CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6f, 0.6f, 0.6f, Salpha));
+	DrawSpriteColor(g_TextureBgStageSelect, CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-
-	//ステージパネルの表示
+	//スキルアイコンの表示
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		//DrawSpriteLeftTop(g_SkillPanel[i].texno, 0.0f, 0.0f, g_SkillPanel[i].size.x, g_SkillPanel[i].size.y,
-		//	0.0f, 0.0f, 1.0f, 1.0);
-
 			DrawSpriteColor(g_SkillPanel[i].texno, g_SkillPanel[i].pos.x, g_SkillPanel[i].pos.y, g_SkillPanel[i].size.x, g_SkillPanel[i].size.y,
 				0.0f, 0.0f, 1.0f, 1.0, g_SkillPanel[i].col);
 	}
+
+	//リング
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		RingPosX,
+		CENTER_Y - 50.0f,
+		RING_SIZE,
+		RING_SIZE,
+		RingRot,
+		D3DXCOLOR(0.0f, 0.8f, 0.6f, 1.0f),
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
+
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		RingPosX,
+		CENTER_Y - 50.0f,
+		RING_SIZE*1.15,
+		RING_SIZE*1.15,
+		RingRot*-1.5,
+		D3DXCOLOR(0.0f, 1.0f, 0.8f, 1.0f),
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
 }
