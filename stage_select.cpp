@@ -18,7 +18,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+#define WHITE_MAX  (20)
+#define WHITE_DIST (40)
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -31,6 +32,7 @@
 static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
 static int g_TextureNamePlate;
 static int g_TextureArrow;
+static int g_TextureWhite;
 static int g_TextureOct;
 static int g_BGMNo;//タイトル用BGMの識別子
 
@@ -40,7 +42,10 @@ float alpha;
 float color;
 
 float octRot[2];
+float arrowSize[2];
 STAGE_PANEL g_StagePanel[STAGE_MAX];
+WHITEBOX	g_White[WHITE_MAX];
+int whiteCnt;
 
 D3DXCOLOR ARROW_COL[2];
 D3DXCOLOR PLATE_COL;
@@ -76,6 +81,8 @@ HRESULT InitStageSelect(void)
 	g_StagePanel[STAGE_4].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
 	g_StagePanel[STAGE_5].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
 
+	g_TextureWhite = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+
 	//初回のみ実行
 	if (first)
 	{
@@ -106,7 +113,22 @@ HRESULT InitStageSelect(void)
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	arrowSize[0] = 100.0f;
+	arrowSize[1] = 100.0f;
 	PLATE_COL	 = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//ホワイト
+	for (int w = 0; w < WHITE_MAX; w++)
+	{
+		g_White[w].pos = D3DXVECTOR2(0.0f, 0.0f);
+		g_White[w].spd = 5.0f;
+		g_White[w].size= D3DXVECTOR2(50.0f, 50.0f);
+		g_White[w].rot = 0.0f;
+		g_White[w].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		g_White[w].use = false;
+	}
+	whiteCnt = 0;
+
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
@@ -168,6 +190,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].direction = D_RIGHT;		//右移動
 			alpha = 1.0f;
 			ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+			arrowSize[1] = 110.0f;
 		}
 		//左に移動
 		if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f)) && (g_StagePanel[i].moving == false))
@@ -178,6 +201,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].direction = D_LEFT;		//左移動
 			alpha = 1.0f;
 			ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
+			arrowSize[0] = 110.0f;
 		}
 
 
@@ -206,6 +230,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].moving = false;
 			//NowSelect++;	//選択ステージ変更
 			ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			arrowSize[1] = 100.0f;
 		}
 		//左移動完了
 		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT) && (g_StagePanel[i].moving = true))
@@ -214,6 +239,7 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].moving = false;
 			//NowSelect--;	//選択ステージ変更
 			ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			arrowSize[0] = 100.0f;
 		}
 
 		if (g_StagePanel[i].NowLane == PLANE_3)
@@ -281,9 +307,28 @@ void UpdateStageSelect(void)
 			octRot[1] = 0.05f;
 		}
 
-
 		octRot[0] += octRot[1];
 
+
+		for (int w = 0; w < WHITE_MAX; w++)
+		{
+			g_White[w].pos.y -= g_White[w].spd;
+			g_White[w].rot += 1.0f;
+			if (g_White[w].pos.y <= SCREEN_HEIGHT*-1)
+			{
+				g_White[w].use = false;
+			}
+		}
+		whiteCnt += 1;
+		if (whiteCnt == 30)
+		{
+			SetWhite((frand() * (1920 / 4)) * 4, frand() * 5, frand() * 3);
+		}
+		if (whiteCnt == 60)
+		{
+			SetWhite((frand() * (1920 / 4)) * 1, frand() * 5, frand() * 3);
+			whiteCnt = 0;
+		}
 	}
 }
 
@@ -311,10 +356,11 @@ void DrawStageSelect(void)
 	}
 
 	//矢印
-	DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, 100.0f, 100.0f,
+	DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, arrowSize[1], arrowSize[1],
 		0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
-	DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, 100.0f, 100.0f,
+	DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, arrowSize[0], arrowSize[0],
 		0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
+
 
 
 
@@ -367,6 +413,28 @@ void DrawStageSelect(void)
 		1.0f,
 		1
 	);
+
+	for (int i = 0; i < WHITE_MAX; i++)
+	{
+		if (g_White[i].use == true)
+		{
+			GetDeviceContext()->PSSetShaderResources(0, 1,
+				GetTexture(g_TextureWhite));
+
+			DrawSpriteColorRotation(
+				g_White[i].pos.x,
+				g_White[i].pos.y,
+				g_White[i].size.x,
+				g_White[i].size.y,
+				g_White[i].rot,
+				g_White[i].col,
+				0.0f,
+				1.0f,
+				1.0f,
+				1
+			);
+		}
+	}
 }
 
 int GetGemeStageNum(void)
@@ -377,4 +445,22 @@ int GetGemeStageNum(void)
 	}
 
 	return NowSelect;
+}
+
+void SetWhite(int x,int sz,int rt)
+{
+	for (int i = 0; i < WHITE_MAX; i++)
+	{
+		if (g_White[i].use == false)
+		{
+			g_White[i].pos.x = x;
+			g_White[i].pos.y = SCREEN_HEIGHT*1.1;
+			g_White[i].size.x = sz * 8.0f;
+			g_White[i].size.y = sz * 8.0f;
+			g_White[i].rot = rt * 45.0f;
+			g_White[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+			g_White[i].use = true;
+			return;
+		}
+	}
 }

@@ -61,6 +61,17 @@ struct STAGE_PANEL
 	int NowLane;
 	bool moving;
 };
+
+struct WHITEBOX
+{
+	D3DXVECTOR2 pos;
+	float spd;
+	D3DXVECTOR2 size;
+	float rot;
+	D3DXCOLOR	col;
+	bool use;
+};
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -69,3 +80,4 @@ void UninitStageSelect(void);
 void UpdateStageSelect(void);
 void DrawStageSelect(void);
 int GetGemeStageNum(void);
+void SetWhite(int x,int sz,int rt);
