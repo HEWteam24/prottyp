@@ -372,9 +372,10 @@ void PlayerCheck(void)
 		g_Player.flag = true;
 		ReleaseNotes();
 
-		SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X + 20.0f + (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
-		SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 10.0f + (frand() * 3) * 10.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
-		SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 20.0f - (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
+		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X + 20.0f + (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
+		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 10.0f + (frand() * 3) * 10.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
+		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 20.0f - (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
+		SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X, NOTESLANE_POS_Y), D3DXVECTOR2(300.0f, 300.0f));
 	}
 	else  //BAD•]‰¿
 	{

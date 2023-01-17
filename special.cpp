@@ -25,10 +25,17 @@
 #include "special.h""
 #include "combo.h"
 
+#define SKILL_ICON_POS_X	(1775.0f)
+#define SKILL_ICON_POS_Y	( 900.0f)
+#define SKILL_ICON_SIZE		( 200.0f)
+
+
 //スペシャルのテクスチャ
 static int g_SpecialFrameTexture;
 static int g_SpecialNowTexture;
 static int g_SpecialIconTexture;
+static int g_TextureGoRing;
+static int g_TextureCharge;
 
 //スペシャルのSE
 static int g_SE_Special;		
@@ -43,9 +50,14 @@ bool start_timer = false;
 float colorR;
 float colorG;
 float colorB;
+float Calpha;
 float IconcolorR;
 float IconcolorG;
 float IconcolorB;
+
+int chargeUv;
+
+float GoRingrot;
 
 SPECIAL sp;
 
@@ -55,6 +67,8 @@ void InitSpecial()
 	g_SpecialNowTexture = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
 	g_SpecialFrameTexture = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureGoRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+	g_TextureCharge= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
 
 	//SEのロード
 	char	file_SE_Special[] = "data\\SE\\SE_Special.wav";
@@ -66,13 +80,19 @@ void InitSpecial()
 	sp.w = 0;
 	sp.h = 0;
 
+	GoRingrot = 0.0f;
+
 	timer = 0;
 	colorR = 1.0f;
 	colorG = 1.0f;
 	colorB = 1.0f;
+	Calpha = 0.5f;
 	IconcolorR = 1.0f;
 	IconcolorG = 1.0f;
 	IconcolorB = 1.0f;
+
+	chargeUv = 0;
+
 	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
 	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
@@ -130,6 +150,7 @@ void UpdateSpecial()
 	{
 		colorB = 0.0f;
 		sp.UseOk = true;
+		Calpha = 1.0f;
 	}
 
 	//Yボタンでスペシャル発動
@@ -163,8 +184,9 @@ void UpdateSpecial()
 	{
 		timer++;
 		colorB = 1.0f;
-		colorG = 0.0f;
+		colorG = 0.4f;
 		colorR = 1.0f;
+		GoRingrot += 4.0f;
 	}
 
 	//5秒で終了
@@ -183,47 +205,92 @@ void UpdateSpecial()
 		colorR = 1.0f;
 		colorG = 1.0f;
 		colorB = 1.0f;
+		Calpha = 0.5f;
 	}
 
+	if (sp.UseOk == true)
+	{
+		GoRingrot += 1.0f;
+	}
+
+	if (sp.charge >= 15)
+	{
+		chargeUv = 1;
+	}
+	else
+	{
+		chargeUv = 0;
+	}
 }
 
 void DrawSpecial()
 {
 
-	//HP下地
-	DrawSpriteColor(g_SpecialFrameTexture,
-		SPECIAL_POS_X, 
-		SPECIAL_POS_Y,
-		SPECIAL_F_SIZE_X,
-		SPECIAL_F_SIZE_Y,
-		0.0f,
-		0.0f, 
-		1.0f,
-		1.0f,
+	////HP下地
+	//DrawSpriteColor(g_SpecialFrameTexture,
+	//	SPECIAL_POS_X, 
+	//	SPECIAL_POS_Y,
+	//	SPECIAL_F_SIZE_X,
+	//	SPECIAL_F_SIZE_Y,
+	//	0.0f,
+	//	0.0f, 
+	//	1.0f,
+	//	1.0f,
+	//	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	////HPバー
+	//DrawSpriteColor(g_SpecialNowTexture,
+	//	SPECIAL_POS_X,
+	//	SPECIAL_POS_Y +((SPECIAL_MAX - sp.charge) * 15)/2,
+	//	SPECIAL_SIZE_X,
+	//	SPECIAL_SIZE_Y - ((SPECIAL_MAX - sp.charge) * 15),
+	//	0.0f,
+	//	0.0f,
+	//	1.0f,
+	//	1.0f,
+	//	D3DXCOLOR(colorR, colorG, colorB, 1.0f));
+
+	//アイコン チャージ
+	DrawSpriteColor(g_TextureCharge,
+		SKILL_ICON_POS_X,
+		SKILL_ICON_POS_Y,
+		SKILL_ICON_SIZE*0.85,
+		SKILL_ICON_SIZE*0.85,
+		1.0f / 15 * sp.charge,
+		0.5f * chargeUv,
+		1.0f / 15,
+		0.5f,
 		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-	//HPバー
-	DrawSpriteColor(g_SpecialNowTexture,
-		SPECIAL_POS_X,
-		SPECIAL_POS_Y +((SPECIAL_MAX - sp.charge) * 15)/2,
-		SPECIAL_SIZE_X,
-		SPECIAL_SIZE_Y - ((SPECIAL_MAX - sp.charge) * 15),
-		0.0f,
-		0.0f,
-		1.0f,
-		1.0f,
-		D3DXCOLOR(colorR, colorG, colorB, 1.0f));
-
+	//アイコン
 	DrawSpriteColor(g_SpecialIconTexture,
-		1775.0f,
-		900.0f,
-		200.0f,
-		200.0f,
+		SKILL_ICON_POS_X,
+		SKILL_ICON_POS_Y,
+		SKILL_ICON_SIZE,
+		SKILL_ICON_SIZE,
 		0.0f,
 		0.0f,
 		1.0f,
 		1.0f,
-		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		D3DXCOLOR(1.0f, 1.0f, 1.0f, Calpha));
+
+
+	//リング
+		GetDeviceContext()->PSSetShaderResources(0, 1,
+			GetTexture(g_TextureGoRing));
+		DrawSpriteColorRotation(
+			SKILL_ICON_POS_X,
+			SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE*1.1,
+			SKILL_ICON_SIZE*1.1,
+			GoRingrot,
+			D3DXCOLOR(colorR, colorG, colorB, 1.0f),
+			0.0f,
+			1.0f,
+			1.0f,
+			1
+		);
+
 }
 
 //スペシャルの増加
