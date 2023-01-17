@@ -107,10 +107,10 @@ void UpdateGame(void)
 	{
 		SceneTransition(SCENE_TITLE);
 	}
-	UpdateRhythm();
 
-	if (GetFreame() > 120) {
-	
+	UpdateRhythm();
+	if (GetFreame() > 30) {
+
 		if (start)
 		{
 			pPause->pause = true;
@@ -132,8 +132,8 @@ void UpdateGame(void)
 			UpdateSpecial();
 
 			if (start)
-			{		
-				start = false;		
+			{
+				start = false;
 			}
 
 		}

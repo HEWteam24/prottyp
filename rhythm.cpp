@@ -101,8 +101,8 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 2;
 		indexNum = 8;
-		errors = -1;
-		sp = 12.0f;
+		errors = 0;
+		sp = 11.95f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
@@ -125,7 +125,7 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 2;
 		indexNum = 8;
-		errors = -1;
+		errors = -2;
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
@@ -147,7 +147,7 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 0;
 		indexNum = 8;
-		errors = -3;
+		errors = 0;
 		sp = 7.5625f;
 		NowBPM = BPM3;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
@@ -226,13 +226,13 @@ void UpdateRhythm()
 {
 	
 	Frame++;
-	if (Frame == 120)
+	if (Frame == 30)
 	{
 		PlaySound(GameSoundNo, -1);
 	}
-	if (Frame >= 120)
+	if (Frame >= 30)
 	{
-		if ((Frame) % (int)NotesT == 0.0f)
+		if (((Frame - errors) % (int)NotesT) == 0.0f)
 		{
 			if (Notestip[Notestipindex1][Notestipindex2 % indexNum] == 1)
 			{
@@ -240,7 +240,7 @@ void UpdateRhythm()
 			}
  			else { int n = 0; }
 
-			if ((Frame) % ((int)NotesT * 4) == 0.0f) {
+			if ((Frame - errors) % ((int)NotesT * 4)  == 0.0f) {
 				SETBULLET();
 			}
 			Notestipindex2++;
