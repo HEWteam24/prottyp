@@ -39,7 +39,7 @@ static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\EnemyBullet01
 
 int g_EnemyBulletHpTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletHp;
-static	char *g_TextureEnemyBulletHpName = (char*)"data\\TEXTURE\\enemy_tooth.png";//テクスチャ名
+static	char *g_TextureEnemyBulletHpName = (char*)"data\\TEXTURE\\enemy_tooth02.png";//テクスチャ名
 
 int g_EnemyBulletTransTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletTrans;
@@ -128,7 +128,7 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletHp[j].h = ENEMYBULLET_SIZE_H * 2;
 		g_EnemyBulletHp[j].pos = D3DXVECTOR2(0, -20);
 		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
-		g_EnemyBulletHp[j].hp = 3;
+		g_EnemyBulletHp[j].hp = 2;
 	}
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
 	g_SE_Damage = LoadSound(file_SE_Damage);
@@ -274,7 +274,7 @@ void UpdateEnemyBullet()
 				g_EnemyBulletTrans[k].use = false;
 			}
 
-			if (CollisionBB(g_EnemyBulletTrans[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletTrans[k].w, g_EnemyBulletTrans[k].h), pPlayer->size / 2))
+			if (CollisionBB(g_EnemyBulletTrans[k].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletTrans[k].w, g_EnemyBulletTrans[k].h), pPlayer->size / 2))
 			{
 				if (HitBullet)
 				{
@@ -322,7 +322,7 @@ void UpdateEnemyBullet()
 				}
 			}
 
-			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
+			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
 			{
 				g_EnemyBulletHp[j].use = false;
 				if (sp->get_damage_down == true)
