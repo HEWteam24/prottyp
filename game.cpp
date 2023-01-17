@@ -113,6 +113,7 @@ void UpdateGame(void)
 	
 		if (start)
 		{
+			PauseSound(BGM_RE());
 			pPause->pause = true;
 			pPause->restart = true;
 			pPause->pause_frame = 0;
@@ -120,6 +121,8 @@ void UpdateGame(void)
 		}
 
 		if (!MusicEnd()) {
+			
+
 			UpdateBG();
 			UpdateLane();
 
