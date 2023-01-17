@@ -39,7 +39,7 @@ static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\EnemyBullet01
 
 int g_EnemyBulletHpTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletHp;
-static	char *g_TextureEnemyBulletHpName = (char*)"data\\TEXTURE\\enemy_tooth.png";//テクスチャ名
+static	char *g_TextureEnemyBulletHpName = (char*)"data\\TEXTURE\\enemy_tooth02.png";//テクスチャ名
 
 int g_EnemyBulletTransTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletTrans;
