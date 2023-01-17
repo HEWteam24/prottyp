@@ -25,9 +25,9 @@
 #include "special.h""
 #include "combo.h"
 
-#define SKILL_ICON_POS_X	(1775.0f)
+#define SKILL_ICON_POS_X	(1600.0f)
 #define SKILL_ICON_POS_Y	( 900.0f)
-#define SKILL_ICON_SIZE		( 200.0f)
+#define SKILL_ICON_SIZE		( 220.0f)
 
 
 //スペシャルのテクスチャ
@@ -285,6 +285,22 @@ void DrawSpecial()
 			SKILL_ICON_SIZE*1.1,
 			GoRingrot,
 			D3DXCOLOR(colorR, colorG, colorB, 1.0f),
+			0.0f,
+			1.0f,
+			1.0f,
+			1
+		);
+
+		//リング
+		GetDeviceContext()->PSSetShaderResources(0, 1,
+			GetTexture(g_TextureGoRing));
+		DrawSpriteColorRotation(
+			SKILL_ICON_POS_X,
+			SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE * 0.95,
+			SKILL_ICON_SIZE * 0.95,
+			GoRingrot*0.8,
+			D3DXCOLOR(colorR*0.8, colorG*0.8, colorB*0.8, 1.0f),
 			0.0f,
 			1.0f,
 			1.0f,
