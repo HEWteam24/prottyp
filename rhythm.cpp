@@ -228,7 +228,7 @@ void UpdateRhythm()
 
 	if (Frame == 120)
 	{
-		PlaySound(GameSoundNo, -1);
+		PlaySound(GameSoundNo, 0);
 	}
 	Frame++;
 	if (Frame >= 120)
