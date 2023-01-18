@@ -353,16 +353,13 @@ void DrawStageSelect(void)
 	{
 		DrawSpriteColor(g_TextureNamePlate, CENTER_X, CENTER_Y + 250.0f, 500.0f, 100.0f,
 			0.0f, (1.0f / 11) * PlateSl, 1.0f, (1.0f / 11), PLATE_COL);
+
+		//矢印
+		DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, arrowSize[1], arrowSize[1],
+			0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
+		DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, arrowSize[0], arrowSize[0],
+			0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
 	}
-
-	//矢印
-	DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, arrowSize[1], arrowSize[1],
-		0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
-	DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, arrowSize[0], arrowSize[0],
-		0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
-
-
-
 
 	//ステージパネルの表示
 	for (int i = 0; i < STAGE_MAX; i++)
