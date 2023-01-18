@@ -102,7 +102,7 @@ HRESULT InitRhythm(int stagenum)
 		Notestipindex1 = 2;
 		indexNum = 8;
 		errors = 0;
-		sp = 11.95f;
+		sp = 12.5f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
@@ -226,11 +226,11 @@ void UpdateRhythm()
 {
 	
 	Frame++;
-	if (Frame == 30)
+	if (Frame == 1)
 	{
 		PlaySound(GameSoundNo, -1);
 	}
-	if (Frame >= 30)
+	if (Frame >= 120)
 	{
 		if (((Frame - errors) % (int)NotesT) == 0.0f)
 		{
