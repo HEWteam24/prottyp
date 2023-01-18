@@ -439,7 +439,6 @@ void DrawStageSelect(void)
 
 int GetGemeStageNum(void)
 {
-
 	return NowSelect;
 }
 
