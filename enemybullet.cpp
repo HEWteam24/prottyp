@@ -391,7 +391,7 @@ void SETBULLET()
 	{
 		for (int j = 0; j < MAP_SIZE_X; j++)
 		{
-			switch (StageBullet[NowStage][nowY][j])
+ 			switch (StageBullet[NowStage][nowY][j])
 			{
 			case 0:
 				IsAtk = false;
