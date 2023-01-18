@@ -276,7 +276,7 @@ void UpdateEnemyBullet()
 				g_EnemyBulletTrans[k].use = false;
 			}
 
-			if (CollisionBB(g_EnemyBulletTrans[k].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletTrans[k].w, g_EnemyBulletTrans[k].h), pPlayer->size / 2))
+			if (CollisionBB(g_EnemyBulletTrans[k].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletTrans[k].w, g_EnemyBulletTrans[k].h), pPlayer->size / 2))
 			{
 				if (HitBullet)
 				{
@@ -378,7 +378,7 @@ void DrawEnemyBullet()
 		if (g_EnemyBulletHp[z].use)
 		{
 			DrawSpriteColor(g_EnemyBulletHpTex, g_EnemyBulletHp[z].pos.x, g_EnemyBulletHp[z].pos.y, g_EnemyBulletHp[z].w, g_EnemyBulletHp[z].h,
-				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 0.3 * g_EnemyBulletHp[z].hp, 0.3 * g_EnemyBulletHp[z].hp, 1.0));
 		}
 	}
 }
