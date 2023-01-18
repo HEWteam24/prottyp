@@ -73,6 +73,8 @@ HRESULT InitEnemyBullet(int Stagenum)
 		BulletSp = ENEMYBULLET_SPEED3;
 	case 4:
 		BulletSp = ENEMYBULLET_SPEED3;
+	case 7:
+		BulletSp = ENEMYBULLET_SPEED3;
 	case 8:
 		BulletSp = ENEMYBULLET_SPEED3;
 	case 9:
@@ -391,7 +393,7 @@ void SETBULLET()
 	{
 		for (int j = 0; j < MAP_SIZE_X; j++)
 		{
-			switch (StageBullet[NowStage][nowY][j])
+ 			switch (StageBullet[NowStage][nowY][j])
 			{
 			case 0:
 				IsAtk = false;
