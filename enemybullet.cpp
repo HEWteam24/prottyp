@@ -141,10 +141,8 @@ HRESULT InitEnemyBullet(int Stagenum)
 	pPlayer = GetPlayer();
 	nowY = 0;
 
-	NowStage = GetGemeStageNum();
-	if (NowStage >= 6) {
-		NowStage  -= 5;
-	}
+	NowStage = Stagenum;
+
 	return S_OK;
 }
 

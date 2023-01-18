@@ -267,6 +267,10 @@ void UpdateStageSelect(void)
 				}
 			}
 			NowSelect = i;
+			if ((ura) && NowSelect > 0)
+			{
+				NowSelect += 5;
+			}
 			//g_TextureBgStageSelect[1] = g_StagePanel[i].texnoA;
 		}
 		else
@@ -292,7 +296,6 @@ void UpdateStageSelect(void)
 				if (ura)
 				{
 					ura = false;
-
 				}
 				else
 				{
@@ -436,10 +439,6 @@ void DrawStageSelect(void)
 
 int GetGemeStageNum(void)
 {
-	if ((ura) && (NowSelect > 0))
-	{
-		NowSelect += 5;
-	}
 
 	return NowSelect;
 }
