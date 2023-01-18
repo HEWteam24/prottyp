@@ -20,6 +20,7 @@
 //*****************************************************************************
 #define WHITE_MAX  (20)
 #define WHITE_DIST (40)
+#define	HARD_SIZE  (300.0f)
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -34,6 +35,9 @@ static int g_TextureNamePlate;
 static int g_TextureArrow;
 static int g_TextureWhite;
 static int g_TextureOct;
+static int g_TextureUIButton;
+static int g_TextureUIHard;
+
 static int g_BGMNo;//タイトル用BGMの識別子
 
 int NowSelect = (int)STAGE_1;
@@ -41,6 +45,7 @@ int PlateSl;
 float alpha;
 float color;
 
+float HardCol[2];
 float octRot[2];
 float arrowSize[2];
 STAGE_PANEL g_StagePanel[STAGE_MAX];
@@ -82,6 +87,8 @@ HRESULT InitStageSelect(void)
 	g_StagePanel[STAGE_5].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
 
 	g_TextureWhite = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureUIButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureUIHard = LoadTexture((char*)"data/TEXTURE/UI_Hard.png");
 
 	//初回のみ実行
 	if (first)
@@ -110,6 +117,8 @@ HRESULT InitStageSelect(void)
 	PlateSl = 0;
 	octRot[0] = 1.0f;
 	octRot[1] = 0.1f;
+	HardCol[0] = 1.0f;
+	HardCol[1] = 0.3f;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -296,10 +305,14 @@ void UpdateStageSelect(void)
 				if (ura)
 				{
 					ura = false;
+					HardCol[0] = 1.0f;
+					HardCol[1] = 0.3f;
 				}
 				else
 				{
 					ura = true;
+					HardCol[0] = 0.3f;
+					HardCol[1] = 1.0f;
 				}
 				change = false;
 			}
@@ -362,6 +375,16 @@ void DrawStageSelect(void)
 			0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
 		DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, arrowSize[0], arrowSize[0],
 			0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
+
+		//難易度パネル
+		DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
+			0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
+		DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
+			0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
+		DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, HARD_SIZE / 3, HARD_SIZE / 3,
+			0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+
 	}
 
 	//ステージパネルの表示
