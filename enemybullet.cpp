@@ -54,6 +54,9 @@ bool AddAlfa = true;
 bool HitBullet = true;
 
 static float	 BulletSp;
+int NowStage;
+
+
 //================================
 //‰Šú‰»
 //================================
@@ -137,6 +140,11 @@ HRESULT InitEnemyBullet(int Stagenum)
 
 	pPlayer = GetPlayer();
 	nowY = 0;
+
+	NowStage = GetGemeStageNum();
+	if (NowStage >= 6) {
+		NowStage  -= 5;
+	}
 	return S_OK;
 }
 
@@ -163,6 +171,8 @@ void UninitEnemyBullet()
 		g_TextureEnemyBulletHp->Release();
 		g_TextureEnemyBulletHp = NULL;
 	}
+
+
 }
 
 //XVˆ—
@@ -388,7 +398,7 @@ void SETBULLET()
 	int atk = 0;	//“G‚ÌUŒ‚—p
 	bool IsAtk = true;
 
-	int NowStage = GetGemeStageNum();
+
 	if (nowY < MAP_SIZE_Y)
 	{
 		for (int j = 0; j < MAP_SIZE_X; j++)

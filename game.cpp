@@ -109,7 +109,7 @@ void UpdateGame(void)
 	}
 
 	UpdateRhythm();
-	if (GetFreame() > 30) {
+	if (GetFreame() > 120) {
 
 		if (start)
 		{
