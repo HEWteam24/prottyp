@@ -106,7 +106,7 @@ void UpdateTuto(void)
 		UpdateRhythm();
 	}
 
-	if ((GetFreame() > 120)&&(stop==false)) {
+	if ((GetFreame() >= 120)&&(stop==false)) {
 
 		if (!MusicEnd()) {
 			
@@ -127,7 +127,7 @@ void UpdateTuto(void)
 		}
 	}
 
-	if (GetFreame() == 121)
+	if (GetFreame() == 151 && stop != true)
 	{
 		PauseSound(BGM_RE());
 		stop = true;
