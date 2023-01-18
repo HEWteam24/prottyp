@@ -24,7 +24,8 @@
 #define ICON_SIZE  (340.0f)
 #define ICON_ZOOM  (1.16f)
 #define ICON_SPACE (480.0f)
-#define ICON_POS_Y (CENTER_Y-50.0f)
+#define ICON_POS_Y (CENTER_Y-120.0f)
+#define PLATE_SIZE (300.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -37,6 +38,7 @@
 
 static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
+static int g_TextureSkillPlate;
 static int g_BGMNo;//BGMの識別子
 
 int NowSSelect = SKILL_1;
@@ -60,6 +62,8 @@ HRESULT InitSkillSelect(void)
 	g_SkillPanel[SKILL_0].texno = LoadTexture((char*)"data/TEXTURE/icon_heal.png");
 	g_SkillPanel[SKILL_1].texno = LoadTexture((char*)"data/TEXTURE/icon_damage.png");
 	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
+
+	g_TextureSkillPlate = LoadTexture((char*)"data/TEXTURE/skill_plate.png");
 
 	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 
@@ -188,8 +192,12 @@ void DrawSkillSelect(void)
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
 			DrawSpriteColor(g_SkillPanel[i].texno, g_SkillPanel[i].pos.x, g_SkillPanel[i].pos.y, g_SkillPanel[i].size.x, g_SkillPanel[i].size.y,
-				0.0f, 0.0f, 1.0f, 1.0, g_SkillPanel[i].col);
+				0.0f, 0.0f, 1.0f, 1.0f, g_SkillPanel[i].col);
 	}
+
+	//説明
+	DrawSpriteColor(g_TextureSkillPlate, CENTER_X, CENTER_Y+300.0f, PLATE_SIZE*2, PLATE_SIZE,
+		0.0f, 1.0f/3*NowSSelect-1, 1.0f, 1.0/3, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 
 	//リング
 	GetDeviceContext()->PSSetShaderResources(0, 1,
