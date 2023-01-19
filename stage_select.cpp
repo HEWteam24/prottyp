@@ -194,6 +194,9 @@ void UninitStageSelect(void)
 		}
 	}
 
+	color = 1.0f;
+	skillSlc = false;
+	change = false;
 
 	for (int i = 0; i < 11; i++)
 	{
@@ -224,22 +227,6 @@ void UpdateStageSelect(void)
 		{
 			change = true;
 		}
-
-		//エンターキー、またはBボタンが押されたらSCENE_GAMEへ移行する
-		//if (Keyboard_IsKeyDown(KK_ENTER) || IsButtonTriggered(0, XINPUT_GAMEPAD_B))
-		//{
-
-
-		//	if (NowSelect == 0)
-		//	{
-		//		SceneTransition(SCENE_TUTO);
-		//	}
-
-		//	else
-		//	{
-		//		SceneTransition(SCENE_SKILLSELECT);
-		//	}
-		//}
 
 		for (int i = 0; i < STAGE_MAX; i++)
 		{
@@ -432,7 +419,7 @@ void UpdateStageSelect(void)
 	}
 
 	//スキルセレクト画面に切り替え
-	if (((Keyboard_IsKeyDown(KK_ENTER)) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (!skillSlc))
+	if (((Keyboard_IsKeyDown(KK_ENTER)) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (!skillSlc)&&(!change) && (!g_StagePanel[0].moving)&&(color >= 1.0f))
 	{
 		skillSlc = true;
 		enter = true;
