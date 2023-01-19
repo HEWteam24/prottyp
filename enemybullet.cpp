@@ -236,7 +236,7 @@ void UpdateEnemyBullet()
 				//スペシャルの被ダメ減少
 				if (sp->get_damage_down == true)
 				{
-					pPlayer->hp -= 5.0f;
+					pPlayer->hp -= 0.0f;
 				}
 				else
 				{
@@ -265,7 +265,7 @@ void UpdateEnemyBullet()
 				g_EnemyBulletLong[k].use = false;
 				if (sp->get_damage_down == true)
 				{
-					pPlayer->hp -= 3.0f;
+					pPlayer->hp -= 0.0f;
 				}
 				else
 				{
@@ -297,7 +297,7 @@ void UpdateEnemyBullet()
 					g_EnemyBulletTrans[k].use = false;
 					if (sp->get_damage_down == true)
 					{
-						pPlayer->hp -= 10.0f;
+						pPlayer->hp -= 0.0f;
 					}
 					else
 					{
@@ -343,7 +343,7 @@ void UpdateEnemyBullet()
 				g_EnemyBulletHp[j].use = false;
 				if (sp->get_damage_down == true)
 				{
-					pPlayer->hp -= 7.0f;
+					pPlayer->hp -= 0.0f;
 				}
 				else
 				{
