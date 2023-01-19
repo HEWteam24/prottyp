@@ -20,12 +20,12 @@
 // マクロ定義
 //*****************************************************************************
 
-#define RING_SIZE  (350.0f)
+#define RING_SIZE  (340.0f)
 #define ICON_SIZE  (300.0f)
 #define ICON_ZOOM  (1.16f)
 #define ICON_SPACE (320.0f)
 #define ICON_POS_Y (CENTER_Y-120.0f)
-#define PLATE_SIZE (300.0f)
+#define PLATE_SIZE (260.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -39,6 +39,7 @@
 static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
 static int g_TextureSkillPlate;
+static int g_TextureTextArrow;
 static int g_BGMNo;//BGMの識別子
 
 int NowSSelect = SKILL_1;
@@ -66,6 +67,7 @@ HRESULT InitSkillSelect(void)
 	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
 
 	g_TextureSkillPlate = LoadTexture((char*)"data/TEXTURE/skill_plate.png");
+	g_TextureTextArrow = LoadTexture((char*)"data/TEXTURE/arrow.png");
 
 	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 
@@ -179,7 +181,7 @@ void UpdateSkillSelect(void)
 		{
 			TextAlpha += 0.025f;
 		}
-		if (TextPosX > CENTER_X*1.3)
+		if (TextPosX > CENTER_X*1.35)
 		{
 			TextPosX -= 15.0f;
 		}
@@ -213,6 +215,18 @@ void DrawSkillSelect(void)
 	//説明
 	DrawSpriteColor(g_TextureSkillPlate,TextPosX, RingPosY, PLATE_SIZE * 2, PLATE_SIZE,
 		0.0f, 1.0f / 3 * NowSSelect - 1, 1.0f, 1.0 / 3, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
+
+	if (NowSSelect < 2)
+	{
+		DrawSpriteColor(g_TextureTextArrow, TextPosX, RingPosY + (PLATE_SIZE / 2) + 30.0f, 80.0f, 80.0f,
+			0.25f * 3, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
+	}
+	if (NowSSelect > 0)
+	{
+		DrawSpriteColor(g_TextureTextArrow, TextPosX, RingPosY - (PLATE_SIZE / 2) - 30.0f, 80.0f, 80.0f,
+			0.25f * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
+	}
+
 
 
 	//スキルアイコンの表示

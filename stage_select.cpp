@@ -46,23 +46,24 @@ int NowSelect = (int)STAGE_1;
 
 float alpha;
 float color;
-
 float HardCol[2];
 float octRot[2];
 float arrowSize[2];
+
 STAGE_PANEL g_StagePanel[STAGE_MAX];
 WHITEBOX	g_White[WHITE_MAX];
-int whiteCnt;
-
 D3DXCOLOR ARROW_COL[2];
 D3DXCOLOR PLATE_COL;
-bool ura = false;
-bool change = false;
-bool first = true;
-bool playing = true;
-bool skillSlc = false;
-bool enter = false;
-int playFst = 0;
+
+bool ura		= false;
+bool change		= false;
+bool first		= true;
+bool playing	= true;
+bool skillSlc	= false;
+bool key_enter	= false;
+bool key_ws		= false;
+int playFst		= 0;
+int  whiteCnt	= 0;
 
 //=============================================================================
 // 初期化処理
@@ -141,17 +142,18 @@ HRESULT InitStageSelect(void)
 		g_BGMNo[9] = LoadSound(filename9);
 		g_BGMNo[10]= LoadSound(filename10);
 	}
-	
-	alpha = 1.0f;
-	color = 1.0f;
-	change = false;
-	enter = false;
-	playFst = 0;
-	
-	octRot[0] = 0.0f;
-	octRot[1] = OCT_ROT;
-	HardCol[0] = 1.0f;
-	HardCol[1] = 0.3f;
+
+	change		= false;
+	key_enter	= false;
+	key_ws		= false;
+
+	alpha		= 1.0f;
+	color		= 1.0f;
+	playFst		= 0;
+	octRot[0]	= 0.0f;
+	octRot[1]	= OCT_ROT;
+	HardCol[0]	= 1.0f;
+	HardCol[1]	= 0.3f;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -190,6 +192,7 @@ void UninitStageSelect(void)
 		if (g_StagePanel[i].NowLane == PLANE_3)
 		{
 			g_StagePanel[i].pos.x = CENTER_X;
+			g_StagePanel[i].pos.y = CENTER_Y - 50.0f;
 			g_StagePanel[i].size = D3DXVECTOR2(390.0f, 390.0f);
 		}
 	}
@@ -210,18 +213,20 @@ void UninitStageSelect(void)
 //=============================================================================
 void UpdateStageSelect(void)
 {
+	if ((g_StagePanel[0].moving == false) && (!playing))
+	{
+		playing = true;
+		PlaySound(g_BGMNo[NowSelect], 0);
+	}
+
+	//スキル選択がFalseだったらステージ選択
 	if (!skillSlc)
 	{
 
-		if ((g_StagePanel[0].moving == false) && (!playing))
-		{
-			playing = true;
-			PlaySound(g_BGMNo[NowSelect], 0);
-		}
-
-		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))) && (change == false))
+		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))) && (change == false)&&(!key_ws))
 		{
 			change = true;
+			key_ws = true;
 		}
 		if (((GetThumbLeftY(0) < -0.3f) || (GetThumbLeftY(0) > 0.3f) || IsButtonTriggered(0, XINPUT_GAMEPAD_X)) && (change == false))
 		{
@@ -298,8 +303,10 @@ void UpdateStageSelect(void)
 				playing = false;
 			}
 
+			//選択中のステージパネルの処理
 			if (g_StagePanel[i].NowLane == PLANE_3)
 			{
+				//選択中のステージパネルを背景に
 				if (ura)
 				{
 					g_TextureBgStageSelect[1] = g_StagePanel[i].texnoB;
@@ -308,7 +315,7 @@ void UpdateStageSelect(void)
 				{
 					g_TextureBgStageSelect[1] = g_StagePanel[i].texnoA;
 				}
-
+				
 				g_StagePanel[i].col = D3DXCOLOR(color, color, color, 1.0f);
 				if (g_StagePanel[i].moving == false)
 				{
@@ -334,6 +341,7 @@ void UpdateStageSelect(void)
 				g_StagePanel[i].col = D3DXCOLOR(color, color, color, 0.5f);
 			}
 
+			//ステージパネルの折り返し
 			if (g_StagePanel[i].NowLane == PLANE_6)
 			{
 				g_StagePanel[i].NowLane = PLANE_0;
@@ -349,12 +357,12 @@ void UpdateStageSelect(void)
 	}
 
 
-
+	//裏表切り替え中動作
 	if (change)
 	{
 		for (int m = 0; m < 11; m++)
 		{
-			StopSound(g_BGMNo[m]);
+			StopSound(g_BGMNo[m]);//曲停止
 		}
 
 		octRot[1] = OCT_ROT*3;
@@ -386,13 +394,13 @@ void UpdateStageSelect(void)
 	}
 	octRot[0] += octRot[1];
 
-
+	//裏面かつ、ステージ0じゃない場合、NowSelectに+5
 	if (((ura) && NowSelect > 0)&&(!skillSlc))
 	{
 		NowSelect += 5;
 	}
 
-	//白い四角
+	//白い四角のエフェクト
 	for (int w = 0; w < WHITE_MAX; w++)
 	{
 		g_White[w].pos.y -= g_White[w].spd;
@@ -413,16 +421,21 @@ void UpdateStageSelect(void)
 		whiteCnt = 0;
 	}
 
+	//ENTER/W/Sの長押し無効化
 	if (!(Keyboard_IsKeyDown(KK_ENTER)))
 	{
-		enter = false;
+		key_enter = false;
+	}
+	if ((!Keyboard_IsKeyDown(KK_W)) && (!Keyboard_IsKeyDown(KK_S)))
+	{
+		key_ws = false;
 	}
 
 	//スキルセレクト画面に切り替え
 	if (((Keyboard_IsKeyDown(KK_ENTER)) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (!skillSlc)&&(!change) && (!g_StagePanel[0].moving)&&(color >= 1.0f))
 	{
 		skillSlc = true;
-		enter = true;
+		key_enter = true;
 		InitSkillSelect();
 	}
 
@@ -432,7 +445,7 @@ void UpdateStageSelect(void)
 	{
 		UpdateSkillSelect();
 
-		if (((Keyboard_IsKeyDown(KK_ENTER)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_B)))&&(!enter))
+		if (((Keyboard_IsKeyDown(KK_ENTER)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_B)))&&(!key_enter))
 		{
 			if (NowSelect == 0)
 			{
@@ -449,11 +462,12 @@ void UpdateStageSelect(void)
 		{
 			if (g_StagePanel[i].NowLane == PLANE_3)
 			{
-				if (g_StagePanel[i].pos.x > CENTER_X - CENTER_X / 2)
+				if (g_StagePanel[i].pos.x > CENTER_X - CENTER_X / 1.8f)
 				{
 					g_StagePanel[i].pos.x -= 50.0f;
-					g_StagePanel[i].size.x += 7.0f;
-					g_StagePanel[i].size.y += 7.0f;
+					g_StagePanel[i].pos.y -= 7.0f;
+					g_StagePanel[i].size.x += 8.0f;
+					g_StagePanel[i].size.y += 8.0f;
 				}
 			}
 		}
@@ -469,6 +483,7 @@ void UpdateStageSelect(void)
 				if (g_StagePanel[i].NowLane == PLANE_3)
 				{
 					g_StagePanel[i].pos.x = CENTER_X;
+					g_StagePanel[i].pos.y = CENTER_Y - 50.0f;
 					g_StagePanel[i].size = D3DXVECTOR2(390.0f, 390.0f);
 					
 				}
@@ -492,19 +507,36 @@ void DrawStageSelect(void)
 
 	if (color >= 1.0f)
 	{
-		//矢印
-		DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, arrowSize[1], arrowSize[1],
-			0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
-		DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 250.0f, arrowSize[0], arrowSize[0],
-			0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
+		if (!skillSlc)
+		{
+			//矢印
+			DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 263.0f, arrowSize[1], arrowSize[1],
+				0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
+			DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 263.0f, arrowSize[0], arrowSize[0],
+				0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
+			//難易度パネル
+			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
+				0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
+			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
+				0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
+			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, HARD_SIZE / 3, HARD_SIZE / 3,
+				0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		}
 
-		//難易度パネル
-		DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
-			0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
-		DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
-			0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
-		DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, HARD_SIZE / 3, HARD_SIZE / 3,
-			0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		//ステージパネルの表示
+		for (int i = 0; i < STAGE_MAX; i++)
+		{
+			if (ura)
+			{
+				DrawSpriteColor(g_StagePanel[i].texnoB, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+			}
+			else
+			{
+				DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+			}
+		}
 
 		//スキル選択暗転
 		if (skillSlc)
@@ -517,30 +549,27 @@ void DrawStageSelect(void)
 		{
 			if (g_StagePanel[i].NowLane == PLANE_3)
 			{
-				DrawSpriteColor(g_TextureNamePlate, g_StagePanel[i].pos.x, CENTER_Y + 250.0f, 500.0f, 100.0f,
+				DrawSpriteColor(g_TextureNamePlate, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y + 310.0f, g_StagePanel[i].size.x * 1.28, g_StagePanel[i].size.y / 3.9f,
 					0.0f, (1.0f / 11) * NowSelect, 1.0f, (1.0f / 11), PLATE_COL);
 			}
 		}
 	}
 
-	//ステージパネルの表示
 	for (int i = 0; i < STAGE_MAX; i++)
 	{
-		if (ura)
+		if ((g_StagePanel[i].NowLane == PLANE_3) && (skillSlc))
 		{
-			DrawSpriteColor(g_StagePanel[i].texnoB, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
-				0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+			if (ura)
+			{
+				DrawSpriteColor(g_StagePanel[i].texnoB, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+			}
+			else
+			{
+				DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+			}
 		}
-		else
-		{
-			DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
-				0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
-		}
-	}
-	if ((g_StagePanel[0].NowLane == PLANE_3) && (skillSlc))
-	{
-		DrawSpriteColor(g_StagePanel[0].texnoA, g_StagePanel[0].pos.x, g_StagePanel[0].pos.y, g_StagePanel[0].size.x, g_StagePanel[0].size.y,
-			0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[0].col);
 	}
 
 	//六角形
