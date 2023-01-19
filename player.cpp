@@ -65,6 +65,7 @@ static int g_TextureHp;		//テクスチャのやつ
 static int g_TextureHpGrid;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
+static int g_TextureShield;
 
 static int g_TextureCText;	//テクスチャのやつ
 
@@ -80,6 +81,7 @@ int good;
 int checkFrame;
 float goodAlpha;
 float goodPosY;
+float ShieldAlpha;
 
 float  effectPos[10] = {0.0f,0.0f,0.0f,0.0f,0.0f,
 						0.0f,0.0f,0.0f,0.0f,0.0f };
@@ -102,6 +104,7 @@ void InitPlayer(void)
 	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
 	g_TextureHpB = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_TextureCText	 = LoadTexture((char*)"data/TEXTURE/good_bad.png");
+	g_TextureShield = LoadTexture((char*)"data/TEXTURE/Shield.png");
 
 	char	file_SE_Bullet[] = "data\\SE\\SE_bullet.wav";
 	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
@@ -134,6 +137,8 @@ void InitPlayer(void)
 	goodAlpha =1.0f;
 	goodPosY = 0.0f;
 	fire_dist = 0;
+
+	ShieldAlpha = 1.0f;
 }
 
 //=============================================================================
@@ -288,6 +293,8 @@ void UpdatePlayer(void)
 //=============================================================================
 void DrawPlayer(void)
 {
+	SPECIAL* Dsp = GetSpecial();
+
 	//残像3描画
 	DrawSpriteColor(g_TexturePlayer, effectPos[9], g_Player.pos.y, g_Player.size.x, g_Player.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 0.3));
@@ -303,6 +310,21 @@ void DrawPlayer(void)
 	//プレイヤー描画
 	DrawSpriteColor(g_TexturePlayer, g_Player.pos.x, g_Player.pos.y, g_Player.size.x, g_Player.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+	if (Dsp->get_damage_down == true)
+	{
+		DrawSpriteColor(g_TextureShield, g_Player.pos.x, g_Player.pos.y - 80.0f, 180.0f, 90.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+		DrawSpriteColor(g_TextureShield, g_Player.pos.x, g_Player.pos.y - 80.0f, 180.0f + ShieldAlpha * 90.0f, 90.0f + ShieldAlpha * 90.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0f - ShieldAlpha));
+
+		ShieldAlpha += 0.05f;
+		if (ShieldAlpha>=1.0f)
+		{
+			ShieldAlpha = 0.0f;
+		}
+	}
 }
 
 void DrawHp(void)
@@ -383,7 +405,7 @@ void PlayerCheck(void)
 		//スペシャルの被ダメ減少
 		if (sp->get_damage_down == true)
 		{
-			g_Player.hp -= 2.0f;
+			g_Player.hp -= 0.0f;
 		}
 		else
 		{

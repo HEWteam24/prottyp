@@ -416,7 +416,7 @@ void SetScene(int nextScene)
 		InitOver();
 		break;
 	case SCENE_RESULT:
-		InitResult();
+		InitResult(GetGemeStageNum());
 		break;
 	case SCENE_TUTO:
 		InitTuto();

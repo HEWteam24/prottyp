@@ -12,7 +12,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitResult(void);
+HRESULT InitResult(int stagenum);
 void UninitResult(void);
 void UpdateResult(void);
 void DrawResult(void);

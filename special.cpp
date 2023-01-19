@@ -31,8 +31,6 @@
 
 
 //スペシャルのテクスチャ
-static int g_SpecialFrameTexture;
-static int g_SpecialNowTexture;
 static int g_SpecialIconTexture;
 static int g_TextureGoRing;
 static int g_TextureCharge;
@@ -55,6 +53,7 @@ float IconcolorR;
 float IconcolorG;
 float IconcolorB;
 
+
 int chargeUv;
 
 float GoRingrot;
@@ -64,8 +63,6 @@ SPECIAL sp;
 void InitSpecial()
 {
 	//テクスチャのロード
-	g_SpecialNowTexture = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
-	g_SpecialFrameTexture = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_TextureGoRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 	g_TextureCharge= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
@@ -83,19 +80,20 @@ void InitSpecial()
 	GoRingrot = 0.0f;
 
 	timer = 0;
-	colorR = 1.0f;
-	colorG = 1.0f;
-	colorB = 1.0f;
+	colorR = 0.8f;
+	colorG = 0.8f;
+	colorB = 0.8f;
 	Calpha = 0.5f;
 	IconcolorR = 1.0f;
 	IconcolorG = 1.0f;
 	IconcolorB = 1.0f;
 
 	chargeUv = 0;
+	
 
 	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
-	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
+	sp.charge = 25;		//スペシャルの初期値。提出時には0にしてください。
 	sp.UseOk = false;
 	sp.damage_up = false;
 	sp.get_damage_down = false;
@@ -123,27 +121,6 @@ void UninitSpecial()
 void UpdateSpecial()
 {
 	PLAYER* player = GetPlayer();
-
-	//switch (sp.type) {
-	//case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
-
-	//	IconcolorR = 1.0f;
-	//	IconcolorG = 0.0f;
-	//	IconcolorB = 0.0f;
-	//	break;
-
-	//case SP_TYPE::HEAL:		//プレイヤーの体力回復
-	//	IconcolorR = 0.0f;
-	//	IconcolorG = 1.0f;
-	//	IconcolorB = 0.0f;
-	//	break;
-
-	//case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
-	//	IconcolorR = 0.0f;
-	//	IconcolorG = 0.0f;
-	//	IconcolorB = 1.0f;
-	//	break;
-	//}
 
 	//スペシャルゲージがたまりきったら発動可能
 	if (sp.charge >= SPECIAL_MAX)
@@ -187,9 +164,11 @@ void UpdateSpecial()
 		colorG = 0.4f;
 		colorR = 1.0f;
 		GoRingrot += 4.0f;
+		Calpha = 0.7;
 	}
 
 	//5秒で終了
+
 	if (timer >= 300)
 	{
 		//スペシャルを追加する場合はここにそのスペシャルの終了処理を追加
@@ -202,9 +181,9 @@ void UpdateSpecial()
 		timer = 0;
 		sp.charge = 0;
 		sp.UseOk = false;
-		colorR = 1.0f;
-		colorG = 1.0f;
-		colorB = 1.0f;
+		colorR = 0.8f;
+		colorG = 0.8f;
+		colorB = 0.8f;
 		Calpha = 0.5f;
 	}
 
@@ -213,54 +192,47 @@ void UpdateSpecial()
 		GoRingrot += 1.0f;
 	}
 
-	if (sp.charge >= 15)
+
+	if ((sp.charge >= 15) && (start_timer == false))
 	{
 		chargeUv = 1;
 	}
 	else
 	{
-		chargeUv = 0;
+		if (!start_timer)
+		{
+			chargeUv = 0;
+		}	
+	}
+
+	if ((start_timer))
+	{
+		sp.charge = (300 - timer)/10;
+		if (timer > 150)
+		{
+			chargeUv = 0;
+		}
 	}
 }
 
 void DrawSpecial()
 {
 
-	////HP下地
-	//DrawSpriteColor(g_SpecialFrameTexture,
-	//	SPECIAL_POS_X, 
-	//	SPECIAL_POS_Y,
-	//	SPECIAL_F_SIZE_X,
-	//	SPECIAL_F_SIZE_Y,
-	//	0.0f,
-	//	0.0f, 
-	//	1.0f,
-	//	1.0f,
-	//	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-	////HPバー
-	//DrawSpriteColor(g_SpecialNowTexture,
-	//	SPECIAL_POS_X,
-	//	SPECIAL_POS_Y +((SPECIAL_MAX - sp.charge) * 15)/2,
-	//	SPECIAL_SIZE_X,
-	//	SPECIAL_SIZE_Y - ((SPECIAL_MAX - sp.charge) * 15),
-	//	0.0f,
-	//	0.0f,
-	//	1.0f,
-	//	1.0f,
-	//	D3DXCOLOR(colorR, colorG, colorB, 1.0f));
-
 	//アイコン チャージ
-	DrawSpriteColor(g_TextureCharge,
-		SKILL_ICON_POS_X,
-		SKILL_ICON_POS_Y,
-		SKILL_ICON_SIZE*0.85,
-		SKILL_ICON_SIZE*0.85,
-		1.0f / 15 * sp.charge,
-		0.5f * chargeUv,
-		1.0f / 15,
-		0.5f,
-		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+		DrawSpriteColor(g_TextureCharge,
+			SKILL_ICON_POS_X,
+			SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE * 0.85,
+			SKILL_ICON_SIZE * 0.85,
+			1.0f / 15 * sp.charge,
+			0.5f * chargeUv,
+			1.0f / 15,
+			0.5f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+	//else
 
 	//アイコン
 	DrawSpriteColor(g_SpecialIconTexture,
@@ -312,7 +284,7 @@ void DrawSpecial()
 //スペシャルの増加
 void SpecialPlus()
 {
-	if (sp.charge < SPECIAL_MAX)
+	if ((sp.charge < SPECIAL_MAX)&&(start_timer==false))
 	{
 		sp.charge += 1 + (GetComboScoreUp() / 2);
 	}

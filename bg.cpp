@@ -63,16 +63,16 @@ HRESULT InitBG(int StageNum)
 		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
 		break;
 	case 7:
-		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_SeaCity.png");
 		break;
 	case 8:
-		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_SeaRock.png");
 		break;
 	case 9:
-		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_Bubbles.png");
 		break;
 	case 10:
-		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_Space.png");
 		break;
 	}
 

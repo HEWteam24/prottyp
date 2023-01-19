@@ -49,8 +49,10 @@ bool	moving;
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
-HRESULT InitResult(void)
+HRESULT InitResult(int stagenum)
 {
+	float criteria = 0.9f + ((float)stagenum / 10);
+
 	g_Coin.col = D3DXCOLOR(0.0f,0.0f,0.0f,1.0f);
 	g_Coin.TextCol = D3DXCOLOR(1.0f, 0.6f, 0.4f, 1.0f);
 	g_Coin.rad = 0.0f;
@@ -68,23 +70,23 @@ HRESULT InitResult(void)
 	{
 		g_Coin.rank = 5;
 	}
-	if (pScore->ToResult >= 4000)
+	if (pScore->ToResult >= 2000* criteria)
 	{
 		g_Coin.rank = 4;
 	}
-	if (pScore->ToResult >= 8000)
+	if (pScore->ToResult >= 4000 * criteria)
 	{
 		g_Coin.rank = 3;
 	}
-	if (pScore->ToResult >= 12000)
+	if (pScore->ToResult >= 8000 * criteria)
 	{
 		g_Coin.rank = 2;
 	}
-	if (pScore->ToResult >= 16000)
+	if (pScore->ToResult >= 10000*criteria)
 	{
 		g_Coin.rank = 1;
 	}
-	if (pScore->ToResult >= 20000)
+	if (pScore->ToResult >= 12000* criteria)
 	{
 		g_Coin.rank = 0;
 	}
