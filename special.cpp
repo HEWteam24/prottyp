@@ -57,6 +57,7 @@ float IconcolorB;
 int chargeUv;
 
 float GoRingrot;
+float AdRingrot;
 
 SPECIAL sp;
 
@@ -78,6 +79,7 @@ void InitSpecial()
 	sp.h = 0;
 
 	GoRingrot = 0.0f;
+	AdRingrot = 1.0f;
 
 	timer = 0;
 	colorR = 0.8f;
@@ -142,10 +144,12 @@ void UpdateSpecial()
 			break;
 
 		case SP_TYPE::HEAL:		//プレイヤーの体力回復
-			player->hp = 300.0f;
+			player->hp += 75.0f;
 			sp.charge = 0;
 			sp.UseOk = false;
-			colorB = 1.0f;
+			start_timer = true;
+			timer = 280;
+			AdRingrot = 10.0f;
 			break;
 
 		case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
@@ -159,11 +163,16 @@ void UpdateSpecial()
 	//スペシャルの経過時間のタイマー
 	if (start_timer == true)
 	{
+		if (timer == 1)
+		{
+			AdRingrot = 4.0f;
+		}
+
 		timer++;
 		colorB = 1.0f;
 		colorG = 0.4f;
 		colorR = 1.0f;
-		GoRingrot += 4.0f;
+		GoRingrot += AdRingrot;
 		Calpha = 0.7;
 	}
 
@@ -185,11 +194,12 @@ void UpdateSpecial()
 		colorG = 0.8f;
 		colorB = 0.8f;
 		Calpha = 0.5f;
+		AdRingrot = 1.0f;
 	}
 
 	if (sp.UseOk == true)
 	{
-		GoRingrot += 1.0f;
+		GoRingrot += AdRingrot;
 	}
 
 
