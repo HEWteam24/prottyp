@@ -121,6 +121,12 @@ void UpdateSkillSelect(void)
 		SceneTransition(SCENE_GAME);
 	}
 
+	//コントローラーAボタン
+	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_A))|| (Keyboard_IsKeyDown(KK_S)))
+	{
+		SceneTransition(SCENE_STAGESELECT);
+	}
+
 	
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
