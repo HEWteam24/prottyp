@@ -45,7 +45,7 @@ static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
 
 int count = 0;
-bool kakusicommand[10] = { false,false,false,false,false,false,false,false,false,false};
+bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false,false,false};
 
 //=============================================================================
 // 初期化処理
@@ -78,7 +78,7 @@ HRESULT InitTitle(void)
 		FFFChange[i] = 0;
 	}
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 11; i++)
 	{
 		kakusicommand[i] = false;
 	}
@@ -105,12 +105,17 @@ void UpdateTitle(void)
 		SceneTransition(SCENE_STAGESELECT);
 	}
 	//コントローラーBボタン押したらSCENE_STAGESELECTへ移行
-	if (kakusicommand[0] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_B))
+	if (kakusicommand[7] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
 		SceneTransition(SCENE_STAGESELECT);
 	}
 
-	if (kakusicommand[8] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_A))
+	if (kakusicommand[9] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_START))
+	{
+		kakusicommand[10] = true;
+		PlaySound(g_SE, 0);
+	}
+	else if (kakusicommand[8] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_A))
 	{
 		kakusicommand[9] = true;
 		PlaySound(g_SE, 0);
@@ -157,29 +162,19 @@ void UpdateTitle(void)
 	}
 	else if (kakusicommand[0] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
 	{
-		count = 0;
 		kakusicommand[0] = true;
 		PlaySound(g_SE, 0);
 	}
 
-	if (kakusicommand[9] == true)
+	if (kakusicommand[10] == true)
 	{
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 11; i++)
 		{
 			kakusicommand[i] = false;
 		}
 		SceneTransition(SCENE_STAGESELECT);
 	}
 
-	//count++;
-	//if (count >= 1800)
-	//{
-	//	for (int i = 0; i < 10; i++)
-	//	{
-	//		kakusicommand[i] = false;
-	//	}
-	//	count = 0;
-	//}
 
 	for (int i = 0; i < 2; i++)
 	{
