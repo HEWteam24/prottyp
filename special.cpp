@@ -31,8 +31,6 @@
 
 
 //スペシャルのテクスチャ
-static int g_SpecialFrameTexture;
-static int g_SpecialNowTexture;
 static int g_SpecialIconTexture;
 static int g_TextureGoRing;
 static int g_TextureCharge;
@@ -65,8 +63,6 @@ SPECIAL sp;
 void InitSpecial()
 {
 	//テクスチャのロード
-	g_SpecialNowTexture = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
-	g_SpecialFrameTexture = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_TextureGoRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 	g_TextureCharge= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
@@ -84,9 +80,9 @@ void InitSpecial()
 	GoRingrot = 0.0f;
 
 	timer = 0;
-	colorR = 1.0f;
-	colorG = 1.0f;
-	colorB = 1.0f;
+	colorR = 0.8f;
+	colorG = 0.8f;
+	colorB = 0.8f;
 	Calpha = 0.5f;
 	IconcolorR = 1.0f;
 	IconcolorG = 1.0f;
@@ -97,7 +93,7 @@ void InitSpecial()
 
 	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
-	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
+	sp.charge = 25;		//スペシャルの初期値。提出時には0にしてください。
 	sp.UseOk = false;
 	sp.damage_up = false;
 	sp.get_damage_down = false;
@@ -125,27 +121,6 @@ void UninitSpecial()
 void UpdateSpecial()
 {
 	PLAYER* player = GetPlayer();
-
-	//switch (sp.type) {
-	//case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
-
-	//	IconcolorR = 1.0f;
-	//	IconcolorG = 0.0f;
-	//	IconcolorB = 0.0f;
-	//	break;
-
-	//case SP_TYPE::HEAL:		//プレイヤーの体力回復
-	//	IconcolorR = 0.0f;
-	//	IconcolorG = 1.0f;
-	//	IconcolorB = 0.0f;
-	//	break;
-
-	//case SP_TYPE::GET_DAMAGE_DOWN:	//プレイヤーの被ダメージ軽減
-	//	IconcolorR = 0.0f;
-	//	IconcolorG = 0.0f;
-	//	IconcolorB = 1.0f;
-	//	break;
-	//}
 
 	//スペシャルゲージがたまりきったら発動可能
 	if (sp.charge >= SPECIAL_MAX)
@@ -206,9 +181,9 @@ void UpdateSpecial()
 		timer = 0;
 		sp.charge = 0;
 		sp.UseOk = false;
-		colorR = 1.0f;
-		colorG = 1.0f;
-		colorB = 1.0f;
+		colorR = 0.8f;
+		colorG = 0.8f;
+		colorB = 0.8f;
 		Calpha = 0.5f;
 	}
 
