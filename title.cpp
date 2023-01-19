@@ -145,12 +145,12 @@ void UpdateTitle(void)
 		kakusicommand[3] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[1] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
+	else if (kakusicommand[1] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
 	{
 		kakusicommand[2] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[0] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
+	else if (kakusicommand[0] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
 	{
 		kakusicommand[1] = true;
 		PlaySound(g_SE, 0);
