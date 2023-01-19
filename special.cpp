@@ -226,30 +226,6 @@ void UpdateSpecial()
 void DrawSpecial()
 {
 
-	////HP下地
-	//DrawSpriteColor(g_SpecialFrameTexture,
-	//	SPECIAL_POS_X, 
-	//	SPECIAL_POS_Y,
-	//	SPECIAL_F_SIZE_X,
-	//	SPECIAL_F_SIZE_Y,
-	//	0.0f,
-	//	0.0f, 
-	//	1.0f,
-	//	1.0f,
-	//	D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-	////HPバー
-	//DrawSpriteColor(g_SpecialNowTexture,
-	//	SPECIAL_POS_X,
-	//	SPECIAL_POS_Y +((SPECIAL_MAX - sp.charge) * 15)/2,
-	//	SPECIAL_SIZE_X,
-	//	SPECIAL_SIZE_Y - ((SPECIAL_MAX - sp.charge) * 15),
-	//	0.0f,
-	//	0.0f,
-	//	1.0f,
-	//	1.0f,
-	//	D3DXCOLOR(colorR, colorG, colorB, 1.0f));
-
 	//アイコン チャージ
 	DrawSpriteColor(g_TextureCharge,
 		SKILL_ICON_POS_X,

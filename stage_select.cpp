@@ -41,7 +41,7 @@ static int g_TextureUIHard;
 static int g_BGMNo;//タイトル用BGMの識別子
 
 int NowSelect = (int)STAGE_1;
-int PlateSl;
+
 float alpha;
 float color;
 
@@ -114,7 +114,7 @@ HRESULT InitStageSelect(void)
 	alpha = 1.0f;
 	color = 1.0f;
 	change = false;
-	PlateSl = 0;
+	
 	octRot[0] = 1.0f;
 	octRot[1] = 0.1f;
 	HardCol[0] = 1.0f;
@@ -360,15 +360,12 @@ void DrawStageSelect(void)
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(color * 0.6f, color * 0.6f, color * 0.6f, alpha));
 
 	//ネームプレート
-	PlateSl = NowSelect;
-	if ((ura) && (PlateSl > 0))
-	{
-		PlateSl += 5;
-	}
+	
+
 	if (color >= 1.0f)
 	{
 		DrawSpriteColor(g_TextureNamePlate, CENTER_X, CENTER_Y + 250.0f, 500.0f, 100.0f,
-			0.0f, (1.0f / 11) * PlateSl, 1.0f, (1.0f / 11), PLATE_COL);
+			0.0f, (1.0f / 11) * NowSelect, 1.0f, (1.0f / 11), PLATE_COL);
 
 		//矢印
 		DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 250.0f, arrowSize[1], arrowSize[1],
