@@ -170,9 +170,9 @@ void UpdateResult(void)
 		0.0f + Addcol * 0.01f,
 		1.0f);
 
-	g_Coin.size.x += 12.0f;
-	g_Coin.size.y += 12.0f;
-	g_Coin.alpha -= 0.05f;
+	g_Coin.size.x += 8.0f;
+	g_Coin.size.y += 8.0f;
+	g_Coin.alpha -= 0.02f;
 
 	if (g_Coin.alpha <= 0.0f)
 	{
@@ -213,7 +213,6 @@ void DrawResult(void)
 			6
 		);
 	}
-
 	if (g_Coin.roted)
 	{
 		GetDeviceContext()->PSSetShaderResources(0, 1,
@@ -225,7 +224,7 @@ void DrawResult(void)
 				g_Coin.size.x,
 				g_Coin.size.y,
 				g_Coin.rad,
-				D3DXCOLOR(1.0f,1.0f,1.0f,g_Coin.alpha),
+				D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Coin.alpha),
 				g_Coin.rank,
 				0.16665f,
 				1.0f,
@@ -233,6 +232,8 @@ void DrawResult(void)
 			);
 		}
 	}
+
+
 
 	DrawScore();
 }

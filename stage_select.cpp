@@ -126,6 +126,8 @@ HRESULT InitStageSelect(void)
 		ura = false;
 		first = false;
 		playing = true;
+		HardCol[0] = 1.0f;
+		HardCol[1] = 0.3f;
 
 		g_StagePanel[1].size = D3DXVECTOR2(395.0f, 395.0f);
 		g_StagePanel[STAGE_5].NowLane = PLANE_1;
@@ -152,8 +154,7 @@ HRESULT InitStageSelect(void)
 	playFst		= 0;
 	octRot[0]	= 0.0f;
 	octRot[1]	= OCT_ROT;
-	HardCol[0]	= 1.0f;
-	HardCol[1]	= 0.3f;
+
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);

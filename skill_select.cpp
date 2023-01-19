@@ -162,7 +162,7 @@ void UpdateSkillSelect(void)
 		else
 		{
 			g_SkillPanel[i].size = D3DXVECTOR2(ICON_SIZE,ICON_SIZE);
-			g_SkillPanel[i].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.6f);
+			g_SkillPanel[i].col = D3DXCOLOR(0.5f, 0.5f, 0.5f, 1.0f);
 		}	
 
 	//‘I‘ðˆÚ“®—P—\
