@@ -55,6 +55,7 @@ float IconcolorR;
 float IconcolorG;
 float IconcolorB;
 
+
 int chargeUv;
 
 float GoRingrot;
@@ -92,6 +93,7 @@ void InitSpecial()
 	IconcolorB = 1.0f;
 
 	chargeUv = 0;
+	
 
 	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
@@ -187,9 +189,11 @@ void UpdateSpecial()
 		colorG = 0.4f;
 		colorR = 1.0f;
 		GoRingrot += 4.0f;
+		Calpha = 0.7;
 	}
 
 	//5秒で終了
+
 	if (timer >= 300)
 	{
 		//スペシャルを追加する場合はここにそのスペシャルの終了処理を追加
@@ -213,13 +217,26 @@ void UpdateSpecial()
 		GoRingrot += 1.0f;
 	}
 
-	if (sp.charge >= 15)
+
+	if ((sp.charge >= 15) && (start_timer == false))
 	{
 		chargeUv = 1;
 	}
 	else
 	{
-		chargeUv = 0;
+		if (!start_timer)
+		{
+			chargeUv = 0;
+		}	
+	}
+
+	if ((start_timer))
+	{
+		sp.charge = (300 - timer)/10;
+		if (timer > 150)
+		{
+			chargeUv = 0;
+		}
 	}
 }
 
@@ -227,16 +244,20 @@ void DrawSpecial()
 {
 
 	//アイコン チャージ
-	DrawSpriteColor(g_TextureCharge,
-		SKILL_ICON_POS_X,
-		SKILL_ICON_POS_Y,
-		SKILL_ICON_SIZE*0.85,
-		SKILL_ICON_SIZE*0.85,
-		1.0f / 15 * sp.charge,
-		0.5f * chargeUv,
-		1.0f / 15,
-		0.5f,
-		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+		DrawSpriteColor(g_TextureCharge,
+			SKILL_ICON_POS_X,
+			SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE * 0.85,
+			SKILL_ICON_SIZE * 0.85,
+			1.0f / 15 * sp.charge,
+			0.5f * chargeUv,
+			1.0f / 15,
+			0.5f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+	//else
 
 	//アイコン
 	DrawSpriteColor(g_SpecialIconTexture,
@@ -288,7 +309,7 @@ void DrawSpecial()
 //スペシャルの増加
 void SpecialPlus()
 {
-	if (sp.charge < SPECIAL_MAX)
+	if ((sp.charge < SPECIAL_MAX)&&(start_timer==false))
 	{
 		sp.charge += 1 + (GetComboScoreUp() / 2);
 	}
