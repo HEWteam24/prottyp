@@ -38,7 +38,7 @@ static int g_TextureOct;
 static int g_TextureUIButton;
 static int g_TextureUIHard;
 
-static int g_BGMNo;//タイトル用BGMの識別子
+static int g_BGMNo[11];//タイトル用BGMの識別子
 
 int NowSelect = (int)STAGE_1;
 
@@ -57,6 +57,8 @@ D3DXCOLOR PLATE_COL;
 bool ura = false;
 bool change = false;
 bool first = true;
+bool playing = true;
+int playFst = 0;
 
 //=============================================================================
 // 初期化処理
@@ -90,6 +92,18 @@ HRESULT InitStageSelect(void)
 	g_TextureUIButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 	g_TextureUIHard = LoadTexture((char*)"data/TEXTURE/UI_Hard.png");
 
+	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
+	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
+	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
+	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";
+	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
+	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
+	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
+	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
+	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
+	char	filename9[] = "data\\BGM\\07_Unadon_150.wav";
+	char	filename10[] = "data\\BGM\\08_Shiokara_150.wav";
+
 	//初回のみ実行
 	if (first)
 	{
@@ -101,19 +115,33 @@ HRESULT InitStageSelect(void)
 			g_StagePanel[i].size = D3DXVECTOR2(300.0f, 300.0f);
 			g_StagePanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			g_StagePanel[i].direction = D_RIGHT;
-			g_StagePanel[i].moving = false;
+			g_StagePanel[i].moving = true;
 			g_StagePanel[i].NowLane = i + 3;
 		}
 		ura = false;
 		first = false;
+		playing = true;
 
 		g_StagePanel[1].size = D3DXVECTOR2(395.0f, 395.0f);;
 		g_StagePanel[STAGE_5].NowLane = PLANE_1;
+
+		g_BGMNo[0] = LoadSound(filename0);
+		g_BGMNo[1] = LoadSound(filename1);
+		g_BGMNo[2] = LoadSound(filename2);
+		g_BGMNo[3] = LoadSound(filename3);
+		g_BGMNo[4] = LoadSound(filename4);
+		g_BGMNo[5] = LoadSound(filename5);
+		g_BGMNo[6] = LoadSound(filename6);
+		g_BGMNo[7] = LoadSound(filename7);
+		g_BGMNo[8] = LoadSound(filename8);
+		g_BGMNo[9] = LoadSound(filename9);
+		g_BGMNo[10]= LoadSound(filename10);
 	}
 	
 	alpha = 1.0f;
 	color = 1.0f;
 	change = false;
+	playFst = 0;
 	
 	octRot[0] = 1.0f;
 	octRot[1] = 0.1f;
@@ -143,7 +171,7 @@ HRESULT InitStageSelect(void)
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
-	//PlaySound(g_BGMNo, -1);
+	PlaySound(g_BGMNo[NowSelect], -1);
 
 	return S_OK;
 }
@@ -153,7 +181,10 @@ HRESULT InitStageSelect(void)
 //=============================================================================
 void UninitStageSelect(void)
 {
-	//StopSound(g_BGMNo);
+	for (int i = 0; i < 11; i++)
+	{
+		StopSound(g_BGMNo[i]);
+	}
 	g_TextureArrow = NULL;
 }
 
@@ -162,6 +193,20 @@ void UninitStageSelect(void)
 //=============================================================================
 void UpdateStageSelect(void)
 {
+
+	if ((g_StagePanel[0].moving ==false)&&(!playing))
+	{
+		playing = true;
+		if ((playFst == 1)&&(NowSelect>0))
+		{
+			PlaySound(g_BGMNo[NowSelect+=5], -1);
+		}
+		else
+		{
+			PlaySound(g_BGMNo[NowSelect], -1);
+		}
+
+	}
 
 	if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))) && (change == false))
 	{
@@ -217,6 +262,11 @@ void UpdateStageSelect(void)
 		//選択移動
 		if ((g_StagePanel[i].moving))
 		{
+			for (int m = 0; m < 11; m++)
+			{
+				StopSound(g_BGMNo[m]);
+			}
+		
 			alpha *= 0.99f;
 			g_StagePanel[i].pos.x += g_StagePanel[i].spd;	//スピードを足して移動
 			g_StagePanel[i].spd *= 0.9f;			//スピード減衰
@@ -233,22 +283,24 @@ void UpdateStageSelect(void)
 		}
 
 		//右移動完了
-		if ((g_StagePanel[i].spd <= 15.0f) && (g_StagePanel[i].direction == D_RIGHT) && (g_StagePanel[i].moving = true))
+		if ((g_StagePanel[i].spd <= 15.0f) && (g_StagePanel[i].direction == D_RIGHT) && (g_StagePanel[i].moving == true))
 		{
 			g_StagePanel[i].pos.x = -480.0f * 2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
 			//NowSelect++;	//選択ステージ変更
 			ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			arrowSize[1] = 100.0f;
+			playing = false;
 		}
 		//左移動完了
-		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT) && (g_StagePanel[i].moving = true))
+		if ((g_StagePanel[i].spd >= -15.0f) && (g_StagePanel[i].direction == D_LEFT) && (g_StagePanel[i].moving == true))
 		{
 			g_StagePanel[i].pos.x = -480.0f * 2 + g_StagePanel[i].NowLane * 480.0f;	//レーンの中心に
 			g_StagePanel[i].moving = false;
 			//NowSelect--;	//選択ステージ変更
 			ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 			arrowSize[0] = 100.0f;
+			playing = false;
 		}
 
 		if (g_StagePanel[i].NowLane == PLANE_3)
@@ -296,8 +348,14 @@ void UpdateStageSelect(void)
 			g_StagePanel[i].NowLane = PLANE_5;
 		}
 
+
 		if (change)
 		{
+			for (int m = 0; m < 11; m++)
+			{
+				StopSound(g_BGMNo[m]);
+			}
+
 			octRot[1] = 1.0f;
 			color *= 0.98f;
 			if (color <= 0.01f)
@@ -315,12 +373,15 @@ void UpdateStageSelect(void)
 					HardCol[1] = 1.0f;
 				}
 				change = false;
+				playing = false;
+				playFst++;
 			}
 		}
 		else if (color < 1.0f)
 		{
 			color *= 1.02;
 			octRot[1] = 0.05f;
+			
 		}
 
 		octRot[0] += octRot[1];
@@ -345,6 +406,8 @@ void UpdateStageSelect(void)
 			SetWhite((frand() * (1920 / 4)) * 1, frand() * 5, frand() * 3);
 			whiteCnt = 0;
 		}
+		
+		
 	}
 }
 
