@@ -383,7 +383,7 @@ void PlayerCheck(void)
 		//スペシャルの被ダメ減少
 		if (sp->get_damage_down == true)
 		{
-			g_Player.hp -= 2.0f;
+			g_Player.hp -= 0.0f;
 		}
 		else
 		{

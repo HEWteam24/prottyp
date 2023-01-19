@@ -53,16 +53,17 @@ HRESULT InitRhythm(int stagenum)
 	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
-	char	filename3[] = "data\\BGM\\08_Shiokara_150.wav";
+	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
 	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
+	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
 
 
 	switch (stagenum)
 	{
-	case 0:
+	case 0://チュートリアル
 
 		GameSoundNo = LoadSound(filename0);
 
@@ -73,7 +74,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 1:
+	case 1://ザリガニ
 
 		GameSoundNo = LoadSound(filename1);
 
@@ -84,7 +85,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 2:
+	case 2://ウナギ
 
 		GameSoundNo = LoadSound(filename2);
 
@@ -95,7 +96,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 3:
+	case 3://タコ
 
 		GameSoundNo = LoadSound(filename3);
 
@@ -106,7 +107,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 4:
+	case 4://サメ
 
 
 		GameSoundNo = LoadSound(filename4);
@@ -119,29 +120,29 @@ HRESULT InitRhythm(int stagenum)
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 
-	case 5:
+	case 5://シシャモ
 
 		GameSoundNo = LoadSound(filename5);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
-		errors = -2;
+		errors = 0;
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 6:
+	case 6://ザリガニ裏
 
 		GameSoundNo = LoadSound(filename6);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
-		errors = -2;
+		errors = 0;
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 7:
+	case 7://ウナギ裏
 
 		GameSoundNo = LoadSound(filename7);
 
@@ -152,15 +153,37 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 11:
+	case 8://タコ裏
 
-		GameSoundNo = LoadSound(filename1);
+		GameSoundNo = LoadSound(filename8);
 
-		Notestipindex1 = 0;
+		Notestipindex1 = 2;
 		indexNum = 8;
 		errors = 0;
-		sp = 7.5625f;
-		NowBPM = BPM3;
+		sp = 12.0f;
+		NowBPM = BPM1;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		break;
+	case 9://サメ裏
+
+		GameSoundNo = LoadSound(filename7);
+
+		Notestipindex1 = 2;
+		indexNum = 8;
+		errors = 0;
+		sp = 12.0f;
+		NowBPM = BPM1;
+		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		break;
+	case 10://シシャモ裏
+
+		GameSoundNo = LoadSound(filename7);
+
+		Notestipindex1 = 2;
+		indexNum = 8;
+		errors = 0;
+		sp = 12.0f;
+		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	default:
@@ -224,9 +247,6 @@ HRESULT InitRhythm(int stagenum)
 		exit(999);
 	}
 
-	//仮で固定のBGM
-
-
 	Frame = 0;
 
 	Notestipindex2 = 0;
@@ -250,8 +270,6 @@ void UpdateRhythm()
 			{
 				SetNotes();
 			}
- 			else { int n = 0; }
-
 			if ((Frame - errors) % ((int)NotesT * 4)  == 0.0f) {
 				SETBULLET();
 			}
@@ -270,32 +288,13 @@ void UpdateRhythm()
  					Notes[i].alpha += 0.065f * NOTES_DIST;
 					Notes[i+1].alpha += 0.065f * NOTES_DIST;
 				}
-				//ノーツ左が真ん中に来た時消える
+				//ノーツ左が真ん中に来た時両方消える
 				if (Notes[i].pos.x + NOTES_SIZE_X / 2 >= SCREEN_WIDTH / 2 + 25.0f)
 				{
 					Notes[i].use = false;
 					Notes[i + 1].use = false;
 				}
-				////ノーツ左が消えてる時右も消える
-				//if (!Notes[i + 1].use)
-				//{
-				//	Notes[i].use = false;
-				//}
 			}
-			//if (i % 2 == 1)
-			//{
-			//	//ノーツ右が真ん中に来た時消える
-			//	if (Notes[i].pos.x - NOTES_SIZE_X / 2 == 970 /*SCREEN_WIDTH / 2 + NOTES_SIZE_X / 2 - NOTES_SP * 2*/)
-			//	{
-			//		Notes[i].use = false;
-			//	}
-			//	////ノーツ右が消えてる時左も消える
-			//	//if (Notes[i - 1].use)
-			//	//{
-			//	//	Notes[i - 1].use = false;
-			//	//}
-			//}
-
 		}
 	}
 
@@ -337,9 +336,9 @@ void DrawRhythm()
 
 void SetNotes()
 {
-	for (int n = 0; n < NOTES_MAX; n+=2)
+	for (int n = 0; n < NOTES_MAX; n += 2)
 	{
-		if (!Notes[n].use) 
+		if (!Notes[n].use)
 		{
 			Notes[n].pos = D3DXVECTOR2(NOTES_POS_X_1, NOTES_POS_Y);
 			Notes[n].use = true;
@@ -395,7 +394,6 @@ int  GetFreame()
 
 void ReleaseNotes()
 {//一番真ん中に近いノーツを消す関数
-	//int		Min = Notes[0].num, Index = 0;
 
 	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (!Notes[i].use) continue;
@@ -404,13 +402,7 @@ void ReleaseNotes()
 			Notes[i + 1].use = false;
 			break;
 		}
-		//if (Notes[i].num < Min && Notes[i].num != -1) {
-		//	Min = Notes[i].num;
-		//	Index = i;
-		//}
 	}
-	//Notes[Index].use = false;
-	//Notes[Index + 1].use = false;
 }
 
 bool	MusicEnd()
