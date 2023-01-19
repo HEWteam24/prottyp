@@ -133,7 +133,7 @@ void UpdateSpecial()
 	}
 
 	//Yボタンでスペシャル発動
-	if (((IsButtonTriggered(0, XINPUT_GAMEPAD_RIGHT_SHOULDER)) || (Keyboard_IsKeyDown(KK_S))) && sp.UseOk == true)
+	if ((((IsButtonTriggered(0, XINPUT_GAMEPAD_RIGHT_SHOULDER)) || (Keyboard_IsKeyDown(KK_S))) && sp.UseOk == true)&&(!start_timer))
 	{
 		PlaySound(g_SE_Special, 0);
 
@@ -165,7 +165,7 @@ void UpdateSpecial()
 	{
 		if (timer == 1)
 		{
-			AdRingrot = 4.0f;
+			AdRingrot = 8.0f;
 		}
 
 		timer++;
@@ -177,7 +177,6 @@ void UpdateSpecial()
 	}
 
 	//5秒で終了
-
 	if (timer >= 300)
 	{
 		//スペシャルを追加する場合はここにそのスペシャルの終了処理を追加
