@@ -124,7 +124,6 @@ void UpdateSkillSelect(void)
 	//コントローラーAボタン
 	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_A))|| (Keyboard_IsKeyDown(KK_S)))
 	{
-		pSp->type = NowSSelect;
 		SceneTransition(SCENE_STAGESELECT);
 	}
 
