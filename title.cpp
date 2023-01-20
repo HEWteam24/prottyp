@@ -20,6 +20,8 @@
 //*****************************************************************************
 #define LOGO_POS_Y	(300.0f)
 #define LINE_DIST	(60.0f)
+#define TITLE_SIZE	(1400.0f)
+#define TITLE_POS_Y (650.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -31,7 +33,10 @@
 static int g_TextureBgTitle;//タイトル画面用テクスチャの識別子
 static int g_TextureFFF;
 static int g_TextureLine;
+static int g_TextureCommand;
+static int g_TextureTitle;
 
+float	TitleAlpha;
 float	lineX[2];
 float	Fsize[3];
 float	FposY[3];
@@ -43,6 +48,7 @@ int FFFChange[3];
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
+static int g_VFFF;
 
 int count = 0;
 bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false,false,false};
@@ -53,13 +59,18 @@ bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false
 HRESULT InitTitle(void)
 {
 	//テクスチャを読み込んで識別子を受け取る
-	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Title.png");
-	g_TextureFFF = LoadTexture((char*)"data/TEXTURE/fff.png");
-	g_TextureLine = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Bg_Bubbles.png");
+	g_TextureFFF	 = LoadTexture((char*)"data/TEXTURE/fff.png");
+	g_TextureLine	 = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureCommand = LoadTexture((char*)"data/TEXTURE/command.png");
+	g_TextureTitle	 = LoadTexture((char*)"data/TEXTURE/title_A.png");
+
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
-	g_SE = LoadSound(file_SE);
+	char	file_VF[] = "data\\SE\\SE_FFF.wav";
+	g_SE	= LoadSound(file_SE);
+	g_VFFF	= LoadSound(file_VF);
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
@@ -78,10 +89,17 @@ HRESULT InitTitle(void)
 		FFFChange[i] = 0;
 	}
 
+	//タイトル
+	TitleAlpha = 1.0f;
+
+
+	//隠しコマンド
 	for (int i = 0; i < 11; i++)
 	{
 		kakusicommand[i] = false;
 	}
+
+	PlaySound(g_VFFF, 0);
 
 	return S_OK;
 }
@@ -224,6 +242,12 @@ void UpdateTitle(void)
 		}
 	}
 
+	//フォルティシッシャモ
+	TitleAlpha -= 0.1f;
+	if (TitleAlpha <= 0.0f)
+	{
+		TitleAlpha = 1.0f;
+	}
 
 }
 
@@ -234,6 +258,9 @@ void DrawTitle(void)
 {
 	DrawSpriteLeftTop(g_TextureBgTitle, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
 		0.0f, 0.0f, 1.0f, 1.0f );
+
+	DrawSpriteColor(g_TextureCommand, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 50, 200.0f, 50.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.7f, 0.7f, 1.0f, 0.5f));
 
 	//Line
 	for (int i = 0; i < 5; i++)
@@ -284,4 +311,18 @@ void DrawTitle(void)
 				D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 	}
+
+	DrawSpriteColor(g_TextureTitle,
+		CENTER_X, LOGO_POS_Y + 350.0f,
+		TITLE_SIZE + ((1.0f - TitleAlpha) * 80.0f), (TITLE_SIZE / 7) + ((1.0f - TitleAlpha) * 80.0f),
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		D3DXCOLOR(1.0f, 1.0f, 1.0f, TitleAlpha));
+
+	DrawSpriteColor(g_TextureTitle,
+		CENTER_X, LOGO_POS_Y + 350.0f,
+		TITLE_SIZE, (TITLE_SIZE/7),
+		0.0f, 0.0f,
+		1.0f, 1.0f,
+		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }

@@ -8,6 +8,8 @@
 #include "texture.h"
 #include "sprite.h"
 #include "special.h"
+#include "effect.h"
+#include "collision.h"
 
 //================================
 //グローバル変数
@@ -62,31 +64,14 @@ void UpdateBullet()
 
 			if (pEnemy->use)
 			{
-				if (
-					g_Bullet[i].pos.y - (g_Bullet[i].h / 2) < (pEnemy->pos.y + pEnemy->size.y / 2) &&
-					g_Bullet[i].oldpos.y - (g_Bullet[i].h / 2) > (pEnemy->pos.y - pEnemy->size.y / 2) &&
-					g_Bullet[i].pos.x < (pEnemy->pos.x + pEnemy->size.x / 2) &&
-					g_Bullet[i].pos.x >(pEnemy->pos.x - pEnemy->size.x / 2)
-					)
+				if(CollisionBB(g_Bullet[i].pos,pEnemy->pos,D3DXVECTOR2(g_Bullet[i].w,g_Bullet[i].h),pEnemy->size))
 				{
-					if (GetEnemyNum() > 0) {
-						pEnemy->hp -= Damage() / (GetEnemyNum() * 1.5);
-						g_Bullet[i].use = false;
-					}
-					else {
-						pEnemy->hp -= Damage();
-						g_Bullet[i].use = false;
-					}
-					//if (pEnemy->hp <= 0)
-					//{
-					//	pEnemy->use = false;
-					//}
+					pEnemy->hp -= Damage();
+					SetEffect(EFFECT_2, g_Bullet[i].pos, D3DXVECTOR2(100,100));
+					g_Bullet[i].use = false;
 				}
-
 			}
 		}
-
-
 	}
 }
 
@@ -97,25 +82,6 @@ void DrawBullet()
 	{
 		if (g_Bullet[i].use)
 		{
-			////テクスチャのセット
-			//GetDeviceContext()->PSSetShaderResources
-			//(0, 1, GetTexture(g_Bullet[i].texNo));	//スプライトの描画
-
-			//DrawSprite
-			//(
-			//	g_Bullet[i].pos.x,
-			//	g_Bullet[i].pos.y,
-			//	g_Bullet[i].w,
-			//	g_Bullet[i].h,
-			//	g_Bullet[i].rot,
-			//	D3DXCOLOR(1.0, 1.0, 1.0, 1.0),	//白色
-			//	g_Bullet[i].texNo,		//アニメーションパターン番号
-			//	1,				//パターンの横サイズ
-			//	1				//    　　　縦サイズ
-			//						//横に並ぶパターンの数
-
-			//);
-
 			DrawSpriteColor(g_Bullet[i].texNo, g_Bullet[i].pos.x, g_Bullet[i].pos.y, BULLET_SIZE_W, BULLET_SIZE_H,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
