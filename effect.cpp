@@ -5,13 +5,14 @@
 #include "main.h"
 
 static EFFECT	g_Effect[EFFECT_MAX];
-static int		g_TextureEffect[3];
+static int		g_TextureEffect[4];
 
 void InitEffect()
 {
 	g_TextureEffect[EFFECT_1] = LoadTexture((char*)"data/TEXTURE/effect_kira.png");
 	g_TextureEffect[EFFECT_2] = LoadTexture((char*)"data/TEXTURE/effect_bullet_hit.png");
-	g_TextureEffect[EFFECT_3] = LoadTexture((char*)"data/TEXTURE/effect_notes.png");
+	g_TextureEffect[EFFECT_3] = LoadTexture((char*)"data/TEXTURE/effect_notes_r.png");
+	g_TextureEffect[EFFECT_4] = LoadTexture((char*)"data/TEXTURE/effect_notes_l.png");
 
 	for (int i = 0; i < EFFECT_MAX; i++)
 	{
@@ -64,6 +65,11 @@ void UpdateEffect()
 			}
 
 			if (g_Effect[i].type == EFFECT_3)
+			{
+
+			}
+
+			if (g_Effect[i].type == EFFECT_4)
 			{
 
 			}
@@ -120,6 +126,13 @@ void SetEffect(EFFECT_TYPE type, D3DXVECTOR2 pos, D3DXVECTOR2 sz)
 			}
 
 			if (g_Effect[i].type == EFFECT_3)
+			{
+				g_Effect[i].patternX = 8;
+				g_Effect[i].patternY = 4;
+				g_Effect[i].patternMAX = 16;
+			}
+
+			if (g_Effect[i].type == EFFECT_4)
 			{
 				g_Effect[i].patternX = 8;
 				g_Effect[i].patternY = 4;
