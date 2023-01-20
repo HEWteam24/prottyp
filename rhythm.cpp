@@ -53,12 +53,14 @@ HRESULT InitRhythm(int stagenum)
 	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
-	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";
+	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";//未
 	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
 	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
 	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
+	char	filename9[] = "data\\BGM\\08_Shiokara_150.wav";//未
+	char	filename10[]= "data\\BGM\\08_Shiokara_150.wav";//未
 
 
 	switch (stagenum)
@@ -131,7 +133,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 6://ザリガニ裏
+	case 6://ザリガニ裏	//抜け殻
 
 		GameSoundNo = LoadSound(filename6);
 
@@ -142,7 +144,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 7://ウナギ裏
+	case 7://ウナギ裏	//うな重
 
 		GameSoundNo = LoadSound(filename7);
 
@@ -153,7 +155,7 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 8://タコ裏
+	case 8://タコ裏		//シオカラ武者
 
 		GameSoundNo = LoadSound(filename8);
 
@@ -164,9 +166,9 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 9://サメ裏
+	case 9://サメ裏		//ジョージ
 
-		GameSoundNo = LoadSound(filename7);
+		GameSoundNo = LoadSound(filename9);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
@@ -175,9 +177,9 @@ HRESULT InitRhythm(int stagenum)
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
-	case 10://シシャモ裏
+	case 10://シシャモ裏 //フルアーマーザリガニ
 
-		GameSoundNo = LoadSound(filename7);
+		GameSoundNo = LoadSound(filename10);
 
 		Notestipindex1 = 2;
 		indexNum = 8;
@@ -358,19 +360,6 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	//if (((Frame + errors) % (int)NotesT <= 6.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	//{
-	//	return true;
-	//}
-	//else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 6.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	//{
- // 		return true;
-	//}
-	//else
-	//{
-	//	return	false;
-	//}
-
 	//ノーツの座標で判定版
 	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (Notes[i].use) {

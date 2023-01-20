@@ -207,7 +207,12 @@ float GetComboScoreUp()
 	{
 		if (ComboAdd % 10 == 0) {
 			ComboMagNum = ComboAdd*2 / 10;
-			ComboMagUp();
+			if (ComboMagNum <= 30) {
+				ComboMagUp();
+			}
+			else {
+ 				ComboMagNum = 30;
+			}
 		}
 		Up += ComboMagNum / 10.0f;
 	}
