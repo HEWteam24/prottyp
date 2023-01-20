@@ -100,11 +100,11 @@ HRESULT InitRhythm(int stagenum)
 
 		GameSoundNo = LoadSound(filename3);
 
-		Notestipindex1 = 2;
+		Notestipindex1 = 1;
 		indexNum = 8;
 		errors = 0;
-		sp = 12.0f;
-		NowBPM = BPM1;
+		sp = 10.8f;
+		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
 		break;
 	case 4://ÉTÉÅ
