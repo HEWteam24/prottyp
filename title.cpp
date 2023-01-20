@@ -31,6 +31,7 @@
 static int g_TextureBgTitle;//タイトル画面用テクスチャの識別子
 static int g_TextureFFF;
 static int g_TextureLine;
+static int g_TextureCommand;
 
 float	lineX[2];
 float	Fsize[3];
@@ -56,6 +57,7 @@ HRESULT InitTitle(void)
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Title.png");
 	g_TextureFFF = LoadTexture((char*)"data/TEXTURE/fff.png");
 	g_TextureLine = LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureCommand = LoadTexture((char*)"data/TEXTURE/command.png");
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
@@ -234,6 +236,9 @@ void DrawTitle(void)
 {
 	DrawSpriteLeftTop(g_TextureBgTitle, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
 		0.0f, 0.0f, 1.0f, 1.0f );
+
+	DrawSpriteColor(g_TextureCommand, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 50, 200.0f, 50.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.7f, 0.7f, 1.0f, 0.5f));
 
 	//Line
 	for (int i = 0; i < 5; i++)
