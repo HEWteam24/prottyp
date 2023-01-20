@@ -97,11 +97,11 @@
 #define		SCORE_R_SIZE_X		(60)
 #define		SCORE_R_SIZE_Y		(80)
 #define		SCORE_R_POS_X		(1760 - (i * SCORE_R_SIZE_X))
-#define		SCORE_R_POS_Y		(CENTER_Y+80.0f)
+#define		SCORE_R_POS_Y		(CENTER_Y+40.0f)
 #define		SCOER_R_DIGIT		(8)
 
 #define		SCORE_R_TEXT_POS_X			(1381.0f)
-#define		SCORE_R_TEXT_POS_Y			(CENTER_Y+10.0f)
+#define		SCORE_R_TEXT_POS_Y			(CENTER_Y-40.0f)
 #define		SCORE_R_TEXT_SIZE_X			(133)
 #define		SCORE_R_TEXT_SIZE_Y			(60)
 
@@ -124,6 +124,13 @@
 #define		COMBOTEXT_POS_Y				(SCREEN_HEIGHT/2-170)
 #define		COMBOTEXT_SIZE_X			(230)
 #define		COMBOTEXT_SIZE_Y			(80)
+
+#define		COMBO_R_SIZE_X		(60)
+#define		COMBO_R_SIZE_Y		(80)
+#define		COMBO_R_POS_X		(1650 - (i * SCORE_R_SIZE_X))
+#define		COMBO_R_POS_Y		(CENTER_Y+170.0f)
+
+#define		COMBO_R_TEXT_POS_Y			(CENTER_Y+160.0f)
 
 #define		COMBOMAG_SIZE_X				(80.0f)
 #define		COMBOMAG_SIZE_Y				(95.0f)

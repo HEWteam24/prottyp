@@ -11,7 +11,7 @@
 #include "main.h"
 #include "keyboard.h"
 #include "enemybullet.h"
-
+#include "effect.h"
 
 
 //ã»ÇÃBPMÇÃÉpÉ^Å[Éì
@@ -386,7 +386,10 @@ void ReleaseNotes()
 
 	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (!Notes[i].use) continue;
-		if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 6.0f))&& Notes[i].pos.x > (880 - (Notes[i].sp.x * 6.0f))) {
+		if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 6.0f)) && Notes[i].pos.x >(880 - (Notes[i].sp.x * 6.0f))) {
+			SetEffect(EFFECT_3, Notes[i].pos, Notes[i].size+ D3DXVECTOR2(150.0f,150.0f));
+			SetEffect(EFFECT_3, Notes[i].pos, Notes[i].size + D3DXVECTOR2(150.0f, 150.0f));
+			//SetEffect(EFFECT_3, Notes[i + 1].pos, Notes[i + 1].size + D3DXVECTOR2(500.0f, 500.0f));
 			Notes[i].use = false;
 			Notes[i + 1].use = false;
 			break;
@@ -396,7 +399,7 @@ void ReleaseNotes()
 
 bool	MusicEnd()
 {
-	if (Frame < 120*60) {
+	if (Frame < 120 * 60) {
 		return false;
 	}
 	else {

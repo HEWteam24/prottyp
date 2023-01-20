@@ -7,8 +7,8 @@
 enum EFFECT_TYPE
 {
 	EFFECT_1 = 0,
-	EFFECT_2,
-	EFFECT_3,
+	EFFECT_2,		
+	EFFECT_3,		//ÉmÅ[Écè¡ãééû
 };
 
 struct EFFECT

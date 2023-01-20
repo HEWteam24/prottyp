@@ -26,7 +26,7 @@ pでポーズ、mで再開
 #include "fade.h"
 #include "frame.h"
 #include "rhythm.h"
-
+#include "enemy.h"
 #include "pause.h"
 
 
@@ -367,6 +367,7 @@ void Draw(void)
 
 void SetScene(int nextScene)
 {
+	int EnemyNumber,EnemyTex;
 	//現在動作しているシーンの終了処理を実行する
 	switch (g_Scene)
 	{
@@ -380,6 +381,8 @@ void SetScene(int nextScene)
 		UninitSkillSelect();
 		break;
 	case SCENE_GAME:
+		EnemyNumber = GetEnemyNum();
+		EnemyTex = GetEnemyTex();
 		UninitGame();
 		UninitPause();
 		break;
@@ -416,7 +419,7 @@ void SetScene(int nextScene)
 		InitOver();
 		break;
 	case SCENE_RESULT:
-		InitResult(GetGemeStageNum());
+		InitResult(GetGemeStageNum(), EnemyNumber, EnemyTex);
 		break;
 	case SCENE_TUTO:
 		InitTuto();

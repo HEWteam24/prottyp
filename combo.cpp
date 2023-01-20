@@ -21,13 +21,18 @@ static	char	*g_TextureNameCombo = COMBO_TEX;//テクスチャファイルパス JPG BMP PNG
 static	ID3D11ShaderResourceView* g_ComboTextTexture;//画像1枚で1つの変数が必要
 static	char* g_TextureNameComboText = (char*)"data\\texture\\text_combo.png";//テクスチャファイルパス JPG BMP PNG
 
+static	ID3D11ShaderResourceView* g_MaxComboTextTexture;//画像1枚で1つの変数が必要
+static	char* g_TextureNameMaxComboText = (char*)"data\\texture\\alphabet_01.png";//テクスチャファイルパス JPG BMP PNG
+
 static	ID3D11ShaderResourceView* g_ComboMagTexture;//画像1枚で1つの変数が必要
 static	char* g_TextureNameComboMag = (char*)"data\\texture\\number_03.png";//テクスチャファイルパス JPG BMP PNG
 
-int		ComboAdd, ComboMagNum;
+int		ComboAdd, ComboMagNum, ComboMax, ComboMaxTextureW[3], ComboMaxTextureH[3];
 float	ComboTexno;
 float	ComboTextTexNo;
+float	MaxComboTextTexNo;
 float	ComboMagTexNo;
+
 
 //=============================================================================
 // 初期化処理
@@ -75,9 +80,17 @@ HRESULT InitCombo()
 		exit(999);
 	}
 
+	MaxComboTextTexNo = LoadTexture(g_TextureNameMaxComboText);
+	if (MaxComboTextTexNo == -1)
+	{//ロードエラー
+		exit(999);
+	}
 	ComboAdd = 0;
 	ComboMagNum = 0;
-
+	ComboMax = 0;
+	ComboMaxTextureW[0] = 23;
+	ComboMaxTextureW[1] = 0;
+	ComboMaxTextureW[2] = 12;
 	return S_OK;
 }
 
@@ -158,8 +171,83 @@ void DrawCombo()
 			5
 		);
 	}
+
 }
 
+void DrawMaxCombo()
+{
+	COMBO g_MaxCombo[COMBO_DIGIT];
+
+	for (int i = 0; i < COMBO_DIGIT; i++) {
+		int j, ComboDigit;
+		j = i;
+		ComboDigit = 10;
+		while (j > 0)
+		{
+			ComboDigit *= 10;
+			j--;
+		}
+		g_MaxCombo[i].combonum = ComboMax % ComboDigit / (ComboDigit / 10);
+		g_MaxCombo[i].pos = D3DXVECTOR2(COMBO_R_POS_X, COMBO_R_POS_Y);		//位置
+		g_MaxCombo[i].size = D3DXVECTOR2(COMBO_R_SIZE_X, COMBO_R_SIZE_Y);	//サイズ
+		g_MaxCombo[i].col = D3DXCOLOR(1.0, 1.0, 1.0, 1.0);
+	}
+
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(ComboTexno));
+	for (int i = 0; i < COMBO_DIGIT; i++) {
+		DrawSpriteColorRotation(
+			g_MaxCombo[i].pos.x,
+			g_MaxCombo[i].pos.y,
+			g_MaxCombo[i].size.x,
+			g_MaxCombo[i].size.y,
+			0.0f,
+			g_MaxCombo[i].col,
+			g_MaxCombo[i].combonum,
+			0.2f,
+			0.2f,
+			5
+		);
+	}
+
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(ComboTextTexNo));
+
+	DrawSpriteColorRotation(
+		g_MaxCombo[0].pos.x + 80.0f,
+		COMBO_R_TEXT_POS_Y + 20.0f,
+		100.0f,
+		60.0f,
+		0.0f,
+		D3DXCOLOR(1.0, 1.0, 1.0, 1.0),
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
+
+
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(MaxComboTextTexNo));
+	for (int i = 0; i < 3; i++) {
+
+
+		DrawSpriteColorRotation(
+			g_MaxCombo[2].pos.x - (60.0f * i) - 70.0f,
+			COMBO_R_TEXT_POS_Y + 20.0f,
+			60.0f,
+			60.0f,
+			0.0f,
+			D3DXCOLOR(1.0, 1.0, 1.0, 1.0),
+			ComboMaxTextureW[i],
+			0.2f,
+			1.0f / 6.0f,
+			5
+		);
+	}
+	
+
+}
 void ComboPlus(int combo)
 {
 	ComboAdd += combo;
@@ -195,6 +283,9 @@ void ComboMagUp()
 }
 void ResetCombo()
 {
+	if (ComboMax < ComboAdd) {
+		ComboMax = ComboAdd;
+	}
 	ComboAdd = 0;
 	ComboMagNum = 0;
 	ComboMagUp();

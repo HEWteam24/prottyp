@@ -12,7 +12,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitResult(int stagenum);
+HRESULT InitResult(int texnum, int enemynum, int texnums);
 void UninitResult(void);
 void UpdateResult(void);
 void DrawResult(void);

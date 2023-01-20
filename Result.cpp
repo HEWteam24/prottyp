@@ -15,8 +15,8 @@
 #include "sound.h"
 #include "fade.h" 
 #include "keyboard.h"
-
 #include "score.h"
+#include "combo.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -46,13 +46,15 @@ int Addcol;
 
 bool	moving;
 
+int		EnemyScore;
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
-HRESULT InitResult(int stagenum)
+HRESULT InitResult(int stagenum,int enemynum,int texnums)
 {
 	float criteria = 0.9f + ((float)stagenum / 10);
 
+	EnemyScore = enemynum;
 	g_Coin.col = D3DXCOLOR(0.0f,0.0f,0.0f,1.0f);
 	g_Coin.TextCol = D3DXCOLOR(1.0f, 0.6f, 0.4f, 1.0f);
 	g_Coin.rad = 0.0f;
@@ -82,7 +84,7 @@ HRESULT InitResult(int stagenum)
 	{
 		g_Coin.rank = 2;
 	}
-	if (pScore->ToResult >= 10000*criteria)
+	if (pScore->ToResult >= 10000 * criteria)
 	{
 		g_Coin.rank = 1;
 	}
@@ -102,7 +104,7 @@ HRESULT InitResult(int stagenum)
 	g_Coin.size = D3DXVECTOR2(300.0f, 300.0f);
 	g_Coin.roted = false;
 
-	InitScoreResult();
+	InitScoreResult(texnums, enemynum);
 
 	Shishamo_pos = -450.0f;
 	Shishamo_spd = 85.0f;
@@ -121,6 +123,7 @@ void UninitResult(void)
 {
 	UninitPlayer();
 	UninitScore();
+	UninitCombo();
 	StopSound(g_BGMNo);
 }
 
@@ -193,47 +196,48 @@ void DrawResult(void)
 	DrawSpriteColor(g_TextureShishamo, Shishamo_pos, CENTER_Y, 800.0f, 800.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 
-	DrawSpriteColor(g_TextureClear, CENTER_X, CENTER_Y-300.0f, 600.0f, 100.0f,
-		0.0f, 0.0f, 1.0f, 1.0f,g_Coin.TextCol);
+	DrawSpriteColor(g_TextureClear, CENTER_X, CENTER_Y - 300.0f, 600.0f, 100.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, g_Coin.TextCol);
 
 
 	GetDeviceContext()->PSSetShaderResources(0, 1,
 		GetTexture(g_TextureRankCoin));
-	for (int i = 0; i < SCOER_DIGIT; i++) {
+
+	DrawSpriteColorRotation(
+		CENTER_X,
+		CENTER_Y,
+		300.0f,
+		300.0f,
+		g_Coin.rad,
+		g_Coin.col,
+		g_Coin.rank,
+		0.16665f,
+		1.0f,
+		6
+	);
+
+	if (g_Coin.roted)
+	{
+		GetDeviceContext()->PSSetShaderResources(0, 1,
+			GetTexture(g_TextureRankCoin));
 		DrawSpriteColorRotation(
 			CENTER_X,
 			CENTER_Y,
-			300.0f,
-			300.0f,
+			g_Coin.size.x,
+			g_Coin.size.y,
 			g_Coin.rad,
-			g_Coin.col,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Coin.alpha),
 			g_Coin.rank,
 			0.16665f,
 			1.0f,
 			6
 		);
-	}
-	if (g_Coin.roted)
-	{
-		GetDeviceContext()->PSSetShaderResources(0, 1,
-			GetTexture(g_TextureRankCoin));
-		for (int i = 0; i < SCOER_DIGIT; i++) {
-			DrawSpriteColorRotation(
-				CENTER_X,
-				CENTER_Y,
-				g_Coin.size.x,
-				g_Coin.size.y,
-				g_Coin.rad,
-				D3DXCOLOR(1.0f, 1.0f, 1.0f, g_Coin.alpha),
-				g_Coin.rank,
-				0.16665f,
-				1.0f,
-				6
-			);
-		}
+
 	}
 
 
 
 	DrawScore();
+	DrawEnemyScore();
+	DrawMaxCombo();
 }

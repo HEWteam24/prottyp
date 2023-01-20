@@ -88,7 +88,6 @@ void UninitGame(void)
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();
-	UninitCombo();
 	UninitSpecial();
 	UninitEffect();
 

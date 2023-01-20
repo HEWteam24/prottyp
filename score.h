@@ -15,7 +15,13 @@ typedef struct {
 	int			ToResult;
 
 }SCORE;
+typedef struct {
+	D3DXVECTOR2		Pos;
+	D3DXVECTOR2		Size;
+	int			Score;
+	int			ToResult;
 
+}ENEMYSCORE;
 typedef struct {
 	D3DXVECTOR2		Pos;
 	D3DXVECTOR2		Size;
@@ -23,14 +29,14 @@ typedef struct {
 }SCORETEXT;
 
 void InitScore();
-void InitScoreResult();
+void InitScoreResult(int tex, int num);
 void UpdateScore();
 void UninitScore();
 void DrawScore();
 void ScorePlus(int score);
 void GetDizit();
 SCORE* GetScore(void);
-
+void DrawEnemyScore();
 void SetScore(D3DXVECTOR2 Pos, D3DXVECTOR2 Size);
 
 #endif // !SCORE_H_

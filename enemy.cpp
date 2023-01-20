@@ -137,7 +137,6 @@ void UninitEnemy()
 //===================================================
 void UpdateEnemy()
 {
-
 	if (Enemy.use) 
 	{
 		Enemy.pos.x += Enemy.sp.x;		//エネミー横移動
@@ -173,12 +172,6 @@ void UpdateEnemy()
 			Enemy.use = true;
 		}
 	}
-
-	//enemyBullet	(デバッグ用)
-	//if ((GetKeyboardTrigger(DIK_S)))
-	//{
-	//	SetEnemyBulletNomal(Enemy.pos);
-	//}
 }
 
 //===================================================
@@ -215,7 +208,10 @@ int	GetEnemyNum()
 {
 	return EnemyNum;
 }
-
+int GetEnemyTex() 
+{
+	return g_TextureEnemyID;
+}
 bool BadEnd()
 {
 	if (!BadFlag) {
