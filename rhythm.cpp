@@ -360,19 +360,6 @@ void SetNotes()
 
 bool GetRhythm()
 {//リズムに合っているかの判定
-	//if (((Frame + errors) % (int)NotesT <= 6.0f) && ((Frame + errors) % (int)NotesT >= 0.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	//{
-	//	return true;
-	//}
-	//else if (((Frame + errors) % (int)NotesT <= NotesT - 1.0f) && ((Frame + errors)  % (int)NotesT >= NotesT - 6.0f) && Notestip[Notestipindex1][(Notestipindex2 - 3) % indexNum] == 1)
-	//{
- // 		return true;
-	//}
-	//else
-	//{
-	//	return	false;
-	//}
-
 	//ノーツの座標で判定版
 	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (Notes[i].use) {
