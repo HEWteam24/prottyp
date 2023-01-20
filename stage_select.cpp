@@ -19,7 +19,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define WHITE_MAX  (15)
+#define WHITE_MAX  (24)
 #define WHITE_DIST (40)
 #define OCT_ROT    (1.5f)
 #define	HARD_SIZE  (300.0f)
@@ -62,6 +62,7 @@ bool playing	= true;
 bool skillSlc	= false;
 bool key_enter	= false;
 bool key_ws		= false;
+bool key_space  = false;
 int playFst		= 0;
 int  whiteCnt	= 0;
 
@@ -148,7 +149,8 @@ HRESULT InitStageSelect(void)
 	change		= false;
 	key_enter	= false;
 	key_ws		= false;
-
+	key_space	= false;
+	
 	alpha		= 1.0f;
 	color		= 1.0f;
 	playFst		= 0;
@@ -232,6 +234,12 @@ void UpdateStageSelect(void)
 		if (((GetThumbLeftY(0) < -0.3f) || (GetThumbLeftY(0) > 0.3f) || IsButtonTriggered(0, XINPUT_GAMEPAD_X)) && (change == false))
 		{
 			change = true;
+		}
+
+		if (((Keyboard_IsKeyDown(KK_SPACE)) || IsButtonTriggered(0, XINPUT_GAMEPAD_A)) && (change == false) && (!key_space))
+		{
+			SceneTransition(SCENE_TITLE);
+			key_space = true;
 		}
 
 		for (int i = 0; i < STAGE_MAX; i++)
@@ -422,7 +430,7 @@ void UpdateStageSelect(void)
 		whiteCnt = 0;
 	}
 
-	//ENTER/W/Sの長押し無効化
+	//ENTER/W/S/SPACEの長押し無効化
 	if (!(Keyboard_IsKeyDown(KK_ENTER)))
 	{
 		key_enter = false;
@@ -430,6 +438,10 @@ void UpdateStageSelect(void)
 	if ((!Keyboard_IsKeyDown(KK_W)) && (!Keyboard_IsKeyDown(KK_S)))
 	{
 		key_ws = false;
+	}
+	if (!(Keyboard_IsKeyDown(KK_SPACE)))
+	{
+		key_space = false;
 	}
 
 	//スキルセレクト画面に切り替え
@@ -477,6 +489,7 @@ void UpdateStageSelect(void)
 		if ((Keyboard_IsKeyDown(KK_SPACE)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_A)))
 		{
 			skillSlc = false;
+			key_space = true;
 			UninitSkillSelect();
 
 			for (int i = 0; i < STAGE_MAX; i++)
