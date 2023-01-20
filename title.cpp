@@ -44,6 +44,7 @@ int FFFChange[3];
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
+static int g_VFFF;
 
 int count = 0;
 bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false,false,false};
@@ -61,7 +62,9 @@ HRESULT InitTitle(void)
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
-	g_SE = LoadSound(file_SE);
+	char	file_VF[] = "data\\SE\\SE_FFF.wav";
+	g_SE	= LoadSound(file_SE);
+	g_VFFF	= LoadSound(file_VF);
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
@@ -84,6 +87,8 @@ HRESULT InitTitle(void)
 	{
 		kakusicommand[i] = false;
 	}
+
+	PlaySound(g_VFFF, 0);
 
 	return S_OK;
 }
