@@ -165,6 +165,7 @@ enum SCENE
 	SCENE_SKILLSELECT,	//スキルセレクト
 	SCENE_TUTO,
 	SCENE_STAGE_0,
+	SCENE_CREDIT,
 
 	SCENE_NUM,		//終端コード
 };

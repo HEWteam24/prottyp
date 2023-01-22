@@ -94,6 +94,9 @@
     <ClCompile Include="effect.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="credit.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="collision.h">
@@ -187,6 +190,9 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="pause.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="credit.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

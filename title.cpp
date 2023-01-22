@@ -48,6 +48,7 @@ int FFFChange[3];
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
+static int g_SE_S;
 static int g_VFFF;
 
 int count = 0;
@@ -68,8 +69,10 @@ HRESULT InitTitle(void)
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
+	char	file_SE_S[] = "data\\SE\\success.wav";
 	char	file_VF[] = "data\\SE\\SE_FFF.wav";
 	g_SE	= LoadSound(file_SE);
+	g_SE_S	= LoadSound(file_SE_S);
 	g_VFFF	= LoadSound(file_VF);
 
 	//BGMの再生（2つ目の引数はループ回数）
@@ -130,56 +133,71 @@ void UpdateTitle(void)
 
 	if (kakusicommand[9] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_START))
 	{
+		kakusicommand[9] = false;
 		kakusicommand[10] = true;
-		PlaySound(g_SE, 0);
+		PlaySound(g_SE_S, 0);
 	}
 	else if (kakusicommand[8] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_A))
 	{
+		kakusicommand[8] = false;
 		kakusicommand[9] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[7] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
+		kakusicommand[7] = false;
 		kakusicommand[8] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[6] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT))
 	{
+		kakusicommand[6] = false;
 		kakusicommand[7] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[5] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT))
 	{
+		kakusicommand[5] = false;
 		kakusicommand[6] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[4] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT))
 	{
+		kakusicommand[4] = false;
 		kakusicommand[5] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[3] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT))
 	{
+		kakusicommand[3] = false;
 		kakusicommand[4] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[2] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
 	{
+		kakusicommand[2] = false;
 		kakusicommand[3] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[1] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
 	{
+		kakusicommand[1] = false;
 		kakusicommand[2] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[0] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
 	{
+		kakusicommand[0] = false;
 		kakusicommand[1] = true;
 		PlaySound(g_SE, 0);
 	}
 	else if (kakusicommand[0] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
 	{
+		for (int i = 0; i < 11; i++)
+		{
+			kakusicommand[i] = false;
+		}
+
 		kakusicommand[0] = true;
 		PlaySound(g_SE, 0);
 	}
@@ -190,7 +208,7 @@ void UpdateTitle(void)
 		{
 			kakusicommand[i] = false;
 		}
-		SceneTransition(SCENE_STAGESELECT);
+		SceneTransition(SCENE_CREDIT);
 	}
 
 
