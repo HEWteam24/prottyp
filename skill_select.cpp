@@ -26,6 +26,7 @@
 #define ICON_SPACE (320.0f)
 #define ICON_POS_Y (CENTER_Y-120.0f)
 #define PLATE_SIZE (260.0f)
+#define PLATE_POS  (CENTER_X*1.46f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -84,7 +85,7 @@ HRESULT InitSkillSelect(void)
 
 	RingRot = 0.0f;
 	RingPosY = 0.0f;
-	TextPosX = CENTER_X * 1.3;
+	TextPosX = PLATE_POS;
 	TextAlpha = 0.0f;
 
 	movingSp = false;
@@ -129,7 +130,7 @@ void UpdateSkillSelect(void)
 	
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		if (g_SkillPanel[i].pos.x > CENTER_X*1.75)
+		if (g_SkillPanel[i].pos.x > CENTER_X*1.785f)
 		{
 			g_SkillPanel[i].pos.x -= 50.0f;
 		}
@@ -181,7 +182,7 @@ void UpdateSkillSelect(void)
 		{
 			TextAlpha += 0.025f;
 		}
-		if (TextPosX > CENTER_X*1.35)
+		if (TextPosX > PLATE_POS)
 		{
 			TextPosX -= 15.0f;
 		}

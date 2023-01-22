@@ -19,10 +19,13 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define WHITE_MAX  (24)
-#define WHITE_DIST (40)
-#define OCT_ROT    (1.5f)
-#define	HARD_SIZE  (300.0f)
+#define WHITE_MAX	(24)
+#define WHITE_DIST	(40)
+#define OCT_ROT		(1.5f)
+#define	HARD_SIZE	(300.0f)
+#define BACK_POS_X	(50.0f)
+#define BUTTON_SIZE	(150.0f)
+#define BUTTON_ADD	(1)
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -35,6 +38,7 @@
 static int g_TextureBgStageSelect[2];//タイトル画面用テクスチャの識別子
 static int g_TextureNamePlate;
 static int g_TextureArrow;
+static int g_TextureArrowBack;
 static int g_TextureWhite;
 static int g_TextureOct;
 static int g_TextureUIButton;
@@ -49,6 +53,8 @@ float color;
 float HardCol[2];
 float octRot[2];
 float arrowSize[2];
+float buttonSize;
+int	  buttonAdd;
 
 STAGE_PANEL g_StagePanel[STAGE_MAX];
 WHITEBOX	g_White[WHITE_MAX];
@@ -79,6 +85,7 @@ HRESULT InitStageSelect(void)
 
 	g_TextureNamePlate = LoadTexture((char*)"data/TEXTURE/BOSS_NAME.png");
 	g_TextureArrow	   = LoadTexture((char*)"data/TEXTURE/arrow.png");
+	g_TextureArrowBack = LoadTexture((char*)"data/TEXTURE/arrow_Back.png");
 
 	g_StagePanel[STAGE_0].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel0.png");
 	g_StagePanel[STAGE_1].texnoA = LoadTexture((char*)"data/TEXTURE/Stage_Panel1.png");
@@ -156,7 +163,8 @@ HRESULT InitStageSelect(void)
 	playFst		= 0;
 	octRot[0]	= 0.0f;
 	octRot[1]	= OCT_ROT;
-
+	buttonSize	= BUTTON_SIZE;
+	buttonAdd	= BUTTON_ADD;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -222,6 +230,17 @@ void UpdateStageSelect(void)
 		PlaySound(g_BGMNo[NowSelect], 0);
 	}
 
+	if ((buttonSize <= BUTTON_SIZE-(BUTTON_SIZE/18))||(buttonSize>=BUTTON_SIZE+(BUTTON_SIZE/18)))
+	{
+		buttonAdd *= -1;
+	}
+	buttonSize += buttonAdd;
+	if (ura)
+	{
+	
+		buttonSize += buttonAdd;
+	}
+
 	//スキル選択がFalseだったらステージ選択
 	if (!skillSlc)
 	{
@@ -231,7 +250,7 @@ void UpdateStageSelect(void)
 			change = true;
 			key_ws = true;
 		}
-		if (((GetThumbLeftY(0) < -0.3f) || (GetThumbLeftY(0) > 0.3f) || IsButtonTriggered(0, XINPUT_GAMEPAD_X)) && (change == false))
+		if ((IsButtonTriggered(0, XINPUT_GAMEPAD_X)) && (change == false))
 		{
 			change = true;
 		}
@@ -528,12 +547,17 @@ void DrawStageSelect(void)
 				0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
 			DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 263.0f, arrowSize[0], arrowSize[0],
 				0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
+			//バック矢印
+			DrawSpriteColor(g_TextureArrowBack, BACK_POS_X+(buttonSize/5.0f), CENTER_Y*1.75f, BUTTON_SIZE, BUTTON_SIZE,
+				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
+			DrawSpriteColor(g_TextureUIButton, BACK_POS_X+BUTTON_SIZE*1.1f, CENTER_Y*1.75f,buttonSize*0.7,buttonSize*0.7f,
+				0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//難易度パネル
 			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
 			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
-			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, HARD_SIZE / 3, HARD_SIZE / 3,
+			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, buttonSize/1.5f, buttonSize / 1.5f,
 				0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
@@ -624,6 +648,11 @@ void DrawStageSelect(void)
 	if (skillSlc)
 	{
 		DrawSkillSelect();
+		//バック矢印
+		DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 2.0f) - 50.0f, CENTER_Y * 1.75f, BUTTON_SIZE*1.3f, BUTTON_SIZE*1.3f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.8f - 50.0f, CENTER_Y * 1.75f, buttonSize * 1.1f, buttonSize * 1.1f,
+			0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	}
 }
 
