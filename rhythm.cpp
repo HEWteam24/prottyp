@@ -53,7 +53,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
-	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";//–¢
+	char	filename3[] = "data\\BGM\\03_Tako_120.wav";
 	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
 	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
