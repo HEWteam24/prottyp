@@ -24,6 +24,7 @@
 
 #include "special.h""
 #include "combo.h"
+//#include "effect.h"
 
 #define SKILL_ICON_POS_X	(1600.0f)
 #define SKILL_ICON_POS_Y	( 900.0f)
@@ -34,6 +35,7 @@
 static int g_SpecialIconTexture;
 static int g_TextureGoRing;
 static int g_TextureCharge;
+static int g_TextureSpButton;
 
 //スペシャルのSE
 static int g_SE_Special;		
@@ -52,7 +54,8 @@ float Calpha;
 float IconcolorR;
 float IconcolorG;
 float IconcolorB;
-
+float SpButtonSize;
+float SpButtonAdd;
 
 int chargeUv;
 
@@ -64,9 +67,10 @@ SPECIAL sp;
 void InitSpecial()
 {
 	//テクスチャのロード
-	g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	g_TextureGoRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
-	g_TextureCharge= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
+	g_SpecialIconTexture= LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureGoRing		= LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+	g_TextureCharge		= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
+	g_TextureSpButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 
 	//SEのロード
 	char	file_SE_Special[] = "data\\SE\\SE_Special.wav";
@@ -100,6 +104,9 @@ void InitSpecial()
 	sp.damage_up = false;
 	sp.get_damage_down = false;
 	start_timer = false;
+
+	SpButtonAdd = 2;
+	SpButtonSize = 100.0f;
 
 	switch (sp.type) {
 	case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
@@ -199,6 +206,19 @@ void UpdateSpecial()
 	if (sp.UseOk == true)
 	{
 		GoRingrot += AdRingrot;
+		if (!start_timer)
+		{
+			SpButtonSize += SpButtonAdd;
+		}
+	}
+	else
+	{
+		SpButtonSize = 100.0f;
+	}
+
+	if ((SpButtonSize <= 90.0f) || (SpButtonSize >= 110.0f))
+	{
+		SpButtonAdd *= -1;
 	}
 
 
@@ -288,6 +308,8 @@ void DrawSpecial()
 			1
 		);
 
+		DrawSpriteColor(g_TextureSpButton, SKILL_ICON_POS_X+100.0f,SKILL_ICON_POS_Y+100.0f, SpButtonSize,SpButtonSize,
+			0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 //スペシャルの増加
@@ -296,6 +318,7 @@ void SpecialPlus()
 	if ((sp.charge < SPECIAL_MAX)&&(start_timer==false))
 	{
 		sp.charge += 1 + (GetComboScoreUp() / 2);
+		//SetEffect(EFFECT_1, D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(SKILL_ICON_SIZE*3.0f, SKILL_ICON_SIZE*3.0f));
 	}
 }
 
