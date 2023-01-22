@@ -26,6 +26,7 @@
 #define BACK_POS_X	(50.0f)
 #define BUTTON_SIZE	(150.0f)
 #define BUTTON_ADD	(1)
+#define STAGE_POS_Y (CENTER_Y-100.0f)
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -43,6 +44,8 @@ static int g_TextureWhite;
 static int g_TextureOct;
 static int g_TextureUIButton;
 static int g_TextureUIHard;
+static int g_TextureUIFrame;
+static int g_TextureUIPlay;
 
 static int g_BGMNo[11];//タイトル用BGMの識別子
 
@@ -50,6 +53,7 @@ int NowSelect = (int)STAGE_1;
 
 float alpha;
 float color;
+float platePosY;
 float HardCol[2];
 float octRot[2];
 float arrowSize[2];
@@ -69,7 +73,7 @@ bool skillSlc	= false;
 bool key_enter	= false;
 bool key_ws		= false;
 bool key_space  = false;
-int playFst		= 0;
+int  playFst		= 0;
 int  whiteCnt	= 0;
 
 //=============================================================================
@@ -101,9 +105,11 @@ HRESULT InitStageSelect(void)
 	g_StagePanel[STAGE_4].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
 	g_StagePanel[STAGE_5].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
 
-	g_TextureWhite = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	g_TextureUIButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
-	g_TextureUIHard = LoadTexture((char*)"data/TEXTURE/UI_Hard.png");
+	g_TextureWhite		= LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureUIButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureUIHard		= LoadTexture((char*)"data/TEXTURE/UI_Hard.png");
+	g_TextureUIFrame	= LoadTexture((char*)"data/TEXTURE/UI_frame.png");
+	g_TextureUIPlay		= LoadTexture((char*)"data/TEXTURE/UI_play.png");
 
 	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
@@ -123,7 +129,7 @@ HRESULT InitStageSelect(void)
 		//構造体の初期化
 		for (int i = 0; i < STAGE_MAX; i++)
 		{
-			g_StagePanel[i].pos = D3DXVECTOR2(-480.0f * 2 + i * 480.0f, CENTER_Y - 50.0f);
+			g_StagePanel[i].pos = D3DXVECTOR2(-480.0f * 2 + i * 480.0f, STAGE_POS_Y);
 			g_StagePanel[i].spd = 10.0f;
 			g_StagePanel[i].size = D3DXVECTOR2(300.0f, 300.0f);
 			g_StagePanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -165,6 +171,7 @@ HRESULT InitStageSelect(void)
 	octRot[1]	= OCT_ROT;
 	buttonSize	= BUTTON_SIZE;
 	buttonAdd	= BUTTON_ADD;
+	platePosY	= STAGE_POS_Y + 270.0f;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -203,7 +210,7 @@ void UninitStageSelect(void)
 		if (g_StagePanel[i].NowLane == PLANE_3)
 		{
 			g_StagePanel[i].pos.x = CENTER_X;
-			g_StagePanel[i].pos.y = CENTER_Y - 50.0f;
+			g_StagePanel[i].pos.y = STAGE_POS_Y;
 			g_StagePanel[i].size = D3DXVECTOR2(390.0f, 390.0f);
 		}
 	}
@@ -494,12 +501,13 @@ void UpdateStageSelect(void)
 		{
 			if (g_StagePanel[i].NowLane == PLANE_3)
 			{
-				if (g_StagePanel[i].pos.x > CENTER_X - CENTER_X / 1.8f)
+				if (g_StagePanel[i].pos.x > CENTER_X - CENTER_X / 2.0f)
 				{
 					g_StagePanel[i].pos.x -= 50.0f;
-					g_StagePanel[i].pos.y -= 7.0f;
+					//g_StagePanel[i].pos.y -= 2.0f;
 					g_StagePanel[i].size.x += 8.0f;
 					g_StagePanel[i].size.y += 8.0f;
+					platePosY += 4.0f;
 				}
 			}
 		}
@@ -510,13 +518,14 @@ void UpdateStageSelect(void)
 			skillSlc = false;
 			key_space = true;
 			UninitSkillSelect();
+			platePosY = CENTER_Y + 170.0f;
 
 			for (int i = 0; i < STAGE_MAX; i++)
 			{
 				if (g_StagePanel[i].NowLane == PLANE_3)
 				{
 					g_StagePanel[i].pos.x = CENTER_X;
-					g_StagePanel[i].pos.y = CENTER_Y - 50.0f;
+					g_StagePanel[i].pos.y = STAGE_POS_Y;
 					g_StagePanel[i].size = D3DXVECTOR2(390.0f, 390.0f);
 					
 				}
@@ -543,22 +552,29 @@ void DrawStageSelect(void)
 		if (!skillSlc)
 		{
 			//矢印
-			DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, CENTER_Y + 263.0f, arrowSize[1], arrowSize[1],
+			DrawSpriteColor(g_TextureArrow, CENTER_X - 300.0f, STAGE_POS_Y + 270.0f, arrowSize[1], arrowSize[1],
 				0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
-			DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, CENTER_Y + 263.0f, arrowSize[0], arrowSize[0],
+			DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, STAGE_POS_Y + 270.0f, arrowSize[0], arrowSize[0],
 				0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
 			//バック矢印
-			DrawSpriteColor(g_TextureArrowBack, BACK_POS_X+(buttonSize/5.0f), CENTER_Y*1.75f, BUTTON_SIZE, BUTTON_SIZE,
+			DrawSpriteColor(g_TextureUIFrame, BACK_POS_X*3.05f, 100.0f, 260.0f, 130.0f,
+				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			DrawSpriteColor(g_TextureArrowBack, BACK_POS_X+(buttonSize/5.0f), 100.0f, BUTTON_SIZE, BUTTON_SIZE,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
-			DrawSpriteColor(g_TextureUIButton, BACK_POS_X+BUTTON_SIZE*1.1f, CENTER_Y*1.75f,buttonSize*0.7,buttonSize*0.7f,
+			DrawSpriteColor(g_TextureUIButton, BACK_POS_X+BUTTON_SIZE*1.1f, 100.0f,buttonSize*0.7,buttonSize*0.7f,
 				0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//難易度パネル
-			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
+			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
-			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 350.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
+			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
-			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 350.0f, buttonSize/1.5f, buttonSize / 1.5f,
+			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 400.0f, buttonSize/1.5f, buttonSize / 1.5f,
 				0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			//PLAYパネル
+			DrawSpriteColor(g_TextureUIPlay, CENTER_X, CENTER_Y * 1.6f, 480.0f, 160.0f,
+				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			DrawSpriteColor(g_TextureUIButton, CENTER_X+180.0f, CENTER_Y * 1.6f, buttonSize * 0.7, buttonSize * 0.7f,
+				0.25 * 1, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
 		//ステージパネルの表示
@@ -587,25 +603,8 @@ void DrawStageSelect(void)
 		{
 			if (g_StagePanel[i].NowLane == PLANE_3)
 			{
-				DrawSpriteColor(g_TextureNamePlate, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y + 310.0f, g_StagePanel[i].size.x * 1.28, g_StagePanel[i].size.y / 3.9f,
+				DrawSpriteColor(g_TextureNamePlate, g_StagePanel[i].pos.x, platePosY, g_StagePanel[i].size.x * 1.28, g_StagePanel[i].size.y / 3.9f,
 					0.0f, (1.0f / 11) * NowSelect, 1.0f, (1.0f / 11), PLATE_COL);
-			}
-		}
-	}
-
-	for (int i = 0; i < STAGE_MAX; i++)
-	{
-		if ((g_StagePanel[i].NowLane == PLANE_3) && (skillSlc))
-		{
-			if (ura)
-			{
-				DrawSpriteColor(g_StagePanel[i].texnoB, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
-					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
-			}
-			else
-			{
-				DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
-					0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
 			}
 		}
 	}
@@ -649,10 +648,37 @@ void DrawStageSelect(void)
 	{
 		DrawSkillSelect();
 		//バック矢印
-		DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 2.0f) - 50.0f, CENTER_Y * 1.75f, BUTTON_SIZE*1.3f, BUTTON_SIZE*1.3f,
+		DrawSpriteColor(g_TextureUIFrame, BACK_POS_X * 3.8f, 100.0f, 300.0f, 150.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-		DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.8f - 50.0f, CENTER_Y * 1.75f, buttonSize * 1.1f, buttonSize * 1.1f,
+		DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 2.0f) - 20.0f, 100.0f, BUTTON_SIZE*1.0f, BUTTON_SIZE*1.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.8f - 60.0f, 100.0f, buttonSize * 0.8f, buttonSize * 0.8f,
 			0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+		//選択中ステージパネル
+		for (int i = 0; i < STAGE_MAX; i++)
+		{
+			if ((g_StagePanel[i].NowLane == PLANE_3))
+			{
+				//PLAYパネル
+				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.65f, g_StagePanel[i].size.x*1.5f, (g_StagePanel[i].size.x/3.0f)*1.5f,
+					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				DrawSpriteColor(g_TextureUIButton, g_StagePanel[i].pos.x + 240.0f, CENTER_Y * 1.65f, buttonSize * 0.7 * 1.5f, buttonSize * 0.7f * 1.5f,
+					0.25 * 1, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+				if (ura)
+				{
+					DrawSpriteColor(g_StagePanel[i].texnoB, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+						0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+				}
+				else
+				{
+					DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
+						0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
+				}
+			}
+		}
 	}
 }
 
