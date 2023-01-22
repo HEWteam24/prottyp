@@ -252,14 +252,10 @@ void UpdateStageSelect(void)
 	if (!skillSlc)
 	{
 
-		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))) && (change == false)&&(!key_ws))
+		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_X))) && (change == false)&&(!key_ws))
 		{
 			change = true;
 			key_ws = true;
-		}
-		if ((IsButtonTriggered(0, XINPUT_GAMEPAD_X)) && (change == false))
-		{
-			change = true;
 		}
 
 		if (((Keyboard_IsKeyDown(KK_SPACE)) || IsButtonTriggered(0, XINPUT_GAMEPAD_A)) && (change == false) && (!key_space))
@@ -271,7 +267,7 @@ void UpdateStageSelect(void)
 		for (int i = 0; i < STAGE_MAX; i++)
 		{
 			//‰E‚ÉˆÚ“®
-			if (((Keyboard_IsKeyDown(KK_A)) || (GetThumbLeftX(0) < -0.3f)) && (g_StagePanel[i].moving == false))
+			if (((Keyboard_IsKeyDown(KK_A)) || (GetThumbLeftX(0) < -0.3f)|| (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_LEFT))) && (g_StagePanel[i].moving == false))
 			{
 				g_StagePanel[i].moving = true;				//ˆÚ“®’†
 				g_StagePanel[i].NowLane++;
@@ -282,7 +278,7 @@ void UpdateStageSelect(void)
 				arrowSize[1] = 110.0f;
 			}
 			//¶‚ÉˆÚ“®
-			if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f)) && (g_StagePanel[i].moving == false))
+			if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f) || (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_RIGHT))) && (g_StagePanel[i].moving == false))
 			{
 				g_StagePanel[i].moving = true;				//ˆÚ“®’†
 				g_StagePanel[i].NowLane--;

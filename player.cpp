@@ -238,7 +238,7 @@ void UpdatePlayer(void)
 
 
 		//Aキーで右移動
-		if ((Keyboard_IsKeyDown(KK_A)) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+		if (((Keyboard_IsKeyDown(KK_A)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT))) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
 		{
 			g_Player.moving = true;				//移動中
 			g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
@@ -250,7 +250,7 @@ void UpdatePlayer(void)
 		}
 
 		// Dキー で右移動
-		if ((Keyboard_IsKeyDown(KK_D)) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+		if (((Keyboard_IsKeyDown(KK_D))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT))) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
 		{
 			g_Player.moving = true;				//移動中
 			g_Player.oldpos.x = g_Player.pos.x; //現在位置保存

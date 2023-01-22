@@ -136,7 +136,7 @@ void UpdateSkillSelect(void)
 		}
 
 	//‰º‘¤‚É‘I‘ðˆÚ“®
-		if (((GetThumbLeftY(0) < -0.3f)||(Keyboard_IsKeyDown(KK_S))) && (movingSp == false) && (NowSSelect < 2))
+		if (((GetThumbLeftY(0) < -0.3f)||(Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))) && (movingSp == false) && (NowSSelect < 2))
 		{
 			NowSSelect+=1;
 			//g_SkillPanel[i].moving = true;
@@ -145,7 +145,7 @@ void UpdateSkillSelect(void)
 			TextPosX = CENTER_X * 1.5;
 		}
 	//ã‘¤‚É‘I‘ðˆÚ“®
-		if (((GetThumbLeftY(0) > 0.3f) || (Keyboard_IsKeyDown(KK_W))) && (movingSp == false) && (NowSSelect > 0))
+		if (((GetThumbLeftY(0) > 0.3f) || (Keyboard_IsKeyDown(KK_W)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))) && (movingSp == false) && (NowSSelect > 0))
 		{
 			NowSSelect-=1;
 			//g_SkillPanel[i].moving = true;
