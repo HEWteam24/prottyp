@@ -22,6 +22,7 @@ pでポーズ、mで再開
 #include "stage_select.h"
 #include "skill_select.h"
 #include "tuto.h"
+#include "credit.h"
 
 #include "fade.h"
 #include "frame.h"
@@ -308,6 +309,9 @@ void Update(void)
 		case SCENE_TUTO:
 			UpdateTuto();
 			break;
+		case SCENE_CREDIT:
+			UpdateCredit();
+			break;
 		}
 
 	UpdateFade();
@@ -353,6 +357,9 @@ void Draw(void)
 	case SCENE_TUTO:
 		DrawTuto();
 		break;
+	case SCENE_CREDIT:
+		DrawCredit();
+		break;
 	}
 
 	
@@ -395,6 +402,9 @@ void SetScene(int nextScene)
 	case SCENE_TUTO:
 		UninitTuto();
 		break;
+	case SCENE_CREDIT:
+		UninitCredit();
+		break;
 	}
 
 	//動作するシーンを更新する
@@ -423,6 +433,9 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_TUTO:
 		InitTuto();
+		break;
+	case SCENE_CREDIT:
+		InitCredit();
 		break;
 	}
 }
