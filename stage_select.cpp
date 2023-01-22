@@ -47,6 +47,10 @@ static int g_TextureUIHard;
 static int g_TextureUIFrame;
 static int g_TextureUIPlay;
 
+static int g_SE_Select;
+static int g_SE_Stage;
+static int g_SE_Back;
+
 static int g_BGMNo[11];//タイトル用BGMの識別子
 
 int NowSelect = (int)STAGE_1;
@@ -159,6 +163,14 @@ HRESULT InitStageSelect(void)
 		g_BGMNo[10]= LoadSound(filename10);
 	}
 
+	char	file_SE_Select	[] = "data\\SE\\SE_MenuMove.wav";
+	char	file_SE_Stage[] = "data\\SE\\SE_Stage.wav";
+	char	file_SE_Back	[] = "data\\SE\\SE_MenuBack.wav";
+	g_SE_Select = LoadSound(file_SE_Select);
+	g_SE_Stage	= LoadSound(file_SE_Stage);
+	g_SE_Back	= LoadSound(file_SE_Back);
+
+
 	change		= false;
 	key_enter	= false;
 	key_ws		= false;
@@ -260,6 +272,7 @@ void UpdateStageSelect(void)
 
 		if (((Keyboard_IsKeyDown(KK_SPACE)) || IsButtonTriggered(0, XINPUT_GAMEPAD_A)) && (change == false) && (!key_space))
 		{
+			PlaySound(g_SE_Back, 0);
 			SceneTransition(SCENE_TITLE);
 			key_space = true;
 		}
@@ -276,6 +289,7 @@ void UpdateStageSelect(void)
 				alpha = 1.0f;
 				ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 				arrowSize[1] = 110.0f;
+				PlaySound(g_SE_Select, 0);
 			}
 			//左に移動
 			if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f) || (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_RIGHT))) && (g_StagePanel[i].moving == false))
@@ -287,6 +301,7 @@ void UpdateStageSelect(void)
 				alpha = 1.0f;
 				ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 0.0f, 1.0f);
 				arrowSize[0] = 110.0f;
+				PlaySound(g_SE_Select, 0);
 			}
 
 
@@ -472,6 +487,7 @@ void UpdateStageSelect(void)
 		skillSlc = true;
 		key_enter = true;
 		InitSkillSelect();
+		PlaySound(g_SE_Stage, 0);
 	}
 
 
@@ -511,6 +527,7 @@ void UpdateStageSelect(void)
 		//スキル選択を閉じる
 		if ((Keyboard_IsKeyDown(KK_SPACE)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_A)))
 		{
+			PlaySound(g_SE_Back, 0);
 			skillSlc = false;
 			key_space = true;
 			UninitSkillSelect();

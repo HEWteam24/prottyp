@@ -41,6 +41,8 @@ static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
 static int g_TextureSkillPlate;
 static int g_TextureTextArrow;
+
+static int g_SE_SpSelect;
 static int g_BGMNo;//BGMの識別子
 
 int NowSSelect = SKILL_1;
@@ -71,6 +73,9 @@ HRESULT InitSkillSelect(void)
 	g_TextureTextArrow = LoadTexture((char*)"data/TEXTURE/arrow.png");
 
 	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+
+	char	file_SE_SpSelect[] = "data\\SE\\SE_MenuMove.wav";
+	g_SE_SpSelect = LoadSound(file_SE_SpSelect);
 
 	//構造体の初期化
 	for (int i = 0; i < SKILL_MAX; i++)
@@ -143,6 +148,7 @@ void UpdateSkillSelect(void)
 			movingSp = true;
 			TextAlpha = 0.0f;
 			TextPosX = CENTER_X * 1.5;
+			PlaySound(g_SE_SpSelect, 0);
 		}
 	//上側に選択移動
 		if (((GetThumbLeftY(0) > 0.3f) || (Keyboard_IsKeyDown(KK_W)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))) && (movingSp == false) && (NowSSelect > 0))
@@ -152,6 +158,7 @@ void UpdateSkillSelect(void)
 			movingSp = true;
 			TextAlpha = 0.0f;
 			TextPosX = CENTER_X * 1.5;
+			PlaySound(g_SE_SpSelect, 0);
 		}
 		
 	//選択されてたら拡大 & されてなかったら縮小
