@@ -53,7 +53,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename0[] = "data\\BGM\\00_Tutorial_120.wav";
 	char	filename1[] = "data\\BGM\\01_Zarigani_120.wav";
 	char	filename2[] = "data\\BGM\\02_Unagi_120.wav";
-	char	filename3[] = "data\\BGM\\01_Zarigani_120.wav";//–¢
+	char	filename3[] = "data\\BGM\\03_Tako_120.wav";
 	char	filename4[] = "data\\BGM\\04_Shark_120.wav";
 	char	filename5[] = "data\\BGM\\05_Shishamo_150.wav";
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
@@ -387,9 +387,12 @@ void ReleaseNotes()
 	for (int i = 0; i < NOTES_MAX; i += 2) {
 		if (!Notes[i].use) continue;
 		if (Notes[i].pos.x < (880 + (Notes[i].sp.x * 6.0f)) && Notes[i].pos.x >(880 - (Notes[i].sp.x * 6.0f))) {
-			SetEffect(EFFECT_3, Notes[i].pos, Notes[i].size+ D3DXVECTOR2(150.0f,150.0f));
-			SetEffect(EFFECT_3, Notes[i].pos, Notes[i].size + D3DXVECTOR2(150.0f, 150.0f));
-			//SetEffect(EFFECT_3, Notes[i + 1].pos, Notes[i + 1].size + D3DXVECTOR2(500.0f, 500.0f));
+			SetEffect(EFFECT_4, Notes[i].pos, Notes[i].size+ D3DXVECTOR2(130.0f,130.0f));
+			SetEffect(EFFECT_4, Notes[i].pos, Notes[i].size + D3DXVECTOR2(130.0f, 130.0f));
+			SetEffect(EFFECT_4, Notes[i].pos, Notes[i].size + D3DXVECTOR2(130.0f, 130.0f));
+			SetEffect(EFFECT_3, Notes[i + 1].pos, Notes[i + 1].size + D3DXVECTOR2(130.0f, 130.0f));
+			SetEffect(EFFECT_3, Notes[i + 1].pos, Notes[i + 1].size + D3DXVECTOR2(130.0f, 130.0f));
+			SetEffect(EFFECT_3, Notes[i + 1].pos, Notes[i + 1].size + D3DXVECTOR2(130.0f, 130.0f));
 			Notes[i].use = false;
 			Notes[i + 1].use = false;
 			break;
