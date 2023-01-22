@@ -558,19 +558,19 @@ void DrawStageSelect(void)
 			DrawSpriteColor(g_TextureArrowBack, BACK_POS_X+(buttonSize/5.0f), 100.0f, BUTTON_SIZE, BUTTON_SIZE,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 			DrawSpriteColor(g_TextureUIButton, BACK_POS_X+BUTTON_SIZE*1.1f, 100.0f,buttonSize*0.7,buttonSize*0.7f,
-				0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.25 * 0, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//難易度パネル
 			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
 			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
 			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 400.0f, buttonSize/1.5f, buttonSize / 1.5f,
-				0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.25 * 2, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//PLAYパネル
 			DrawSpriteColor(g_TextureUIPlay, CENTER_X, CENTER_Y * 1.6f, 480.0f, 160.0f,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			DrawSpriteColor(g_TextureUIButton, CENTER_X+180.0f, CENTER_Y * 1.6f, buttonSize * 0.7, buttonSize * 0.7f,
-				0.25 * 1, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.25 * 1, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
 		//ステージパネルの表示
@@ -649,7 +649,7 @@ void DrawStageSelect(void)
 		DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 2.0f) - 20.0f, 100.0f, BUTTON_SIZE*1.0f, BUTTON_SIZE*1.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.8f - 60.0f, 100.0f, buttonSize * 0.8f, buttonSize * 0.8f,
-			0.25 * 0, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			0.25 * 0, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 		//選択中ステージパネル
@@ -658,10 +658,10 @@ void DrawStageSelect(void)
 			if ((g_StagePanel[i].NowLane == PLANE_3))
 			{
 				//PLAYパネル
-				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.65f, g_StagePanel[i].size.x*1.5f, (g_StagePanel[i].size.x/3.0f)*1.5f,
+				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.69f, g_StagePanel[i].size.x*1.5f, (g_StagePanel[i].size.x/3.0f)*1.5f,
 					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-				DrawSpriteColor(g_TextureUIButton, g_StagePanel[i].pos.x + 240.0f, CENTER_Y * 1.65f, buttonSize * 0.7 * 1.5f, buttonSize * 0.7f * 1.5f,
-					0.25 * 1, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				DrawSpriteColor(g_TextureUIButton, g_StagePanel[i].pos.x + 240.0f, CENTER_Y * 1.69f, buttonSize * 0.7 * 1.5f, buttonSize * 0.7f * 1.5f,
+					0.25 * 1, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 				if (ura)
 				{

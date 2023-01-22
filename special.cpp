@@ -50,6 +50,7 @@ bool start_timer = false;
 float colorR;
 float colorG;
 float colorB;
+float colorRGB;
 float Calpha;
 float IconcolorR;
 float IconcolorG;
@@ -77,22 +78,23 @@ void InitSpecial()
 	g_SE_Special = LoadSound(file_SE_Special);
 
 	//初期化
-	sp.IconPos.x = 0;
-	sp.IconPos.y = 0;
-	sp.w = 0;
-	sp.h = 0;
+	sp.IconPos.x= 0;
+	sp.IconPos.y= 0;
+	sp.w		= 0;
+	sp.h		= 0;
 
-	GoRingrot = 0.0f;
-	AdRingrot = 1.0f;
+	GoRingrot	= 0.0f;
+	AdRingrot	= 1.0f;
 
-	timer = 0;
-	colorR = 0.8f;
-	colorG = 0.8f;
-	colorB = 0.8f;
-	Calpha = 0.5f;
-	IconcolorR = 1.0f;
-	IconcolorG = 1.0f;
-	IconcolorB = 1.0f;
+	timer		= 0;
+	colorR		= 0.8f;
+	colorG		= 0.8f;
+	colorB		= 0.8f;
+	colorRGB	= 0.5f;
+	Calpha		= 0.5f;
+	IconcolorR	= 1.0f;
+	IconcolorG	= 1.0f;
+	IconcolorB	= 1.0f;
 
 	chargeUv = 0;
 	
@@ -137,6 +139,7 @@ void UpdateSpecial()
 		colorB = 0.0f;
 		sp.UseOk = true;
 		Calpha = 1.0f;
+		colorRGB = 1.0f;
 	}
 
 	//Yボタンでスペシャル発動
@@ -309,7 +312,7 @@ void DrawSpecial()
 		);
 
 		DrawSpriteColor(g_TextureSpButton, SKILL_ICON_POS_X+100.0f,SKILL_ICON_POS_Y+100.0f, SpButtonSize,SpButtonSize,
-			0.25 * 2, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			0.25 * 1, 0.5f, 0.25f, 0.5f, D3DXCOLOR(Calpha, Calpha, Calpha, 1.0f));
 }
 
 //スペシャルの増加
