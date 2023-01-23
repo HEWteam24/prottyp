@@ -155,6 +155,10 @@ void UpdateSpecial()
 
 		case SP_TYPE::HEAL:		//ƒvƒŒƒCƒ„[‚Ì‘Ì—Í‰ñ•œ
 			player->hp += 75.0f;
+			if (player->hp >= PLAYER_HP_DEFAULT)
+			{
+				player->hp = PLAYER_HP_DEFAULT;
+			}
 			sp.charge = 0;
 			sp.UseOk = false;
 			start_timer = true;

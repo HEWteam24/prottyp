@@ -66,6 +66,7 @@ void UpdateBullet()
 			{
 				if(CollisionBB(g_Bullet[i].pos,pEnemy->pos,D3DXVECTOR2(g_Bullet[i].w,g_Bullet[i].h),pEnemy->size))
 				{
+
 					pEnemy->hp -= Damage();
 					SetEffect(EFFECT_2, g_Bullet[i].pos, D3DXVECTOR2(100,100));
 					g_Bullet[i].use = false;
@@ -116,13 +117,21 @@ int Damage()
 	//当該special発動中のダメージの増加
 	if (sp->damage_up == true)
 	{
-		damage = 450;
+		float m = 1, n = GetEnemyNum();
+		for (int i = 0; i < n; i++) {
+			m *= 0.9f;
+		}
+		damage = 350 * m;
 		return damage;
 	}
 	//非発動時のデフォルト数値
 	else
 	{
-		damage = 90;
+		float m = 1, n = GetEnemyNum();
+		for (int i = 0; i < n; i++) {
+			m *= 0.9f;
+		}
+		damage = 90 * m;
 		return damage;
 	}
 }
