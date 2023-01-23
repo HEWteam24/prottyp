@@ -34,7 +34,7 @@
 #define			ENEMY10_SIZE_X		(LANE_SIZE_X*3)								//エネミーサイズX
 #define			ENEMY10_SIZE_Y		(ENEMY10_SIZE_X*1.5)							//エネミーサイズY
 
-#define			ENEMY_SP			(1.5f)										//エネミースピード
+#define			ENEMY_SP			(3.0f)										//エネミースピード
 #define			ENEMY_HP			(500)										//エネミーHP初期値
 //#define			ENEMY_TEX			((char*)"data\\texture\\ZARI_BOSS_1.png")			//エネミーテクスチャ
 #define			ENEMY_HP_POS_X		(CENTER_X-460.0f)									//エネミー体力ゲージ座標X
