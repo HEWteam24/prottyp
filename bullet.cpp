@@ -119,9 +119,9 @@ int Damage()
 	{
 		float m = 1, n = GetEnemyNum();
 		for (int i = 0; i < n; i++) {
-			m *= 0.98f;
+			m *= 0.9f;
 		}
-		damage = 350;
+		damage = 350 * m;
 		return damage;
 	}
 	//非発動時のデフォルト数値

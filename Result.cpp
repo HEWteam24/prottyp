@@ -110,6 +110,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	Shishamo_spd = 85.0f;
 	Addcol = 0;
 	moving = true;
+
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Result.wav");
 	//PlaySound(g_BGMNo, -1);
 
