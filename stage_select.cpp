@@ -21,7 +21,7 @@
 //*****************************************************************************
 #define WHITE_MAX	(24)
 #define WHITE_DIST	(40)
-#define OCT_ROT		(1.5f)
+#define OCT_ROT		(0.3f)
 #define	HARD_SIZE	(300.0f)
 #define BACK_POS_X	(50.0f)
 #define BUTTON_SIZE	(150.0f)
@@ -56,6 +56,7 @@ static int g_BGMNo[11];//タイトル用BGMの識別子
 int NowSelect = (int)STAGE_1;
 
 float alpha;
+float PlayAlpha;
 float color;
 float platePosY;
 float HardCol[2];
@@ -184,6 +185,7 @@ HRESULT InitStageSelect(void)
 	buttonSize	= BUTTON_SIZE;
 	buttonAdd	= BUTTON_ADD;
 	platePosY	= STAGE_POS_Y + 270.0f;
+	PlayAlpha = 0.0f;
 
 	ARROW_COL[0] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	ARROW_COL[1] = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
@@ -411,7 +413,7 @@ void UpdateStageSelect(void)
 			StopSound(g_BGMNo[m]);//曲停止
 		}
 
-		octRot[1] = OCT_ROT*3;
+		octRot[1] = OCT_ROT*10.0f;
 		color *= 0.8f;
 		if (color <= 0.01f)
 		{
@@ -420,12 +422,14 @@ void UpdateStageSelect(void)
 				ura = false;
 				HardCol[0] = 1.0f;
 				HardCol[1] = 0.3f;
+				
 			}
 			else
 			{
 				ura = true;
 				HardCol[0] = 0.3f;
 				HardCol[1] = 1.0f;
+				
 			}
 			change = false;
 			playing = false;
@@ -439,6 +443,10 @@ void UpdateStageSelect(void)
 
 	}
 	octRot[0] += octRot[1];
+	if (ura)
+	{
+	octRot[0] += octRot[1]*10.0f;
+	}
 
 	//裏面かつ、ステージ0じゃない場合、NowSelectに+5
 	if (((ura) && NowSelect > 0)&&(!skillSlc))
@@ -496,6 +504,13 @@ void UpdateStageSelect(void)
 	{
 		UpdateSkillSelect();
 
+		PlayAlpha += 0.05f;
+		if (PlayAlpha >= 1.0f)
+		{
+			PlayAlpha = 0.0f;
+		}
+
+		//シーン遷移
 		if (((Keyboard_IsKeyDown(KK_ENTER)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_B)))&&(!key_enter))
 		{
 			if (NowSelect == 0)
@@ -630,7 +645,7 @@ void DrawStageSelect(void)
 
 		DrawSpriteColorRotation(
 			CENTER_X, CENTER_Y, 2200.0f, 2200.0f,octRot[0],
-			D3DXCOLOR(0.5f, 0.8f, 1.0f, 0.1f),
+			D3DXCOLOR(HardCol[1], HardCol[1] * 0.3f, HardCol[0], 0.2f),
 			0.0f,1.0f,1.0f,1);
 
 		GetDeviceContext()->PSSetShaderResources(0, 1,
@@ -638,7 +653,7 @@ void DrawStageSelect(void)
 
 		DrawSpriteColorRotation(
 			CENTER_X, CENTER_Y, 2200.0f, 2200.0f,octRot[0] * -1,
-			D3DXCOLOR(0.5f, 1.0f, 0.8f, 0.1f),
+			D3DXCOLOR(HardCol[1], HardCol[1]*0.3f, HardCol[0], 0.2f),
 			0.0f,1.0f,1.0f,1);
 	}
 
@@ -677,8 +692,11 @@ void DrawStageSelect(void)
 				//PLAYパネル
 				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.69f, g_StagePanel[i].size.x*1.5f, (g_StagePanel[i].size.x/3.0f)*1.5f,
 					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.69f, (g_StagePanel[i].size.x * 1.5f)+(PlayAlpha*30.0f), ((g_StagePanel[i].size.x / 3.0f) * 1.5f)+(PlayAlpha * 30.0f),
+					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - PlayAlpha));
 				DrawSpriteColor(g_TextureUIButton, g_StagePanel[i].pos.x + 240.0f, CENTER_Y * 1.69f, buttonSize * 0.7 * 1.5f, buttonSize * 0.7f * 1.5f,
 					0.25 * 1, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
 
 				if (ura)
 				{
