@@ -367,7 +367,7 @@ void Draw(void)
 
 void SetScene(int nextScene)
 {
-	int EnemyNumber,EnemyTex;
+	int EnemyNumber = 0, EnemyTex = 0;
 	//現在動作しているシーンの終了処理を実行する
 	switch (g_Scene)
 	{

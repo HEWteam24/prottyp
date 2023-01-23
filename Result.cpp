@@ -52,7 +52,7 @@ int		EnemyScore;
 //=============================================================================
 HRESULT InitResult(int stagenum,int enemynum,int texnums)
 {
-	float criteria = 0.9f + ((float)stagenum / 10);
+	float criteria = 1.0f + (((float)stagenum / 10) * 2);
 
 	EnemyScore = enemynum;
 	g_Coin.col = D3DXCOLOR(0.0f,0.0f,0.0f,1.0f);
