@@ -127,7 +127,7 @@ void UpdateTuto(void)
 		}
 	}
 
-	if (GetFreame() == 151 && stop != true)
+	if (GetFreame() == 148 && stop != true)
 	{
 		PauseSound(BGM_RE());
 		stop = true;

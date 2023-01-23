@@ -26,6 +26,7 @@
 #define ICON_SPACE (320.0f)
 #define ICON_POS_Y (CENTER_Y-120.0f)
 #define PLATE_SIZE (260.0f)
+#define PLATE_POS  (CENTER_X*1.46f)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -40,6 +41,8 @@ static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
 static int g_TextureSkillPlate;
 static int g_TextureTextArrow;
+
+static int g_SE_SpSelect;
 static int g_BGMNo;//BGMの識別子
 
 int NowSSelect = SKILL_1;
@@ -71,6 +74,9 @@ HRESULT InitSkillSelect(void)
 
 	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 
+	char	file_SE_SpSelect[] = "data\\SE\\SE_MenuMove.wav";
+	g_SE_SpSelect = LoadSound(file_SE_SpSelect);
+
 	//構造体の初期化
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
@@ -84,7 +90,7 @@ HRESULT InitSkillSelect(void)
 
 	RingRot = 0.0f;
 	RingPosY = 0.0f;
-	TextPosX = CENTER_X * 1.3;
+	TextPosX = PLATE_POS;
 	TextAlpha = 0.0f;
 
 	movingSp = false;
@@ -129,28 +135,30 @@ void UpdateSkillSelect(void)
 	
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		if (g_SkillPanel[i].pos.x > CENTER_X*1.75)
+		if (g_SkillPanel[i].pos.x > CENTER_X*1.785f)
 		{
 			g_SkillPanel[i].pos.x -= 50.0f;
 		}
 
 	//下側に選択移動
-		if (((GetThumbLeftY(0) < -0.3f)||(Keyboard_IsKeyDown(KK_S))) && (movingSp == false) && (NowSSelect < 2))
+		if (((GetThumbLeftY(0) < -0.3f)||(Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))) && (movingSp == false) && (NowSSelect < 2))
 		{
 			NowSSelect+=1;
 			//g_SkillPanel[i].moving = true;
 			movingSp = true;
 			TextAlpha = 0.0f;
 			TextPosX = CENTER_X * 1.5;
+			PlaySound(g_SE_SpSelect, 0);
 		}
 	//上側に選択移動
-		if (((GetThumbLeftY(0) > 0.3f) || (Keyboard_IsKeyDown(KK_W))) && (movingSp == false) && (NowSSelect > 0))
+		if (((GetThumbLeftY(0) > 0.3f) || (Keyboard_IsKeyDown(KK_W)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))) && (movingSp == false) && (NowSSelect > 0))
 		{
 			NowSSelect-=1;
 			//g_SkillPanel[i].moving = true;
 			movingSp = true;
 			TextAlpha = 0.0f;
 			TextPosX = CENTER_X * 1.5;
+			PlaySound(g_SE_SpSelect, 0);
 		}
 		
 	//選択されてたら拡大 & されてなかったら縮小
@@ -181,7 +189,7 @@ void UpdateSkillSelect(void)
 		{
 			TextAlpha += 0.025f;
 		}
-		if (TextPosX > CENTER_X*1.35)
+		if (TextPosX > PLATE_POS)
 		{
 			TextPosX -= 15.0f;
 		}

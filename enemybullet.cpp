@@ -240,7 +240,7 @@ void UpdateEnemyBullet()
 				}
 				else
 				{
-					pPlayer->hp -= 25.0f*1;
+					pPlayer->hp -= 25.0f*1.5f;
 				}
 
 				g_EnemyBulletNomal[i].pos -= g_EnemyBulletNomal[i].mov;

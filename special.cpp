@@ -24,6 +24,7 @@
 
 #include "special.h""
 #include "combo.h"
+//#include "effect.h"
 
 #define SKILL_ICON_POS_X	(1600.0f)
 #define SKILL_ICON_POS_Y	( 900.0f)
@@ -34,6 +35,7 @@
 static int g_SpecialIconTexture;
 static int g_TextureGoRing;
 static int g_TextureCharge;
+static int g_TextureSpButton;
 
 //スペシャルのSE
 static int g_SE_Special;		
@@ -48,11 +50,13 @@ bool start_timer = false;
 float colorR;
 float colorG;
 float colorB;
+float colorRGB;
 float Calpha;
 float IconcolorR;
 float IconcolorG;
 float IconcolorB;
-
+float SpButtonSize;
+float SpButtonAdd;
 
 int chargeUv;
 
@@ -64,31 +68,33 @@ SPECIAL sp;
 void InitSpecial()
 {
 	//テクスチャのロード
-	g_SpecialIconTexture = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	g_TextureGoRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
-	g_TextureCharge= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
+	g_SpecialIconTexture= LoadTexture((char*)"data/TEXTURE/fade_white.png");
+	g_TextureGoRing		= LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+	g_TextureCharge		= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
+	g_TextureSpButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 
 	//SEのロード
 	char	file_SE_Special[] = "data\\SE\\SE_Special.wav";
 	g_SE_Special = LoadSound(file_SE_Special);
 
 	//初期化
-	sp.IconPos.x = 0;
-	sp.IconPos.y = 0;
-	sp.w = 0;
-	sp.h = 0;
+	sp.IconPos.x= 0;
+	sp.IconPos.y= 0;
+	sp.w		= 0;
+	sp.h		= 0;
 
-	GoRingrot = 0.0f;
-	AdRingrot = 1.0f;
+	GoRingrot	= 0.0f;
+	AdRingrot	= 1.0f;
 
-	timer = 0;
-	colorR = 0.8f;
-	colorG = 0.8f;
-	colorB = 0.8f;
-	Calpha = 0.5f;
-	IconcolorR = 1.0f;
-	IconcolorG = 1.0f;
-	IconcolorB = 1.0f;
+	timer		= 0;
+	colorR		= 0.8f;
+	colorG		= 0.8f;
+	colorB		= 0.8f;
+	colorRGB	= 0.5f;
+	Calpha		= 0.5f;
+	IconcolorR	= 1.0f;
+	IconcolorG	= 1.0f;
+	IconcolorB	= 1.0f;
 
 	chargeUv = 0;
 	
@@ -100,6 +106,9 @@ void InitSpecial()
 	sp.damage_up = false;
 	sp.get_damage_down = false;
 	start_timer = false;
+
+	SpButtonAdd = 2;
+	SpButtonSize = 100.0f;
 
 	switch (sp.type) {
 	case SP_TYPE::DAMAGE_UP: //与えるダメージ増加
@@ -130,6 +139,7 @@ void UpdateSpecial()
 		colorB = 0.0f;
 		sp.UseOk = true;
 		Calpha = 1.0f;
+		colorRGB = 1.0f;
 	}
 
 	//Yボタンでスペシャル発動
@@ -145,6 +155,10 @@ void UpdateSpecial()
 
 		case SP_TYPE::HEAL:		//プレイヤーの体力回復
 			player->hp += 75.0f;
+			if (player->hp >= PLAYER_HP_DEFAULT)
+			{
+				player->hp = PLAYER_HP_DEFAULT;
+			}
 			sp.charge = 0;
 			sp.UseOk = false;
 			start_timer = true;
@@ -199,6 +213,19 @@ void UpdateSpecial()
 	if (sp.UseOk == true)
 	{
 		GoRingrot += AdRingrot;
+		if (!start_timer)
+		{
+			SpButtonSize += SpButtonAdd;
+		}
+	}
+	else
+	{
+		SpButtonSize = 100.0f;
+	}
+
+	if ((SpButtonSize <= 90.0f) || (SpButtonSize >= 110.0f))
+	{
+		SpButtonAdd *= -1;
 	}
 
 
@@ -288,6 +315,8 @@ void DrawSpecial()
 			1
 		);
 
+		DrawSpriteColor(g_TextureSpButton, SKILL_ICON_POS_X+100.0f,SKILL_ICON_POS_Y+100.0f, SpButtonSize,SpButtonSize,
+			0.25 * 1, 0.5f, 0.25f, 0.5f, D3DXCOLOR(Calpha, Calpha, Calpha, 1.0f));
 }
 
 //スペシャルの増加
@@ -296,6 +325,7 @@ void SpecialPlus()
 	if ((sp.charge < SPECIAL_MAX)&&(start_timer==false))
 	{
 		sp.charge += 1 + (GetComboScoreUp() / 2);
+		//SetEffect(EFFECT_1, D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(SKILL_ICON_SIZE*3.0f, SKILL_ICON_SIZE*3.0f));
 	}
 }
 
