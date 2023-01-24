@@ -208,7 +208,7 @@ void UpdateEnemyBullet()
 	{
 		AddAlfa = false;
 	}
-	else if (EnemyAlfa <= 0.0f)
+	else if (EnemyAlfa <= 0.25f)
 	{
 		AddAlfa = true;
 	}
@@ -222,7 +222,7 @@ void UpdateEnemyBullet()
 		EnemyAlfa -= ENEMYBULLET_ALFA_CHANGE;
 	}
 
-	if (EnemyAlfa >= 0.5f)
+	if (EnemyAlfa >= 0.65f)
 	{
 		HitBullet = true;
 	}
