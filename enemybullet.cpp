@@ -73,11 +73,11 @@ HRESULT InitEnemyBullet(int Stagenum)
 	case 2:
 		BulletSp = ENEMYBULLET_SPEED2;
 	case 3:
-		BulletSp = ENEMYBULLET_SPEED3;
-	case 4:
-		BulletSp = ENEMYBULLET_SPEED3;
-	case 5:
 		BulletSp = ENEMYBULLET_SPEED2;
+	case 4:
+		BulletSp = ENEMYBULLET_SPEED2;
+	case 5:
+		BulletSp = ENEMYBULLET_SPEED3;
 	case 6:
 		BulletSp = ENEMYBULLET_SPEED3;
 	case 7:

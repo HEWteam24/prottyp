@@ -72,23 +72,23 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	{
 		g_Coin.rank = 5;
 	}
-	if (pScore->ToResult >= 2000* criteria)
+	if (pScore->ToResult >= 4000 * criteria)
 	{
 		g_Coin.rank = 4;
 	}
-	if (pScore->ToResult >= 4000 * criteria)
+	if (pScore->ToResult >= 8000 * criteria)
 	{
 		g_Coin.rank = 3;
 	}
-	if (pScore->ToResult >= 8000 * criteria)
+	if (pScore->ToResult >= 17000 * criteria)
 	{
 		g_Coin.rank = 2;
 	}
-	if (pScore->ToResult >= 10000 * criteria)
+	if (pScore->ToResult >= 27000 * criteria)
 	{
 		g_Coin.rank = 1;
 	}
-	if (pScore->ToResult >= 12000* criteria)
+	if (pScore->ToResult >= 38000 * criteria)
 	{
 		g_Coin.rank = 0;
 	}
