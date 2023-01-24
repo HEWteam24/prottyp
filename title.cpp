@@ -45,6 +45,7 @@ bool	change[3];
 
 int FFFframe[3];
 int FFFChange[3];
+int TitleFrame;
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
@@ -68,7 +69,8 @@ HRESULT InitTitle(void)
 	g_TextureTitle	 = LoadTexture((char*)"data/TEXTURE/title_A.png");
 
 	//音声ファイルを読み込んで識別子を受け取る
-	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
+	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
+
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
 	char	file_SE_0[] = "data\\SE\\command0.wav";
 	char	file_SE_S[] = "data\\SE\\success.wav";
@@ -80,7 +82,7 @@ HRESULT InitTitle(void)
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
-	//PlaySound(g_BGMNo, -1);
+
 
 	lineX[0] = CENTER_X/2*1;
 	lineX[1] = CENTER_X/2*3;
@@ -97,7 +99,7 @@ HRESULT InitTitle(void)
 
 	//タイトル
 	TitleAlpha = 1.0f;
-
+	TitleFrame = 0;
 
 	//隠しコマンド
 	for (int i = 0; i < 11; i++)
@@ -115,7 +117,7 @@ HRESULT InitTitle(void)
 //=============================================================================
 void UninitTitle(void)
 {
-	//StopSound(g_BGMNo);
+	StopSound(g_BGMNo);
 }
 
 //=============================================================================
@@ -123,6 +125,13 @@ void UninitTitle(void)
 //=============================================================================
 void UpdateTitle(void)
 {
+	TitleFrame++;
+
+	if (TitleFrame == 100)
+	{
+		PlaySound(g_BGMNo, 0);
+	}
+
 	//エンターキーが押されたらSCENE_STAGESELECTへ移行する
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
