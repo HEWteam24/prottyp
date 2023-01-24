@@ -753,3 +753,15 @@ void SetWhite(int x,int sz,int rt)
 		}
 	}
 }
+
+bool GetUra()
+{
+	if (ura)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}

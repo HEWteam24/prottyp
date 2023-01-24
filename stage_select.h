@@ -81,3 +81,4 @@ void UpdateStageSelect(void);
 void DrawStageSelect(void);
 int GetGemeStageNum(void);
 void SetWhite(int x,int sz,int rt);
+bool GetUra();
