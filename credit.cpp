@@ -20,7 +20,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-#define CREDIT_Y	(3000.0f)
+#define CREDIT_Y	(3800.0f)
 float credit_nowY = SCREEN_HEIGHT + (CREDIT_Y / 2);
 
 //*****************************************************************************
@@ -77,7 +77,7 @@ void UpdateCredit(void)
 		SceneTransition(SCENE_TITLE);
 	}
 	//コントローラーBボタン押したらSCENE_STAGESELECTへ移行
-	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
+	if (IsButtonTriggered(0, XINPUT_GAMEPAD_A) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)|| IsButtonTriggered(0, XINPUT_GAMEPAD_X)|| IsButtonTriggered(0, XINPUT_GAMEPAD_Y)|| IsButtonTriggered(0, XINPUT_GAMEPAD_START))
 	{
 		SceneTransition(SCENE_TITLE);
 	}
@@ -110,7 +110,7 @@ void DrawCredit(void)
 {
 	if (!thankyou)
 	{
-		DrawSpriteColor(g_TextureCredit, CENTER_X, credit_nowY, SCREEN_WIDTH, CREDIT_Y,
+		DrawSpriteColor(g_TextureCredit, CENTER_X, credit_nowY, 1500.0f, CREDIT_Y,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f - t_alfa));
 	}
 	else

@@ -48,6 +48,7 @@ int FFFChange[3];
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
+static int g_SE_0;
 static int g_SE_S;
 static int g_VFFF;
 
@@ -69,9 +70,11 @@ HRESULT InitTitle(void)
 	//音声ファイルを読み込んで識別子を受け取る
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
+	char	file_SE_0[] = "data\\SE\\command0.wav";
 	char	file_SE_S[] = "data\\SE\\success.wav";
 	char	file_VF[] = "data\\SE\\SE_FFF.wav";
 	g_SE	= LoadSound(file_SE);
+	g_SE_0	= LoadSound(file_SE_0);
 	g_SE_S	= LoadSound(file_SE_S);
 	g_VFFF	= LoadSound(file_VF);
 
