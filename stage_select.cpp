@@ -125,7 +125,7 @@ HRESULT InitStageSelect(void)
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
 	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
-	char	filename9[] = "data\\BGM\\07_Unadon_150.wav";	//ñ¢
+	char	filename9[] = "data\\BGM\\09_Jawge_150.wav";
 	char	filename10[] = "data\\BGM\\08_Shiokara_150.wav";//ñ¢
 
 	//èââÒÇÃÇ›é¿çs
