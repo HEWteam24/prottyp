@@ -35,6 +35,8 @@ static int g_TextureFFF;
 static int g_TextureLine;
 static int g_TextureCommand;
 static int g_TextureTitle;
+static int g_TextureUIText;
+static int g_TextureUIButton;
 
 float	TitleAlpha;
 float	lineX[2];
@@ -67,6 +69,8 @@ HRESULT InitTitle(void)
 	g_TextureLine	 = LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_TextureCommand = LoadTexture((char*)"data/TEXTURE/command.png");
 	g_TextureTitle	 = LoadTexture((char*)"data/TEXTURE/title_A.png");
+	g_TextureUIText	 = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	g_TextureUIButton= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 
 	//音声ファイルを読み込んで識別子を受け取る
 	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
@@ -98,7 +102,7 @@ HRESULT InitTitle(void)
 	}
 
 	//タイトル
-	TitleAlpha = 1.0f;
+	TitleAlpha = 1.1f;
 	TitleFrame = 0;
 
 	//隠しコマンド
@@ -127,7 +131,7 @@ void UpdateTitle(void)
 {
 	TitleFrame++;
 
-	if (TitleFrame == 100)
+	if (TitleFrame == 120)
 	{
 		PlaySound(g_BGMNo, 0);
 	}
@@ -273,8 +277,8 @@ void UpdateTitle(void)
 	}
 
 	//フォルティシッシャモ
-	TitleAlpha -= 0.1f;
-	if (TitleAlpha <= 0.0f)
+	TitleAlpha -= 0.052f;
+	if (TitleAlpha <= -1.0f)
 	{
 		TitleAlpha = 1.0f;
 	}
@@ -343,16 +347,32 @@ void DrawTitle(void)
 	}
 
 	DrawSpriteColor(g_TextureTitle,
-		CENTER_X, LOGO_POS_Y + 350.0f,
+		CENTER_X, LOGO_POS_Y + 300.0f,
 		TITLE_SIZE + ((1.0f - TitleAlpha) * 80.0f), (TITLE_SIZE / 7) + ((1.0f - TitleAlpha) * 80.0f),
 		0.0f, 0.0f,
 		1.0f, 1.0f,
 		D3DXCOLOR(1.0f, 1.0f, 1.0f, TitleAlpha));
 
 	DrawSpriteColor(g_TextureTitle,
-		CENTER_X, LOGO_POS_Y + 350.0f,
+		CENTER_X, LOGO_POS_Y + 300.0f,
 		TITLE_SIZE, (TITLE_SIZE/7),
 		0.0f, 0.0f,
 		1.0f, 1.0f,
 		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+
+	//START
+	DrawSpriteColor(g_TextureUIText,
+		CENTER_X-100.0f, LOGO_POS_Y + 550.0f,
+		500.0f+(TitleAlpha*8.0f), 100.0f+(TitleAlpha*8.0f),
+		0.0f, 0.0f,
+		1.0f, 1.0f/3.0f,
+		D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+	//START_Button
+	DrawSpriteColor(g_TextureUIButton,
+		CENTER_X+225.0f, LOGO_POS_Y + 550.0f,
+		120.0f+(TitleAlpha * 8.0f), 120.0f+(TitleAlpha * 8.0f),
+		0.25f, 0.0f,
+		0.25f, 0.5f,
+		D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 }
