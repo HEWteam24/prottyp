@@ -45,6 +45,10 @@ int g_EnemyBulletTransTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletTrans;
 static	char *g_TextureEnemyBulletTransName = (char*)"data\\TEXTURE\\chara_octopus.png";//テクスチャ名
 
+//裏用
+static	ID3D11ShaderResourceView* g_TextureEnemyBulletSlash;
+static	char *g_TextureEnemyBulletSlashName = (char*)"data\\TEXTURE\\chara_octopus.png";//テクスチャ名
+
 int nowY = 0;	//マップのその時の縦列数
 
 static int g_SE_Damage;		//ダメージサウンド
@@ -96,7 +100,14 @@ HRESULT InitEnemyBullet(int Stagenum)
 
 	g_EnemyBulletNomalTex = LoadTexture(g_TextureEnemyBulletNomalName);
 	g_EnemyBulletLongTex = LoadTexture(g_TextureEnemyBulletLongName);
-	g_EnemyBulletHpTex = LoadTexture(g_TextureEnemyBulletHpName);
+	if (GetUra() == false)
+	{
+		g_EnemyBulletHpTex = LoadTexture(g_TextureEnemyBulletHpName);
+	}
+	else if (GetUra() == true)
+	{
+		g_EnemyBulletHpTex = LoadTexture(g_TextureEnemyBulletSlashName);
+	}
 	g_EnemyBulletTransTex = LoadTexture(g_TextureEnemyBulletTransName);
 
 	//構造体の初期化
@@ -182,6 +193,8 @@ void UninitEnemyBullet()
 //更新処理
 void UpdateEnemyBullet()
 {
+	
+
 	SPECIAL* sp = GetSpecial();
 
 	int eFreame = GetFreame();
@@ -195,7 +208,7 @@ void UpdateEnemyBullet()
 	{
 		AddAlfa = false;
 	}
-	else if (EnemyAlfa <= 0.0f)
+	else if (EnemyAlfa <= 0.25f)
 	{
 		AddAlfa = true;
 	}
@@ -209,7 +222,7 @@ void UpdateEnemyBullet()
 		EnemyAlfa -= ENEMYBULLET_ALFA_CHANGE;
 	}
 
-	if (EnemyAlfa >= 0.5f)
+	if (EnemyAlfa >= 0.65f)
 	{
 		HitBullet = true;
 	}

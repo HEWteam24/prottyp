@@ -125,7 +125,7 @@ HRESULT InitStageSelect(void)
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
 	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
-	char	filename9[] = "data\\BGM\\07_Unadon_150.wav";	//ñ¢
+	char	filename9[] = "data\\BGM\\09_Jawge_150.wav";
 	char	filename10[] = "data\\BGM\\08_Shiokara_150.wav";//ñ¢
 
 	//èââÒÇÃÇ›é¿çs
@@ -165,7 +165,7 @@ HRESULT InitStageSelect(void)
 	}
 
 	char	file_SE_Select	[] = "data\\SE\\SE_MenuMove.wav";
-	char	file_SE_Stage[] = "data\\SE\\SE_Stage.wav";
+	char	file_SE_Stage	[] = "data\\SE\\SE_MenuPush.wav";
 	char	file_SE_Back	[] = "data\\SE\\SE_MenuBack.wav";
 	g_SE_Select = LoadSound(file_SE_Select);
 	g_SE_Stage	= LoadSound(file_SE_Stage);
@@ -751,5 +751,17 @@ void SetWhite(int x,int sz,int rt)
 			g_White[i].use = true;
 			return;
 		}
+	}
+}
+
+bool GetUra()
+{
+	if (ura)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
 	}
 }
