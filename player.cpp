@@ -107,7 +107,7 @@ void InitPlayer(void)
 	g_TextureShield = LoadTexture((char*)"data/TEXTURE/Shield.png");
 
 	char	file_SE_Bullet[] = "data\\SE\\SE_bullet.wav";
-	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
+	char	file_SE_Damage[] = "data\\SE\\SE_Damage_B.wav";
 	g_SE_Bullet = LoadSound(file_SE_Bullet);
 	g_SE_Damage = LoadSound(file_SE_Damage);
 	//èâä˙âª

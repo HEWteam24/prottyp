@@ -77,11 +77,11 @@ HRESULT InitEnemyBullet(int Stagenum)
 	case 2:
 		BulletSp = ENEMYBULLET_SPEED2;
 	case 3:
-		BulletSp = ENEMYBULLET_SPEED3;
-	case 4:
-		BulletSp = ENEMYBULLET_SPEED3;
-	case 5:
 		BulletSp = ENEMYBULLET_SPEED2;
+	case 4:
+		BulletSp = ENEMYBULLET_SPEED2;
+	case 5:
+		BulletSp = ENEMYBULLET_SPEED3;
 	case 6:
 		BulletSp = ENEMYBULLET_SPEED3;
 	case 7:
@@ -152,7 +152,7 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletHp[j].mov = D3DXVECTOR2(0, BulletSp / 2.0f);
 		g_EnemyBulletHp[j].hp = 2;
 	}
-	char	file_SE_Damage[] = "data\\SE\\SE_deadEnm.wav";
+	char	file_SE_Damage[] = "data\\SE\\SE_Damage_B.wav";
 	g_SE_Damage = LoadSound(file_SE_Damage);
 
 	pPlayer = GetPlayer();

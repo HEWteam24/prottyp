@@ -165,7 +165,7 @@ HRESULT InitStageSelect(void)
 	}
 
 	char	file_SE_Select	[] = "data\\SE\\SE_MenuMove.wav";
-	char	file_SE_Stage[] = "data\\SE\\SE_Stage.wav";
+	char	file_SE_Stage	[] = "data\\SE\\SE_MenuPush.wav";
 	char	file_SE_Back	[] = "data\\SE\\SE_MenuBack.wav";
 	g_SE_Select = LoadSound(file_SE_Select);
 	g_SE_Stage	= LoadSound(file_SE_Stage);
