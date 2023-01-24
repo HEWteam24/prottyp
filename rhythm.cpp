@@ -104,7 +104,7 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 1;
 		indexNum = 8;
-		errors = 0;
+		errors = -4;
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
