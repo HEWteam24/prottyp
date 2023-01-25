@@ -42,7 +42,7 @@ HRESULT InitBG(int StageNum)
 		break;
 
 	case 0:
-		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
+		g_TextureBg = LoadTexture((char*)"data/TEXTURE/Bg_Tuto.png");
 		break;
 	case 1:
 		g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_SeaCity.png");

@@ -10,6 +10,7 @@
 #include "texture.h"
 #include "sprite.h"
 #include "player.h"
+
 #include "bg.h"
 #include "collision.h"
 #include "input.h"
@@ -26,6 +27,10 @@
 #include "keyboard.h"
 #include "special.h"
 
+#include "effect.h"
+
+#include "pause.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -37,36 +42,35 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static int g_BGMGame;
-static int g_TextureTutoDark;
-bool stop;
-
-CIRCLE circle;
+//static int g_BGMTuto;
+bool Tutostart;
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitTuto(void)
+HRESULT InitTuto(int StageNum)
 {
-	g_TextureTutoDark = LoadTexture((char*)"data/TEXTURE/Tuto.png");
-
 	InitPlayer();
 	InitBullet();
 	InitScore();
 	InitCombo();
 
 	InitSpecial();
-	InitEnemy(0);
-	InitEnemyBullet(0);
-	InitRhythm(0);
+	InitEnemy(StageNum);
+	InitEnemyBullet(StageNum);
+	InitRhythm(StageNum);
+	InitEffect();
 	// 背景の初期化
-	InitBG(0);
+	InitBG(StageNum);
 	InitLane();
 
-	stop = false;
+	//*****************************************************************************************************************
+	//  ゲーム開始カウント
+	//	true  = あり
+	//	false = なし
 
-	circle.size = D3DXVECTOR2(1920.0f,1920.0f*3);
-	circle.pos  = D3DXVECTOR2(CENTER_X, 0.0f-450.0f);
+	Tutostart = true;
+	//*****************************************************************************************************************
 
 	return S_OK;
 }
@@ -84,10 +88,10 @@ void UninitTuto(void)
 	UninitEnemy();
 	UninitEnemyBullet();
 	UninitRhythm();
-	UninitCombo();
 	UninitSpecial();
+	UninitEffect();
 
-	StopSound(g_BGMGame);
+	//StopSound(g_BGM);
 }
 
 //=============================================================================
@@ -95,52 +99,64 @@ void UninitTuto(void)
 //=============================================================================
 void UpdateTuto(void)
 {
+	PAUSE* pPause = GetPause();
+
 	//エンターキーが押されたらSCENE_GAMEへ移行する
 	if (Keyboard_IsKeyDown(KK_G))
 	{
 		SceneTransition(SCENE_TITLE);
 	}
-
-	if (stop == false)
-	{
+	if (!MusicEnd()) {
 		UpdateRhythm();
-	}
 
-	if ((GetFreame() >= 120)&&(stop==false)) {
+		if (GetFreame() > 120) {
 
-		if (!MusicEnd()) {
-			
 
-			UpdateBG();
-			UpdateLane();
 
-			UpdatePlayer();
-			UpdateBullet();
-			UpdateEnemy();
-			UpdateEnemyBullet();
-			UpdateScore();
-			UpdateCombo();
-			UpdateSpecial();
+			if (Tutostart)
+			{
+				PauseSound(BGM_RE());
+				pPause->pause = true;
+				pPause->restart = true;
+				pPause->pause_frame = 0;
+				pPause->alpha = 0.2f;
+			}
+			else {
+				UpdateBG();
+				UpdateLane();
+
+				UpdatePlayer();
+				UpdateBullet();
+				UpdateEnemy();
+				UpdateEnemyBullet();
+				UpdateScore();
+				UpdateCombo();
+				UpdateSpecial();
+			}
+			if (Tutostart)
+			{
+				Tutostart = false;
+			}
+
+
+
+
+
+
 		}
-		else {
-			SceneTransition(SCENE_STAGESELECT);
-		}
+
+	}
+	else {
+		StopSoundAll();
+		SceneTransition(SCENE_RESULT);
 	}
 
-	if (GetFreame() == 148 && stop != true)
+	if (!pPause->restart)
 	{
-		PauseSound(BGM_RE());
-		stop = true;
+		pPause->alpha = 0.7f;
 	}
 
-
-	if (((Keyboard_IsKeyDown(KK_ENTER)))&&(stop == true))
-	{
-		RePlaySound(BGM_RE());
-		stop = false;
-	}
-
-
+	UpdateEffect();
 }
 
 //=============================================================================
@@ -149,21 +165,17 @@ void UpdateTuto(void)
 void DrawTuto(void)
 {
 	//背景の描画処理
-	//DrawBG();
+	DrawBG();
 	DrawLane();
 
 	DrawCombo();
 	DrawBullet();
 	DrawPlayer();
 	DrawEnemyBullet();
-	DrawEnemy();
 	DrawRhythm();
 	DrawHp();
 	DrawSpecial();
 	DrawScore();
-
-	if (stop == true) {
-		DrawSpriteColor(g_TextureTutoDark, circle.pos.x, circle.pos.y, circle.size.x, circle.size.y,
-			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f));
-	}
+	DrawEnemy();
+	DrawEffect();
 }

@@ -10,7 +10,6 @@
 #include "sprite.h"
 #include "sound.h"
 #include "collision.h"
-#include "rhythm.h"
 #include "special.h"
 #include "MapChip.h"
 #include "stage_select.h"
@@ -31,11 +30,11 @@ BULLET* pBullet;
 //テクスチャのロード
 int g_EnemyBulletNomalTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletNomal;
-static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\rock.png";//テクスチャ名
+static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\stone.png";//テクスチャ名
 
 int g_EnemyBulletLongTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletLong;
-static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\EnemyBullet01.png";//テクスチャ名
+static	char *g_TextureEnemyBulletLongName = (char*)"data\\TEXTURE\\water.png";//テクスチャ名
 
 int g_EnemyBulletHpTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletHp;
@@ -130,7 +129,6 @@ HRESULT InitEnemyBullet(int Stagenum)
 		g_EnemyBulletLong[k].pos = D3DXVECTOR2(0, -40);
 		g_EnemyBulletLong[k].mov = D3DXVECTOR2(0, BulletSp);
 		g_EnemyBulletLong[k].hp = 1;
-
 	}
 	for (int j = 0; j < ENEMYBULLET_TRANSLUCENT_MAX; j++)
 	{
@@ -196,13 +194,6 @@ void UpdateEnemyBullet()
 	
 
 	SPECIAL* sp = GetSpecial();
-
-	int eFreame = GetFreame();
-
-	if (eFreame % 60*1.5 == 0.0f)
-	{
-		//nowY++;
-	}
 
 	if (EnemyAlfa >= 1.0f)
 	{
