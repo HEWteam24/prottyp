@@ -60,6 +60,7 @@ int		g_CountFPS;							// FPSカウンタ
 char	g_DebugStr[2048] = WINDOW_CAPTION;	// デバッグ文字表示用
 #endif
 
+NOW_SCENE g_NowScene;
 
 static int g_Scene;//現在実行されているシーン
 
@@ -310,7 +311,7 @@ void Update(void)
 			if (pa->pause == false) {
 				UpdateTuto();
 			}
-			//UpdatePause();			
+			UpdatePause();			
 			break;
 		case SCENE_CREDIT:
 			UpdateCredit();
@@ -432,6 +433,7 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_GAME:
 		InitGame(GetGemeStageNum());
+		g_NowScene.SceneNow = SCENE_GAME;
 		break;
 	case SCENE_GAMEOVER:
 		InitOver();
@@ -441,6 +443,7 @@ void SetScene(int nextScene)
 		break;
 	case SCENE_TUTO:
 		InitTuto(0);
+		g_NowScene.SceneNow = SCENE_TUTO;
 		break;
 	case SCENE_CREDIT:
 		InitCredit();
@@ -451,4 +454,9 @@ void SetScene(int nextScene)
 float frand(void)
 {
 	return (float)rand() / RAND_MAX;
+}
+
+NOW_SCENE* GetNowScene()
+{
+	return &g_NowScene;
 }

@@ -16,6 +16,7 @@ ENTERで機能の実行です。
 //==============================================================================
 
 #include "pause.h"
+#include "main.h"
 
 static int PauseTexture;
 static int PauseTextTexture;
@@ -296,7 +297,15 @@ void DrawPause()
 
 void ReTry()
 {
-	SceneTransition(SCENE_GAME);
+	NOW_SCENE* pNowScene = GetNowScene();
+	if (pNowScene->SceneNow == SCENE_GAME)
+	{
+		SceneTransition(SCENE_GAME);
+	}
+	if (pNowScene->SceneNow == SCENE_TUTO)
+	{
+		SceneTransition(SCENE_TUTO);
+	}
 }
 
 void Back()

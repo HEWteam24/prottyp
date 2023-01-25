@@ -170,10 +170,16 @@ enum SCENE
 	SCENE_NUM,		//終端コード
 };
 
+struct NOW_SCENE
+{
+	int SceneNow;
+};
+
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 
 void SetScene(int nextScene);
+NOW_SCENE* GetNowScene();
 float frand(void);
