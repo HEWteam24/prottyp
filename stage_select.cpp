@@ -87,8 +87,8 @@ int  whiteCnt	= 0;
 HRESULT InitStageSelect(void)
 {
 	//テクスチャを読み込んで識別子を受け取る
-	g_TextureBgStageSelect[0] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
-	g_TextureBgStageSelect[1] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
+	//g_TextureBgStageSelect[0] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
+	//g_TextureBgStageSelect[1] = LoadTexture((char*)"data/TEXTURE/Back_Select.JPG");
 
 	g_TextureOct = LoadTexture((char*)"data/TEXTURE/oct.png");
 

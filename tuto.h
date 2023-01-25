@@ -12,7 +12,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitTuto(void);
+HRESULT InitTuto(int StageNum);
 void UninitTuto(void);
 void UpdateTuto(void);
 void DrawTuto(void);

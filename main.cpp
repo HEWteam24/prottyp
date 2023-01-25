@@ -307,7 +307,10 @@ void Update(void)
 			UpdateResult();
 			break;
 		case SCENE_TUTO:
-			UpdateTuto();
+			if (pa->pause == false) {
+				UpdateTuto();
+			}
+			UpdatePause();			
 			break;
 		case SCENE_CREDIT:
 			UpdateCredit();
@@ -356,6 +359,7 @@ void Draw(void)
 		break;
 	case SCENE_TUTO:
 		DrawTuto();
+		DrawPause();
 		break;
 	case SCENE_CREDIT:
 		DrawCredit();
@@ -400,7 +404,11 @@ void SetScene(int nextScene)
 		UninitResult();
 		break;
 	case SCENE_TUTO:
+		
+		EnemyNumber = GetEnemyNum();
+		EnemyTex = GetEnemyTex();
 		UninitTuto();
+		UninitPause();
 		break;
 	case SCENE_CREDIT:
 		UninitCredit();
@@ -432,7 +440,7 @@ void SetScene(int nextScene)
 		InitResult(GetGemeStageNum(), EnemyNumber, EnemyTex);
 		break;
 	case SCENE_TUTO:
-		InitTuto();
+		InitTuto(0);
 		break;
 	case SCENE_CREDIT:
 		InitCredit();
