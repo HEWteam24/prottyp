@@ -121,7 +121,7 @@ int Damage()
 		for (int i = 0; i < n; i++) {
 			m *= 0.9f;
 		}
-		damage = 350 * m;
+		damage = 250 * m;
 		return damage;
 	}
 	//非発動時のデフォルト数値

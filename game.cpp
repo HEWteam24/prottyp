@@ -106,42 +106,50 @@ void UpdateGame(void)
 	{
 		SceneTransition(SCENE_TITLE);
 	}
+	if (!MusicEnd()) {
+		UpdateRhythm();
 
-	UpdateRhythm();
-	if (GetFreame() > 120) {
 
-		if (start)
-		{
-			PauseSound(BGM_RE());
-			pPause->pause = true;
-			pPause->restart = true;
-			pPause->pause_frame = 0;
-			pPause->alpha = 0.2f;
-		}
+		if (GetFreame() > 120) {
 
-		if (!MusicEnd()) {
-			
 
-			UpdateBG();
-			UpdateLane();
 
-			UpdatePlayer();
-			UpdateBullet();
-			UpdateEnemy();
-			UpdateEnemyBullet();
-			UpdateScore();
-			UpdateCombo();
-			UpdateSpecial();
+			if (start)
+			{
+				PauseSound(BGM_RE());
+				pPause->pause = true;
+				pPause->restart = true;
+				pPause->pause_frame = 0;
+				pPause->alpha = 0.2f;
+			}
+			else {
+				UpdateBG();
+				UpdateLane();
 
+				UpdatePlayer();
+				UpdateBullet();
+				UpdateEnemy();
+				UpdateEnemyBullet();
+				UpdateScore();
+				UpdateCombo();
+				UpdateSpecial();
+			}
 			if (start)
 			{
 				start = false;
 			}
 
+
+
+
+
+
 		}
-		else {
-			SceneTransition(SCENE_RESULT);
-		}
+
+	}
+	else {
+		StopSoundAll();
+		SceneTransition(SCENE_RESULT);
 	}
 
 	if (!pPause->restart)

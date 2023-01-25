@@ -39,6 +39,7 @@ static	char	*g_TextureNameNotesLeft  = NOTES_TEX_LEFT;//テクスチャ名
 static	char	*g_TextureNameNotesCenter= NOTES_TEX_CENTER;//テクスチャ名
 static	ID3D11ShaderResourceView	*g_TextureNotesLane;
 static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
+static	int		g_TextureNameRunPlayer;
 
 int Notestipindex1, Notestipindex2,indexNum;
 int Notestip[10][10]
@@ -59,7 +60,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename6[] = "data\\BGM\\06_Zarigani_150.wav";
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
 	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
-	char	filename9[] = "data\\BGM\\08_Shiokara_150.wav";//未
+	char	filename9[] = "data\\BGM\\09_Jawge_150.wav";
 	char	filename10[]= "data\\BGM\\08_Shiokara_150.wav";//未
 
 
@@ -93,7 +94,7 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 1;
 		indexNum = 8;
-		errors = 0;
+		errors = 2;
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
@@ -191,6 +192,7 @@ HRESULT InitRhythm(int stagenum)
 	default:
 		break;
 	}
+
 	for (int i = 0; i < NOTES_MAX; i += 2) 
 	{
 		//ノーツ左の初期化
@@ -249,6 +251,11 @@ HRESULT InitRhythm(int stagenum)
 		exit(999);
 	}
 
+	g_TextureNameRunPlayer = LoadTexture((char*)"data/TEXTURE/player.png");
+	if (g_TextureNameRunPlayer == -1)
+	{
+		exit(999);
+	}
 	Frame = 0;
 
 	Notestipindex2 = 0;
@@ -334,6 +341,10 @@ void DrawRhythm()
 		DrawSpriteColor(Notes[i].texno, Notes[i].pos.x, Notes[i].pos.y, Notes[i].size.x, Notes[i].size.y,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0 - Notes[i].alpha));
 	}
+
+
+	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * 0.05f), 20.0f, 60.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 }
 
 void SetNotes()
@@ -402,7 +413,7 @@ void ReleaseNotes()
 
 bool	MusicEnd()
 {
-	if (Frame < 120 * 60) {
+	if ((Frame - 120) < 120 * 60) {
 		return false;
 	}
 	else {
