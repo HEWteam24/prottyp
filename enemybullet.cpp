@@ -31,7 +31,7 @@ BULLET* pBullet;
 //テクスチャのロード
 int g_EnemyBulletNomalTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletNomal;
-static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\rank_coins_1200x200_B.png";//テクスチャ名
+static	char *g_TextureEnemyBulletNomalName = (char*)"data\\TEXTURE\\rock.png";//テクスチャ名
 
 int g_EnemyBulletLongTex;
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletLong;
