@@ -29,6 +29,9 @@ struct T_CIRCLE
 	D3DXVECTOR2		ArPos;
 	D3DXVECTOR2		ArSpd;
 	float			ArRot;
+
+	float			ButtonSize;
+	float			ButtonAdd;
 	
 	int TextFrame;
 	int Phase;
