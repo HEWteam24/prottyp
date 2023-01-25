@@ -84,7 +84,7 @@ void UpdatePause()
 		RePlaySound(BGM_RE());
 	}
 
-	if ((Keyboard_IsKeyDown(KK_W)|| (GetThumbLeftY(0) > 0.3f)) && already == false)
+	if ((Keyboard_IsKeyDown(KK_W)|| (GetThumbLeftY(0) > 0.3f)|| (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))) && already == false)
 	{
 
 		already = true;
@@ -99,7 +99,7 @@ void UpdatePause()
 
 	}
 
-	if ((Keyboard_IsKeyDown(KK_S) || (GetThumbLeftY(0) < -0.3f)) && already == false)
+	if ((Keyboard_IsKeyDown(KK_S) || (GetThumbLeftY(0) < -0.3f)|| (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))) && already == false)
 	{
 		already = true;
 
