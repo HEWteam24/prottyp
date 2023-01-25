@@ -310,7 +310,7 @@ void Update(void)
 			if (pa->pause == false) {
 				UpdateTuto();
 			}
-			UpdatePause();			
+			//UpdatePause();			
 			break;
 		case SCENE_CREDIT:
 			UpdateCredit();
