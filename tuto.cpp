@@ -34,7 +34,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-
+#define TUTO_TEXT_SIZE_X (600.0f)
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -43,8 +43,12 @@
 // グローバル変数
 //*****************************************************************************
 //static int g_BGMTuto;
+static int g_TextureCircle;
+static int g_TextureText;
+int	TutoFrame;
 bool Tutostart;
-
+bool B_Pushed;
+T_CIRCLE g_Tuto;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -64,6 +68,18 @@ HRESULT InitTuto(int StageNum)
 	InitBG(StageNum);
 	InitLane();
 
+	g_TextureCircle = LoadTexture((char*)"data/TEXTURE/Tuto.png");
+	g_TextureText = LoadTexture((char*)"data/TEXTURE/UI_TutoText.png");
+
+	g_Tuto.col		= D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
+	g_Tuto.pos		= D3DXVECTOR2(CENTER_X, CENTER_Y);
+	g_Tuto.size		= D3DXVECTOR2(CENTER_X*4, CENTER_Y*4);
+	g_Tuto.Tuv		= D3DXVECTOR2(0.0f, 0.0f);
+	g_Tuto.Phase	= 0;
+	g_Tuto.use		= false;
+
+	TutoFrame = 0;
+	B_Pushed = false;
 	//*****************************************************************************************************************
 	//  ゲーム開始カウント
 	//	true  = あり
@@ -91,6 +107,7 @@ void UninitTuto(void)
 	UninitSpecial();
 	UninitEffect();
 
+	TutoFrame = 0;
 	//StopSound(g_BGM);
 }
 
@@ -99,17 +116,18 @@ void UninitTuto(void)
 //=============================================================================
 void UpdateTuto(void)
 {
-	PAUSE* pPause = GetPause();
+	PAUSE*		pPause = GetPause();
+	SPECIAL*	pSkill = GetSpecial();
 
 	//エンターキーが押されたらSCENE_GAMEへ移行する
 	if (Keyboard_IsKeyDown(KK_G))
 	{
 		SceneTransition(SCENE_TITLE);
 	}
-	if (!MusicEnd()) {
+	if (!MusicEnd() && (!g_Tuto.use)) {
 		UpdateRhythm();
 
-		if (GetFreame() > 120) {
+		if ((GetFreame() > 120)) {
 
 
 
@@ -122,6 +140,8 @@ void UpdateTuto(void)
 				pPause->alpha = 0.2f;
 			}
 			else {
+				TutoFrame++;
+
 				UpdateBG();
 				UpdateLane();
 
@@ -148,7 +168,10 @@ void UpdateTuto(void)
 	}
 	else {
 		StopSoundAll();
-		SceneTransition(SCENE_RESULT);
+		if (!g_Tuto.use)
+		{
+			SceneTransition(SCENE_RESULT);
+		}
 	}
 
 	if (!pPause->restart)
@@ -157,6 +180,209 @@ void UpdateTuto(void)
 	}
 
 	UpdateEffect();
+
+
+	if (g_Tuto.use)
+	{
+		PauseSound(BGM_RE());
+
+		if (Keyboard_IsKeyDown(KK_N))
+		{
+			g_Tuto.use = false;
+			RePlaySound(BGM_RE());
+		}
+	}
+
+	if (TutoFrame <= 1597)
+	{
+		pSkill->charge = 0;
+	}
+	if (TutoFrame == 1598)
+	{
+		pSkill->charge = 30;
+	}
+
+
+	//ようこそ
+	if ((TutoFrame==110)&&(g_Tuto.Phase == 0))
+	{
+		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(0.0f, 0.0f));
+		g_Tuto.Phase = 1;
+	}
+	//移動
+	if ((TutoFrame == 780) && (g_Tuto.Phase == 7))
+	{
+		SetCircle(D3DXVECTOR2(1920.0f * 0.7f, 1920.0f * 0.7f), D3DXVECTOR2(CENTER_X, CENTER_Y * 0.9f), D3DXVECTOR2(0.0f, 2.0f));
+		g_Tuto.Phase = 8;
+	}
+	//スキル
+	if ((TutoFrame == 1600) && (g_Tuto.Phase == 12))
+	{
+		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y * 2.5f), D3DXVECTOR2(0.0f, 3.0f));
+		g_Tuto.Phase = 13;
+	}
+	//スコア
+	if ((TutoFrame == 2800) && (g_Tuto.Phase == 17))
+	{
+		SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(1860.0f-135.0f, SCORE_POS_Y), D3DXVECTOR2(0.0f, 4.0f));
+		g_Tuto.Phase = 18;
+	}
+
+	if ((TutoFrame == 4800) && (g_Tuto.Phase == 22))
+	{
+		SceneTransition(SCENE_RESULT);
+	}
+
+	if (g_Tuto.use)
+	{
+		//ようこそ
+		if ((g_Tuto.Phase == 1) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(1.0f, 0.0f));
+			g_Tuto.Phase = 2;
+			B_Pushed = true;
+		}
+
+		//紹介
+		if ((g_Tuto.Phase == 2) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(0.0f, 1.0f));
+			g_Tuto.Phase = 3;
+			B_Pushed = true;
+		}
+		//攻撃1
+		if ((g_Tuto.Phase == 3) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(CENTER_X, CENTER_Y*1.8f), D3DXVECTOR2(1.0f, 1.0f));
+			g_Tuto.Phase = 4;
+			B_Pushed = true;
+		}
+		//攻撃2
+		if ((g_Tuto.Phase == 4) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(CENTER_X, CENTER_Y * 1.8f), D3DXVECTOR2(2.0f, 1.0f));
+			g_Tuto.Phase = 5;
+			B_Pushed = true;
+		}
+		//攻撃3
+		if ((g_Tuto.Phase == 5) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y * 2.5f), D3DXVECTOR2(3.0f, 1.0f));
+			g_Tuto.Phase = 6;
+			B_Pushed = true;
+		}
+		//攻撃4
+		if ((g_Tuto.Phase == 6) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			//SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 1.5f), D3DXVECTOR2(CENTER_X, CENTER_Y), D3DXVECTOR2(4.0f, 1.0f));
+			g_Tuto.Phase = 7;
+			B_Pushed = true;
+			g_Tuto.use = false;
+			RePlaySound(BGM_RE());
+		}
+
+		//移動1
+		if ((g_Tuto.Phase == 8) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(CENTER_X, CENTER_Y*1.8f), D3DXVECTOR2(1.0f, 2.0f));
+			g_Tuto.Phase = 9;
+			B_Pushed = true;
+		}
+		//移動2
+		if ((g_Tuto.Phase == 9) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(2.0f, 2.0f));
+			g_Tuto.Phase = 10;
+			B_Pushed = true;
+		}
+		//移動3
+		if ((g_Tuto.Phase == 10) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(3.0f, 2.0f));
+			g_Tuto.Phase = 11;
+			B_Pushed = true;
+		}
+		//移動4
+		if ((g_Tuto.Phase == 11) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			//SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 1.5f), D3DXVECTOR2(CENTER_X, CENTER_Y), D3DXVECTOR2(3.0f, 2.0f));
+			g_Tuto.Phase = 12;
+			B_Pushed = true;
+			g_Tuto.use = false;
+			RePlaySound(BGM_RE());
+		}
+
+		//スキル1
+		if ((g_Tuto.Phase == 13) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.25f, 1920.0f * 1.25f), D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(1.0f, 3.0f));
+			g_Tuto.Phase = 14;
+			B_Pushed = true;
+		}
+		//スキル2
+		if ((g_Tuto.Phase == 14) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.25f, 1920.0f * 1.25f), D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(2.0f, 3.0f));
+			g_Tuto.Phase = 15;
+			B_Pushed = true;
+		}
+		//スキル3
+		if ((g_Tuto.Phase == 15) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.25f, 1920.0f * 1.25f), D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(3.0f, 3.0f));
+			g_Tuto.Phase = 16;
+			B_Pushed = true;
+		}
+		//スキル4
+		if ((g_Tuto.Phase == 16) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			//SetCircle(D3DXVECTOR2(1920.0f * 1.25f, 1920.0f * 1.25f), D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(2.0f, 3.0f));
+			g_Tuto.Phase = 17;
+			B_Pushed = true;
+			g_Tuto.use = false;
+			RePlaySound(BGM_RE());
+		}
+
+		//スコア1
+		if ((g_Tuto.Phase == 18) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(1860.0f - 135.0f, SCORE_POS_Y), D3DXVECTOR2(1.0f, 4.0f));
+			g_Tuto.Phase = 19;
+			B_Pushed = true;
+		}
+
+		//スコア2
+		if ((g_Tuto.Phase == 19) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 2.0f, 1920.0f * 1.0f), D3DXVECTOR2(CENTER_X, CENTER_Y*1.2f), D3DXVECTOR2(2.0f, 4.0f));
+			g_Tuto.Phase = 20;
+			B_Pushed = true;
+		}
+
+		//スコア3
+		if ((g_Tuto.Phase == 20) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			SetCircle(D3DXVECTOR2(1920.0f * 2.0f, 1920.0f * 1.0f), D3DXVECTOR2(CENTER_X, CENTER_Y*1.2f), D3DXVECTOR2(3.0f, 4.0f));
+			g_Tuto.Phase = 21;
+			B_Pushed = true;
+		}
+
+		//スコア4
+		if ((g_Tuto.Phase == 21) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
+		{
+			//SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(1860.0f - 135.0f, SCORE_POS_Y), D3DXVECTOR2(2.0f, 4.0f));
+			g_Tuto.Phase = 22;
+			B_Pushed = true;
+			g_Tuto.use = false;
+			RePlaySound(BGM_RE());
+		}
+	}
+
+	//チュートリアルの長押し遷移を防ぐ
+	if ((!IsButtonTriggered(0, XINPUT_GAMEPAD_B))&& (!Keyboard_IsKeyDown(KK_ENTER)))
+	{
+		B_Pushed = false;
+	}
 }
 
 //=============================================================================
@@ -178,4 +404,80 @@ void DrawTuto(void)
 	DrawScore();
 	DrawEnemy();
 	DrawEffect();
+
+	if (g_Tuto.use)
+	{
+		//GetDeviceContext()->PSSetShaderResources(0, 1,
+		//	GetTexture(g_TextureCircle));
+
+		//DrawSpriteColorRotation(
+		//	g_Tuto.pos.x,
+		//	g_Tuto.pos.y,
+		//	g_Tuto.size.x,
+		//	g_Tuto.size.y,
+		//	0.0f,
+		//	D3DXCOLOR(1.0f,1.0f,1.0f,0.5f),
+		//	0.0f,
+		//	1.0f,
+		//	1.0f,
+		//	1
+		//);
+
+		//中心サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x, g_Tuto.pos.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		
+		//上部サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x, g_Tuto.pos.y- g_Tuto.size.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		//下部サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x, g_Tuto.pos.y + g_Tuto.size.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		//左サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x - g_Tuto.size.x, g_Tuto.pos.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		//右サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x + g_Tuto.size.x, g_Tuto.pos.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+
+
+		//テキスト
+		DrawSpriteColor(g_TextureText,
+			CENTER_X, CENTER_Y-300.0f,
+			TUTO_TEXT_SIZE_X, TUTO_TEXT_SIZE_X/2.0f,
+			(1.0f / 4.0f)*g_Tuto.Tuv.x, (1.0f / 5.0f)*g_Tuto.Tuv.y,
+			1.0f / 4.0f, 1.0f / 5.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+
+	}
+
+}
+
+
+void SetCircle(D3DXVECTOR2 szst, D3DXVECTOR2 pos,D3DXVECTOR2 TextUV)
+{
+	g_Tuto.pos = pos;
+	g_Tuto.size = szst;
+	g_Tuto.Tuv = TextUV;
+	g_Tuto.use = true;
 }

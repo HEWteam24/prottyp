@@ -22,7 +22,11 @@
 #define	SPECIAL_SIZE_X	(59.9f)						//スペシャル現在値のサイズ						
 #define	SPECIAL_SIZE_Y	(450.0f)					//スペシャル現在値のサイズ					
 #define	SPECIAL_F_SIZE_X	(60.0f)					//スペシャルフレームのサイズ						
-#define	SPECIAL_F_SIZE_Y	(450.0f)				//スペシャルフレームのサイズ						
+#define	SPECIAL_F_SIZE_Y	(450.0f)				//スペシャルフレームのサイズ
+
+#define SKILL_ICON_POS_X	(1600.0f)
+#define SKILL_ICON_POS_Y	( 900.0f)
+#define SKILL_ICON_SIZE		( 220.0f)
 
 
 typedef struct {

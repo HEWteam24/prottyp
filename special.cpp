@@ -26,9 +26,7 @@
 #include "combo.h"
 //#include "effect.h"
 
-#define SKILL_ICON_POS_X	(1600.0f)
-#define SKILL_ICON_POS_Y	( 900.0f)
-#define SKILL_ICON_SIZE		( 220.0f)
+
 
 
 //スペシャルのテクスチャ
