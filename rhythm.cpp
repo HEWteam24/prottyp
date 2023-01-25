@@ -61,7 +61,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename7[] = "data\\BGM\\07_Unadon_150.wav";
 	char	filename8[] = "data\\BGM\\08_Shiokara_150.wav";
 	char	filename9[] = "data\\BGM\\09_Jawge_150.wav";
-	char	filename10[]= "data\\BGM\\08_Shiokara_150.wav";//–¢
+	char	filename10[]= "data\\BGM\\10_FullArmor_150.wav";
 
 
 	switch (stagenum)
@@ -184,7 +184,7 @@ HRESULT InitRhythm(int stagenum)
 
 		Notestipindex1 = 2;
 		indexNum = 8;
-		errors = 0;
+		errors = -1;
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
