@@ -47,7 +47,7 @@ static	char *g_TextureEnemyBulletTransName = (char*)"data\\TEXTURE\\chara_octopu
 
 //裏用
 static	ID3D11ShaderResourceView* g_TextureEnemyBulletSlash;
-static	char *g_TextureEnemyBulletSlashName = (char*)"data\\TEXTURE\\chara_octopus.png";//テクスチャ名
+static	char *g_TextureEnemyBulletSlashName = (char*)"data\\TEXTURE\\Slash.png";//テクスチャ名
 
 int nowY = 0;	//マップのその時の縦列数
 
@@ -253,7 +253,7 @@ void UpdateEnemyBullet()
 				}
 				else
 				{
-					pPlayer->hp -= 25.0f*1.5f;
+					pPlayer->hp -= 50.0f;
 				}
 
 				g_EnemyBulletNomal[i].pos -= g_EnemyBulletNomal[i].mov;
@@ -282,7 +282,7 @@ void UpdateEnemyBullet()
 				}
 				else
 				{
-					pPlayer->hp -= 15.0f;
+					pPlayer->hp -= 30.0f;
 				}
 				g_EnemyBulletLong[k].pos -= g_EnemyBulletLong[k].mov;
 				PlaySound(g_SE_Damage, 0);
@@ -340,7 +340,14 @@ void UpdateEnemyBullet()
 				{
 					if (CollisionBB(g_EnemyBulletHp[j].pos, (pBullet + h)->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), D3DXVECTOR2((pBullet + h)->w / 2, (pBullet + h)->h / 2)))
 					{
-						g_EnemyBulletHp[j].hp--;
+						if (sp->damage_up)
+						{
+							g_EnemyBulletHp[j].hp = 0;
+						}
+						else
+						{
+							g_EnemyBulletHp[j].hp--;
+						}
 						(pBullet + h)->use = false;
 
 						if (g_EnemyBulletHp[j].hp <= 0)
@@ -360,7 +367,7 @@ void UpdateEnemyBullet()
 				}
 				else
 				{
-					pPlayer->hp -= 35.0f;
+					pPlayer->hp -= 70.0f;
 				}
 				g_EnemyBulletHp[j].pos -= g_EnemyBulletHp[j].mov;
 				PlaySound(g_SE_Damage, 0);
