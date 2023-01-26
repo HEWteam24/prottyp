@@ -61,8 +61,6 @@ enum CHECK		//タイミング評価
 // グローバル変数
 //*****************************************************************************
 static int g_TexturePlayer;	//テクスチャのやつ
-static int g_TextureHp;		//テクスチャのやつ
-static int g_TextureHpGrid;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
 static int g_TextureShield;
@@ -99,8 +97,6 @@ static float g_AnimeTable[4] =
 void InitPlayer(void)
 {
 	g_TexturePlayer  = LoadTexture((char*)"data/TEXTURE/player.png");
-	g_TextureHp		 = LoadTexture((char*)"data/TEXTURE/Hp.png");
-	g_TextureHpGrid	 = LoadTexture((char*)"data/TEXTURE/HpGrid.png");
 	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
 	g_TextureHpB = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
 	g_TextureCText	 = LoadTexture((char*)"data/TEXTURE/good_bad.png");
