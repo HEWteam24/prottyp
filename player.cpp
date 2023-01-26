@@ -63,6 +63,7 @@ enum CHECK		//タイミング評価
 static int g_TexturePlayer;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
+static int g_TextureHpIcon; //テクスチャのやつ
 static int g_TextureShield;
 
 static int g_TextureCText;	//テクスチャのやつ
@@ -98,7 +99,8 @@ void InitPlayer(void)
 {
 	g_TexturePlayer = LoadTexture((char*)"data/TEXTURE/player.png");
 	g_TextureHpA	= LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
-	g_TextureHpB	= LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
+	g_TextureHpB	= LoadTexture((char*)"data/TEXTURE/HP_player_C.png");
+	g_TextureHpIcon = LoadTexture((char*)"data/TEXTURE/HP_Icon.png");
 	g_TextureCText	= LoadTexture((char*)"data/TEXTURE/good_bad.png");
 	g_TextureShield = LoadTexture((char*)"data/TEXTURE/Shield.png");
 
@@ -327,12 +329,15 @@ void DrawPlayer(void)
 void DrawHp(void)
 {
 
-	//HP下地
-	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	//HPバー
 	DrawSpriteColor(g_TextureHpA, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + ((PLAYER_HP_DEFAULT - g_Player.hp) / 0.665), PLAYER_HP_SIZE_X, PLAYER_HP_SIZE_Y - (PLAYER_HP_DEFAULT - g_Player.hp) * 3.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5f, 1.0f, 0.4f, 1.0f));
+	//HP下地
+	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//HPアイコン
+	DrawSpriteColor(g_TextureHpIcon, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + 490.0f, PLAYER_HP_SIZE_X+20.0f, PLAYER_HP_SIZE_X + 20.0f,
+		0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	
 	//評価 Good Bad

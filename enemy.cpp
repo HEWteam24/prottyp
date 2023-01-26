@@ -27,6 +27,7 @@ static  int		g_TextureEnemyID;
 static	ID3D11ShaderResourceView	*g_TextureEnemyHp;
 static	char	*g_TextureNameEnemyHpA = ENEMY_HP_TEX_A;//テクスチャ名
 static	char	*g_TextureNameEnemyHpB = ENEMY_HP_TEX_B;//テクスチャ名
+static  int		g_TextureEnemyIcon;
 
 //===================================================
 //　初期化
@@ -89,6 +90,7 @@ HRESULT InitEnemy(int StageNum)
 			Enemy.size = D3DXVECTOR2(ENEMY10_SIZE_X, ENEMY10_SIZE_Y);
 			break;
 	}
+	g_TextureEnemyIcon = LoadTexture((char*)"data/TEXTURE/HP_Icon.png");
 	
 	Enemy.pos = D3DXVECTOR2(ENEMY_SPAWN_POS_X, ENEMY_SPAWN_POS_Y - UnagiPosY);
 	Enemy.sp = D3DXVECTOR2(ENEMY_SP, ENEMY_SP);
@@ -180,22 +182,18 @@ void UpdateEnemy()
 void DrawEnemy()
 {
 
-		//DrawSprite(Enemy.texno, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
-		//	0.0f, 0.0f, 1.0f, 1.0f);
 		DrawSprite(g_TextureEnemyID, Enemy.pos.x, Enemy.pos.y, Enemy.size.x, Enemy.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f);
-
-		DrawSpriteColor(EnemyHp.texnoB, EnemyHp.pos.x, EnemyHp.pos.y, EnemyHp.size.x + 10.0f, EnemyHp.size.y + 10.0f,
-			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-		//横表示
-		//DrawSpriteColor(EnemyHp.texnoA, EnemyHp.pos.x - ((ENEMY_HP - Enemy.hp)/2), EnemyHp.pos.y, EnemyHp.size.x -(ENEMY_HP- Enemy.hp) , EnemyHp.size.y,
-		//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 
 		//縦表示
 		DrawSpriteColor(EnemyHp.texnoA, EnemyHp.pos.x, EnemyHp.pos.y + ((ENEMY_HP - Enemy.hp) / 1.11), EnemyHp.size.x, EnemyHp.size.y - (ENEMY_HP - Enemy.hp) * 1.8,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f));
 		
+		DrawSpriteColor(EnemyHp.texnoB, EnemyHp.pos.x, EnemyHp.pos.y, EnemyHp.size.x + 10.0f, EnemyHp.size.y + 10.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+		//HPアイコン
+		DrawSpriteColor(g_TextureEnemyIcon, EnemyHp.pos.x, PLAYER_HP_POS_Y - 490.0f, PLAYER_HP_SIZE_X + 15.0f, PLAYER_HP_SIZE_X + 15.0f,
+			0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 }
 
