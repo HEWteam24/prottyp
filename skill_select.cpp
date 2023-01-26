@@ -234,11 +234,41 @@ void UpdateSkillSelect(void)
 //=============================================================================
 void DrawSkillSelect(void)
 {
+	//ƒŠƒ“ƒO
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		CENTER_X,
+		CENTER_Y,
+		RING_SIZE * 1.3f,
+		RING_SIZE * 1.3f,
+		BackRingrot * 0.5f,
+		BackRingCol,
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
+	//ƒŠƒ“ƒO
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		CENTER_X,
+		CENTER_Y,
+		RING_SIZE * 1.5f,
+		RING_SIZE * 1.5f,
+		BackRingrot * 0.75f,
+		BackRingCol,
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
 	int sStageNum = GetGemeStageNum();
 	if (sStageNum>=5)
 	{
 		BPMSize += BPMAdd;
-		BackRingCol = D3DXCOLOR(0.5f, 0.1f, 0.1f, 1.0f);
+		BackRingCol = D3DXCOLOR(0.7f, 0.1f, 0.1f, 1.0f);
 		BackRingrot += 3.5f;
 		DrawSpriteColor(g_TextureBPM, CENTER_X, CENTER_Y, BPMSize, BPMSize / 6.0f * 5.0f,
 			0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(1.0f, 0.1f, 0.1f, 1.0f));
