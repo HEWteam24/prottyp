@@ -39,6 +39,8 @@ static	char	*g_TextureNameNotesLeft  = NOTES_TEX_LEFT;//テクスチャ名
 static	char	*g_TextureNameNotesCenter= NOTES_TEX_CENTER;//テクスチャ名
 static	ID3D11ShaderResourceView	*g_TextureNotesLane;
 static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
+static	int		g_TextureNameStageProg;
+static	int		g_TextureNameProgFlag;
 static	int		g_TextureNameRunPlayer;
 
 int Notestipindex1, Notestipindex2,indexNum;
@@ -76,7 +78,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -10;
 		break;
 	case 1://ザリガニ
 
@@ -267,7 +269,19 @@ HRESULT InitRhythm(int stagenum)
 	{
 		exit(999);
 	}
+	g_TextureNameStageProg = LoadTexture((char*)"data/TEXTURE/UI_StageProg.png");
+	if (g_TextureNameStageProg == -1)
+	{
+		exit(999);
+	}
+	g_TextureNameProgFlag = LoadTexture((char*)"data/TEXTURE/UI_ProgFlag.png");
+	if (g_TextureNameProgFlag == -1)
+	{
+		exit(999);
+	}
+	
 	Frame = 0;
+	
 
 	Notestipindex2 = 0;
 	return	S_OK;
@@ -354,7 +368,14 @@ void DrawRhythm()
 	}
 
 
-	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * 0.05f), 20.0f, 60.0f,
+	DrawSpriteColor(g_TextureNameStageProg, 1700.0f, 470.0f, 40.0f, 440.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 50.0f, 50.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+
+	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * 0.06f), 20.0f,60.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 }
 
