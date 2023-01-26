@@ -134,6 +134,7 @@ void UninitTuto(void)
 void UpdateTuto(void)
 {
 	PAUSE*		pPause = GetPause();
+	PLAYER*		pPlayer = GetPlayer();
 	SPECIAL*	pSkill = GetSpecial();
 
 	//エンターキーが押されたらSCENE_GAMEへ移行する
@@ -217,6 +218,11 @@ void UpdateTuto(void)
 	if (TutoFrame == 1598)
 	{
 		pSkill->charge = 30;
+	}
+
+	if (pPlayer->hp <=40)
+	{
+		pPlayer->hp = 40;
 	}
 
 
