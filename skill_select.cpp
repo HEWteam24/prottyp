@@ -69,17 +69,14 @@ SKILL_PANEL g_SkillPanel[SKILL_MAX];
 HRESULT InitSkillSelect(void)
 {
 	//テクスチャを読み込んで識別子を受け取る
-	g_TextureBgStageSelect = LoadTexture((char*)"data/TEXTURE/fade_white.png");
-
+	g_TextureBgStageSelect		= LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_SkillPanel[SKILL_0].texno = LoadTexture((char*)"data/TEXTURE/icon_heal.png");
 	g_SkillPanel[SKILL_1].texno = LoadTexture((char*)"data/TEXTURE/icon_damage.png");
 	g_SkillPanel[SKILL_2].texno = LoadTexture((char*)"data/TEXTURE/icon_protect.png");
-
-	g_TextureSkillPlate = LoadTexture((char*)"data/TEXTURE/skill_plate.png");
-	g_TextureTextArrow	= LoadTexture((char*)"data/TEXTURE/arrow.png");
-
-	g_TextureRing	= LoadTexture((char*)"data/TEXTURE/icon_ring.png");
-	g_TextureBPM	= LoadTexture((char*)"data/TEXTURE/UI_BPM_B.png");
+	g_TextureSkillPlate			= LoadTexture((char*)"data/TEXTURE/skill_plate.png");
+	g_TextureTextArrow			= LoadTexture((char*)"data/TEXTURE/arrow.png");
+	g_TextureRing				= LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+	g_TextureBPM				= LoadTexture((char*)"data/TEXTURE/UI_BPM_B.png");
 
 	char	file_SE_SpSelect[] = "data\\SE\\SE_MenuMove.wav";
 	g_SE_SpSelect = LoadSound(file_SE_SpSelect);
@@ -87,23 +84,21 @@ HRESULT InitSkillSelect(void)
 	//構造体の初期化
 	for (int i = 0; i < SKILL_MAX; i++)
 	{
-		g_SkillPanel[i].pos = D3DXVECTOR2(CENTER_X*2.25, (CENTER_Y - ICON_SPACE) + i * ICON_SPACE);
-		g_SkillPanel[i].size = D3DXVECTOR2(ICON_SIZE, ICON_SIZE);
-		g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		g_SkillPanel[i].moving = false;
+		g_SkillPanel[i].pos		= D3DXVECTOR2(CENTER_X*2.25, (CENTER_Y - ICON_SPACE) + i * ICON_SPACE);
+		g_SkillPanel[i].size	= D3DXVECTOR2(ICON_SIZE, ICON_SIZE);
+		g_SkillPanel[i].col		= D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		g_SkillPanel[i].moving	= false;
 	}
 	BackRingCol = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	changeN		= 60;
-
-	RingRot		= 0.0f;
-	RingPosY	= 0.0f;
-	BPMSize		= 300.0f;
-	BPMAdd		= 1.5f;
-	BackRingrot = 0.0f;
-	TextPosX	= PLATE_POS;
-	TextAlpha	= 0.0f;
-
-	movingSp = false;
+	changeN		= 60;		//変更猶予
+	RingRot		= 0.0f;		//リング角度
+	RingPosY	= 0.0f;		//リングY座標
+	BPMSize		= 300.0f;	//BPMテキストサイズ
+	BPMAdd		= 1.5f;		//BPMテキスト加算
+	BackRingrot = 0.0f;		//背景リング角度
+	TextPosX	= PLATE_POS;//説明テキストX座標
+	TextAlpha	= 0.0f;		//説明テキストアルファ値
+	movingSp	= false;	//移動フラグ
 
 	return S_OK;
 }
@@ -274,7 +269,7 @@ void DrawSkillSelect(void)
 	if (NowSSelect < 2)
 	{
 		DrawSpriteColor(g_TextureTextArrow, TextPosX, RingPosY + (PLATE_SIZE / 2) + 30.0f, 80.0f, 80.0f,
-			0.25f * 3, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
+			0.25f * 3.0f, 0.0f, 0.25f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
 	}
 	if (NowSSelect > 0)
 	{
@@ -306,8 +301,8 @@ void DrawSkillSelect(void)
 		GetTexture(g_TextureRing));
 	DrawSpriteColorRotation(
 		g_SkillPanel[0].pos.x, RingPosY,
-		RING_SIZE * 1.15, RING_SIZE * 1.15,
-		RingRot * -1.5, D3DXCOLOR(0.0f, 1.0f, 0.8f, 1.0f),
+		RING_SIZE * 1.15f, RING_SIZE * 1.15f,
+		RingRot * -1.5f, D3DXCOLOR(0.0f, 1.0f, 0.8f, 1.0f),
 		0.0f, 1.0f, 1.0f, 1
 	);
 
