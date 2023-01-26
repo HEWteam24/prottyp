@@ -712,6 +712,16 @@ void DrawStageSelect(void)
 					DrawSpriteColor(g_StagePanel[i].texnoA, g_StagePanel[i].pos.x, g_StagePanel[i].pos.y, g_StagePanel[i].size.x, g_StagePanel[i].size.y,
 						0.0f, 0.0f, 1.0f, 1.0, g_StagePanel[i].col);
 				}
+
+				//ネームプレート
+				for (int i = 0; i < STAGE_MAX; i++)
+				{
+					if (g_StagePanel[i].NowLane == PLANE_3)
+					{
+						DrawSpriteColor(g_TextureNamePlate, g_StagePanel[i].pos.x, platePosY, g_StagePanel[i].size.x * 1.28, g_StagePanel[i].size.y / 3.9f,
+							0.0f, (1.0f / 11) * NowSelect, 1.0f, (1.0f / 11), PLATE_COL);
+					}
+				}
 			}
 		}
 	}

@@ -33,6 +33,7 @@ static int g_TextureBgTitle;//タイトル画面用テクスチャの識別子
 static int g_TextureShishamo;
 static int g_TextureClear;
 static int g_TextureRankCoin;
+static int g_TextureReButton;
 static int g_BGMNo;//タイトル用BGMの識別子
 
 PLAYER* pPlayerOne = GetPlayer();
@@ -42,7 +43,10 @@ COIN g_Coin;
 
 float	Shishamo_pos;
 float	Shishamo_spd;
+float	ReButton_size;
+float	ReButton_add;
 int Addcol;
+int ResultFrame;
 
 bool	moving;
 
@@ -66,6 +70,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back.JPG");
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
+	g_TextureReButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 
 
 	if (pScore->ToResult >= 0)
@@ -108,7 +113,10 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 
 	Shishamo_pos = -450.0f;
 	Shishamo_spd = 85.0f;
+	ReButton_size = 200.0f;
+	ReButton_add  = 1.0f;
 	Addcol = 0;
+	ResultFrame = 0;
 	moving = true;
 
 	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Result.wav");
@@ -133,13 +141,15 @@ void UninitResult(void)
 //=============================================================================
 void UpdateResult(void)
 {
+	ResultFrame++;
+
 	//エンターキーが押されたらSCENE_TITLEへ移行する
-	if (Keyboard_IsKeyDown(KK_ENTER))
+	if ((Keyboard_IsKeyDown(KK_ENTER))&&(ResultFrame>=150))
 	{
 		SceneTransition(SCENE_STAGESELECT);
 	}
 	//コントローラーBボタン押したらSCENE_TITLEへ移行
-	if (IsButtonTriggered(0, XINPUT_GAMEPAD_B))
+	if ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (ResultFrame >= 150))
 	{
 		SceneTransition(SCENE_STAGESELECT);
 	}
@@ -183,6 +193,12 @@ void UpdateResult(void)
 		g_Coin.size.x = 300.0f;
 		g_Coin.size.y = 300.0f;
 		g_Coin.alpha = 0.3f;
+	}
+
+	ReButton_size += ReButton_add;
+	if ((ReButton_size >= 210.0f) || (ReButton_size <= 190.0f))
+	{
+		ReButton_add *= -1;
 	}
 }
 
@@ -236,7 +252,11 @@ void DrawResult(void)
 
 	}
 
-
+	if (ResultFrame >= 150)
+	{
+		DrawSpriteColor(g_TextureReButton, 1700.0f, 950.0f, ReButton_size, ReButton_size,
+			0.25f, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
+	}
 
 	DrawScore();
 	DrawEnemyScore();

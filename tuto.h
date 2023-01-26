@@ -38,3 +38,5 @@ struct T_CIRCLE
 
 	bool			use;
 };
+
+T_CIRCLE* GetTuto();

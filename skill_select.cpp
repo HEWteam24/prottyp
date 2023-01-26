@@ -7,6 +7,7 @@
 
 ==============================================================================*/
 #include "skill_select.h"
+#include "stage_select.h"
 #include "special.h"
 #include "texture.h"
 #include "sprite.h"
@@ -51,10 +52,12 @@ float RingRot;	//ÉäÉìÉOäpìx
 float RingPosY;	//ÉäÉìÉOà íu
 float TextPosX; //ê‡ñæï∂à íu
 float TextAlpha;
+float BackRingrot;
 
 int changeN;	//à⁄ìÆóPó\
 bool movingSp;	//à⁄ìÆÉtÉâÉO
 
+D3DXCOLOR BackRingCol;
 SKILL_PANEL g_SkillPanel[SKILL_MAX];
 
 //=============================================================================
@@ -85,11 +88,13 @@ HRESULT InitSkillSelect(void)
 		g_SkillPanel[i].col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		g_SkillPanel[i].moving = false;
 	}
+	BackRingCol = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	changeN = 60;
 
 	RingRot = 0.0f;
 	RingPosY = 0.0f;
+	BackRingrot = 0.0f;
 	TextPosX = PLATE_POS;
 	TextAlpha = 0.0f;
 
@@ -208,6 +213,7 @@ void UpdateSkillSelect(void)
 
 	//ÉäÉìÉOÇÃèàóù
 	RingRot += 0.5f;
+	BackRingrot += 0.5f;
 	RingPosY = (CENTER_Y - ICON_SPACE) + NowSSelect * ICON_SPACE;
 }
 
@@ -216,9 +222,45 @@ void UpdateSkillSelect(void)
 //=============================================================================
 void DrawSkillSelect(void)
 {
-	////îwåiï\é¶
-	//DrawSpriteColor(g_TextureBgStageSelect, CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_WIDTH,
-	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.6f));
+	int sStageNum = GetGemeStageNum();
+	if (sStageNum>=5)
+	{
+		BackRingCol = D3DXCOLOR(0.5f, 0.1f, 0.1f, 1.0f);
+		BackRingrot += 3.5f;
+	}
+	else
+	{
+		BackRingCol = D3DXCOLOR(0.1f, 0.5f, 0.1f, 1.0f);
+	}
+	//ÉäÉìÉO
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		CENTER_X,
+		CENTER_Y,
+		RING_SIZE*3.0f,
+		RING_SIZE*3.0f,
+		BackRingrot*-1.0f,
+		BackRingCol,
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
+	GetDeviceContext()->PSSetShaderResources(0, 1,
+		GetTexture(g_TextureRing));
+	DrawSpriteColorRotation(
+		CENTER_X,
+		CENTER_Y,
+		RING_SIZE * 2.7f,
+		RING_SIZE * 2.7f,
+		BackRingrot * -1.5f,
+		BackRingCol,
+		0.0f,
+		1.0f,
+		1.0f,
+		1
+	);
 
 	//ê‡ñæ
 	DrawSpriteColor(g_TextureSkillPlate,TextPosX, RingPosY, PLATE_SIZE * 2, PLATE_SIZE,

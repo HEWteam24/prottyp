@@ -188,7 +188,7 @@ void DrawMaxCombo()
 			j--;
 		}
 		g_MaxCombo[i].combonum = ComboMax % ComboDigit / (ComboDigit / 10);
-		g_MaxCombo[i].pos = D3DXVECTOR2(COMBO_R_POS_X, COMBO_R_POS_Y);		//位置
+		g_MaxCombo[i].pos = D3DXVECTOR2(COMBO_R_POS_X, COMBO_R_POS_Y - 100.0f);		//位置
 		g_MaxCombo[i].size = D3DXVECTOR2(COMBO_R_SIZE_X, COMBO_R_SIZE_Y);	//サイズ
 		g_MaxCombo[i].col = D3DXCOLOR(1.0, 1.0, 1.0, 1.0);
 	}
@@ -215,7 +215,7 @@ void DrawMaxCombo()
 
 	DrawSpriteColorRotation(
 		g_MaxCombo[0].pos.x + 80.0f,
-		COMBO_R_TEXT_POS_Y + 20.0f,
+		COMBO_R_TEXT_POS_Y + 20.0f - 100.0f,
 		100.0f,
 		60.0f,
 		0.0f,
@@ -234,7 +234,7 @@ void DrawMaxCombo()
 
 		DrawSpriteColorRotation(
 			g_MaxCombo[2].pos.x - (60.0f * i) - 70.0f,
-			COMBO_R_TEXT_POS_Y + 20.0f,
+			COMBO_R_TEXT_POS_Y + 20.0f - 100.0f,
 			60.0f,
 			60.0f,
 			0.0f,
@@ -251,6 +251,9 @@ void DrawMaxCombo()
 void ComboPlus(int combo)
 {
 	ComboAdd += combo;
+	if (ComboMax < ComboAdd) {
+		ComboMax = ComboAdd;
+	}
 }
 
 void GetComboDizit()
@@ -283,9 +286,6 @@ void ComboMagUp()
 }
 void ResetCombo()
 {
-	if (ComboMax < ComboAdd) {
-		ComboMax = ComboAdd;
-	}
 	ComboAdd = 0;
 	ComboMagNum = 0;
 	ComboMagUp();

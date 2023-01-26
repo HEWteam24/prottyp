@@ -134,6 +134,7 @@ void UninitTuto(void)
 void UpdateTuto(void)
 {
 	PAUSE*		pPause = GetPause();
+	PLAYER*		pPlayer = GetPlayer();
 	SPECIAL*	pSkill = GetSpecial();
 
 	//エンターキーが押されたらSCENE_GAMEへ移行する
@@ -217,6 +218,11 @@ void UpdateTuto(void)
 	if (TutoFrame == 1598)
 	{
 		pSkill->charge = 30;
+	}
+
+	if (pPlayer->hp <=40)
+	{
+		pPlayer->hp = 40;
 	}
 
 
@@ -485,10 +491,12 @@ void DrawTuto(void)
 {
 	//背景の描画処理
 	DrawBG();
-	DrawLane();
-
+	if ((g_Tuto.Phase < 20) || (g_Tuto.Phase > 21))
+	{
+		DrawLane();
+		DrawBullet();
+	}
 	DrawCombo();
-	DrawBullet();
 	DrawPlayer();
 	DrawEnemyBullet();
 	DrawRhythm();
@@ -611,4 +619,9 @@ void SetArrow(D3DXVECTOR2 pos,float rot)
 {
 	g_Tuto.ArPos = pos;
 	g_Tuto.ArRot = rot;
+}
+
+T_CIRCLE* GetTuto()
+{
+	return &g_Tuto;
 }

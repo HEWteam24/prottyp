@@ -64,12 +64,12 @@ void InitScoreResult(int tex, int num)
 
 	texnum = tex;
 
-	g_ScoreText.Pos = D3DXVECTOR2(SCORE_R_TEXT_POS_X, SCORE_R_TEXT_POS_Y);
+	g_ScoreText.Pos = D3DXVECTOR2(SCORE_R_TEXT_POS_X, SCORE_R_TEXT_POS_Y - 100.0f);
 	g_ScoreText.Size = D3DXVECTOR2(SCORE_R_TEXT_SIZE_X, SCORE_R_TEXT_SIZE_Y);
 	g_ScoreText.col = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	for (int i = 0; i < SCOER_DIGIT; i++) {
-		g_Score[i].Pos = D3DXVECTOR2(SCORE_R_POS_X, SCORE_R_POS_Y);
+		g_Score[i].Pos = D3DXVECTOR2(SCORE_R_POS_X, SCORE_R_POS_Y - 100.0f);
 		g_Score[i].Size = D3DXVECTOR2(SCORE_R_SIZE_X, SCORE_R_SIZE_Y);
 	}
 
@@ -143,7 +143,7 @@ void DrawEnemyScore()
 		if (i == 2) {
 			DrawSpriteColorRotation(
 				g_EnemySocre[i].Pos.x,
-				g_EnemySocre[i].Pos.y,
+				g_EnemySocre[i].Pos.y - 100.0f,
 				g_EnemySocre[i].Size.x,
 				g_EnemySocre[i].Size.y,
 				0.0f,
@@ -157,7 +157,7 @@ void DrawEnemyScore()
 		else {
 			DrawSpriteColorRotation(
 				g_EnemySocre[i].Pos.x,
-				g_EnemySocre[i].Pos.y,
+				g_EnemySocre[i].Pos.y - 100.0f,
 				g_EnemySocre[i].Size.x,
 				g_EnemySocre[i].Size.y,
 				0.0f,
@@ -174,7 +174,7 @@ void DrawEnemyScore()
 
 	DrawSpriteColorRotation(
 		g_EnemySocre[2].Pos.x-70.0f,
-		SCORE_R_POS_Y + 260.0f,
+		SCORE_R_POS_Y + 260.0f - 100.0f,
 		70.0f,
 		70.0f,
 		0.0f,

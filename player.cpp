@@ -61,8 +61,6 @@ enum CHECK		//タイミング評価
 // グローバル変数
 //*****************************************************************************
 static int g_TexturePlayer;	//テクスチャのやつ
-static int g_TextureHp;		//テクスチャのやつ
-static int g_TextureHpGrid;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
 static int g_TextureShield;
@@ -98,12 +96,10 @@ static float g_AnimeTable[4] =
 //=============================================================================
 void InitPlayer(void)
 {
-	g_TexturePlayer  = LoadTexture((char*)"data/TEXTURE/player.png");
-	g_TextureHp		 = LoadTexture((char*)"data/TEXTURE/Hp.png");
-	g_TextureHpGrid	 = LoadTexture((char*)"data/TEXTURE/HpGrid.png");
-	g_TextureHpA = LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
-	g_TextureHpB = LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
-	g_TextureCText	 = LoadTexture((char*)"data/TEXTURE/good_bad.png");
+	g_TexturePlayer = LoadTexture((char*)"data/TEXTURE/player.png");
+	g_TextureHpA	= LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
+	g_TextureHpB	= LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
+	g_TextureCText	= LoadTexture((char*)"data/TEXTURE/good_bad.png");
 	g_TextureShield = LoadTexture((char*)"data/TEXTURE/Shield.png");
 
 	char	file_SE_Bullet[] = "data\\SE\\SE_bullet.wav";
@@ -132,11 +128,11 @@ void InitPlayer(void)
 		effectPos[i] = g_Player.pos.x;
 	}
 
-	good = C_NONE;
-	checkFrame = 0.0f;
-	goodAlpha =1.0f;
-	goodPosY = 0.0f;
-	fire_dist = 0;
+	good		= C_NONE;
+	checkFrame	= 0.0f;
+	goodAlpha	=1.0f;
+	goodPosY	= 0.0f;
+	fire_dist	= 0;
 
 	ShieldAlpha = 1.0f;
 }
@@ -197,23 +193,23 @@ void UpdatePlayer(void)
 		//スティックで移動
 		if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
 		{
-			g_Player.moving = true;				//移動中
-			g_Player.oldpos.x = g_Player.pos.x;	//現在位置保存
+			g_Player.moving		= true;				//移動中
+			g_Player.oldpos.x	= g_Player.pos.x;	//現在位置保存
 
-			g_Player.speed.x = -50.0f;		//スピードを-に
-			g_Player.direction = D_LEFT;		//左移動
-			g_Player.NowLane -= 1;			//レーン変更
+			g_Player.speed.x	= -50.0f;			//スピードを-に
+			g_Player.direction	= D_LEFT;			//左移動
+			g_Player.NowLane   -= 1;				//レーン変更
 			PlayerCheck();
 		}
 		//左
 		if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
 		{
-			g_Player.moving = true;				//移動中
-			g_Player.oldpos.x = g_Player.pos.x; //現在位置保存
+			g_Player.moving		= true;				//移動中
+			g_Player.oldpos.x	= g_Player.pos.x;	//現在位置保存
 
-			g_Player.speed.x = 50.0f;			//スピードを+に
-			g_Player.direction = D_RIGHT;		//右移動
-			g_Player.NowLane += 1;				//レーン変更
+			g_Player.speed.x	= 50.0f;			//スピードを+に
+			g_Player.direction	= D_RIGHT;			//右移動
+			g_Player.NowLane   += 1;				//レーン変更
 			PlayerCheck();
 		}
 
@@ -311,6 +307,7 @@ void DrawPlayer(void)
 	DrawSpriteColor(g_TexturePlayer, g_Player.pos.x, g_Player.pos.y, g_Player.size.x, g_Player.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 
+	//スキル:シールドの表示
 	if (Dsp->get_damage_down == true)
 	{
 		DrawSpriteColor(g_TextureShield, g_Player.pos.x, g_Player.pos.y - 80.0f, 180.0f, 90.0f,
@@ -329,16 +326,7 @@ void DrawPlayer(void)
 
 void DrawHp(void)
 {
-	////HP下地
-	//DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
-	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.6, 0.6, 0.6, 1.0));
-	////HPバー
-	//DrawSpriteColor(g_TextureHp, NOTESLANE_POS_X, NOTESLANE_POS_Y+(PLAYER_HP_DEFAULT - g_Player.hp)/(PLAYER_HP_DEFAULT/20), NOTES_SIZE_X, ((PLAYER_HP_DEFAULT-(PLAYER_HP_DEFAULT-g_Player.hp))/(PLAYER_HP_DEFAULT/NOTES_SIZE_Y)),
-	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5, 1.0, 0.3, 1.0));
-	////HPグリッド
-	//DrawSpriteColor(g_TextureHpGrid, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
-	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.8, 0.8, 0.8, 1.0));
-	
+
 	//HP下地
 	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
@@ -346,11 +334,11 @@ void DrawHp(void)
 	DrawSpriteColor(g_TextureHpA, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + ((PLAYER_HP_DEFAULT - g_Player.hp) / 0.665), PLAYER_HP_SIZE_X, PLAYER_HP_SIZE_Y - (PLAYER_HP_DEFAULT - g_Player.hp) * 3.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5f, 1.0f, 0.4f, 1.0f));
 
+	
 	//評価 Good Bad
 	if (good == C_NONE)
 	{
-		//DrawSpriteColor(g_TextureHpGrid, NOTESLANE_POS_X, NOTESLANE_POS_Y, NOTES_SIZE_X, NOTES_SIZE_Y,
-		//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.8, 0.8, 0.8, 1.0));
+		
 	}
 	if (good == C_GOOD)
 	{
@@ -380,7 +368,7 @@ void PlayerCheck(void)
 
 	//NOTESLANE* pRythm = GetNotesLane();
 	goodAlpha = 1.0f;
-	goodPosY = 100.0f;
+	goodPosY  = 100.0f;
 
 	//リズムOK判定
 	if (GetRhythm())
@@ -394,9 +382,6 @@ void PlayerCheck(void)
 		g_Player.flag = true;
 		ReleaseNotes();
 
-		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X + 20.0f + (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
-		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 10.0f + (frand() * 3) * 10.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
-		//SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X - 20.0f - (frand() * 5) * 20.0f, CENTER_Y + 440.0f), D3DXVECTOR2(100.0f, 100.0f));
 		SetEffect(EFFECT_1, D3DXVECTOR2(CENTER_X, NOTESLANE_POS_Y), D3DXVECTOR2(300.0f, 300.0f));
 	}
 	else  //BAD評価
