@@ -30,7 +30,7 @@ float		NotesT = 0.0f;
 int			errors = 0;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
-
+int			BGMError;
 
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureNotes;
@@ -76,6 +76,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 1://ザリガニ
 
@@ -87,6 +88,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 2://ウナギ
 
@@ -98,6 +100,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 3://タコ
 
@@ -109,6 +112,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 4://サメ
 
@@ -121,6 +125,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 
 	case 5://シシャモ
@@ -133,6 +138,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 6://ザリガニ裏	//抜け殻
 
@@ -144,6 +150,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 7://ウナギ裏	//うな重
 
@@ -155,6 +162,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 8://タコ裏		//シオカラ武者
 
@@ -166,6 +174,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 0;
 		break;
 	case 9://サメ裏		//ジョージ
 
@@ -177,6 +186,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = -150;
 		break;
 	case 10://シシャモ裏 //フルアーマーザリガニ
 
@@ -188,6 +198,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
+		BGMError = 330;
 		break;
 	default:
 		break;
@@ -413,7 +424,7 @@ void ReleaseNotes()
 
 bool	MusicEnd()
 {
-	if ((Frame - 120) < 120 * 60) {
+	if ((Frame - 120) < 120 * 60 + BGMError) {
 		return false;
 	}
 	else {
