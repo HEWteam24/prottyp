@@ -53,6 +53,7 @@ int TitleFrame;
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
 static int g_SE_S;
+static int g_SE_START;
 static int g_VFFF;
 
 bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false,false,false};
@@ -75,12 +76,14 @@ HRESULT InitTitle(void)
 	//音声ファイルを読み込んで識別子を受け取る
 	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
-	char	file_SE[] = "data\\SE\\SE_bullet.wav";
-	char	file_SE_S[] = "data\\SE\\success.wav";
-	char	file_VF[] = "data\\SE\\SE_FFF.wav";
-	g_SE	= LoadSound(file_SE);
-	g_SE_S	= LoadSound(file_SE_S);
-	g_VFFF	= LoadSound(file_VF);
+	char	file_SE		 [] = "data\\SE\\SE_bullet.wav";
+	char	file_SE_S	 [] = "data\\SE\\success.wav";
+	char	file_VF		 []	= "data\\SE\\SE_FFF.wav";
+	char	file_SE_START[]	= "data\\SE\\SE_MenuPush.wav";
+	g_SE		= LoadSound(file_SE);
+	g_SE_S		= LoadSound(file_SE_S);
+	g_VFFF		= LoadSound(file_VF);
+	g_SE_START	= LoadSound(file_SE_START);
 
 	//BGMの再生（2つ目の引数はループ回数）
 	//ループ回数に負の値を指定すると無限ループ
@@ -137,11 +140,13 @@ void UpdateTitle(void)
 	//エンターキーが押されたらSCENE_STAGESELECTへ移行する
 	if (Keyboard_IsKeyDown(KK_ENTER))
 	{
+		PlaySound(g_SE_START, 0);
 		SceneTransition(SCENE_STAGESELECT);
 	}
 	//コントローラーBボタン押したらSCENE_STAGESELECTへ移行
 	if (kakusicommand[7] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_B))
 	{
+		PlaySound(g_SE_START, 0);
 		SceneTransition(SCENE_STAGESELECT);
 	}
 

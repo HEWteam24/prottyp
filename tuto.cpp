@@ -49,8 +49,10 @@ static int g_TextureText;
 static int g_TextureTutoButton;
 static int g_TextureTutoArrow;
 static int g_SE_Tuto;
-int	TutoFrame;
-int ArroFrame;
+static int g_SE_TutoDon;
+
+int	 TutoFrame;
+int  ArroFrame;
 bool TutoNext;
 bool Tutostart;
 bool B_Pushed;
@@ -90,8 +92,10 @@ HRESULT InitTuto(int StageNum)
 	g_Tuto.Phase		= 0;
 	g_Tuto.use			= false;
 
-	char	file_SE_Tuto[] = "data\\SE\\SE_MenuPush.wav";
-	g_SE_Tuto = LoadSound(file_SE_Tuto);
+	char	file_SE_Tuto	[] = "data\\SE\\SE_MenuPush.wav";
+	char	file_SE_TutoDon [] = "data\\SE\\SE_Don.wav";
+	g_SE_Tuto	 = LoadSound(file_SE_Tuto);
+	g_SE_TutoDon = LoadSound(file_SE_TutoDon);
 
 	TutoFrame = 0;
 	ArroFrame = 0;
@@ -229,6 +233,7 @@ void UpdateTuto(void)
 	//ようこそ
 	if ((TutoFrame==110)&&(g_Tuto.Phase == 0))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(0.0f, 0.0f));
 		g_Tuto.Phase = 1;
 		g_Tuto.TextFrame = 0;
@@ -236,6 +241,7 @@ void UpdateTuto(void)
 	//移動
 	if ((TutoFrame == 780) && (g_Tuto.Phase == 7))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 0.7f, 1920.0f * 0.7f), D3DXVECTOR2(CENTER_X, CENTER_Y * 0.9f), D3DXVECTOR2(0.0f, 2.0f));
 		SetArrow(D3DXVECTOR2(CENTER_X, CENTER_Y + 100.0f), 90.0f);
 		g_Tuto.Phase = 8;
@@ -244,6 +250,7 @@ void UpdateTuto(void)
 	//スキル
 	if ((TutoFrame == 1600) && (g_Tuto.Phase == 12))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y * 2.5f), D3DXVECTOR2(0.0f, 3.0f));
 		g_Tuto.Phase = 13;
 		g_Tuto.TextFrame = 0;
@@ -251,6 +258,7 @@ void UpdateTuto(void)
 	//スコア
 	if ((TutoFrame == 2800) && (g_Tuto.Phase == 17))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(1860.0f-135.0f, SCORE_POS_Y), D3DXVECTOR2(0.0f, 4.0f));
 		SetArrow(D3DXVECTOR2(1860.0f - 135.0f, SCORE_POS_Y+150.0f), 90.0f);
 		g_Tuto.Phase = 18;
