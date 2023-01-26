@@ -618,3 +618,8 @@ void SetArrow(D3DXVECTOR2 pos,float rot)
 	g_Tuto.ArPos = pos;
 	g_Tuto.ArRot = rot;
 }
+
+T_CIRCLE* GetTuto()
+{
+	return &g_Tuto;
+}
