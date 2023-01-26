@@ -491,10 +491,12 @@ void DrawTuto(void)
 {
 	//”wŒi‚Ì•`‰æˆ—
 	DrawBG();
-	DrawLane();
-
+	if ((g_Tuto.Phase < 20) || (g_Tuto.Phase > 21))
+	{
+		DrawLane();
+		DrawBullet();
+	}
 	DrawCombo();
-	DrawBullet();
 	DrawPlayer();
 	DrawEnemyBullet();
 	DrawRhythm();
