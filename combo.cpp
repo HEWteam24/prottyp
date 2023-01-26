@@ -251,6 +251,9 @@ void DrawMaxCombo()
 void ComboPlus(int combo)
 {
 	ComboAdd += combo;
+	if (ComboMax < ComboAdd) {
+		ComboMax = ComboAdd;
+	}
 }
 
 void GetComboDizit()
@@ -283,9 +286,6 @@ void ComboMagUp()
 }
 void ResetCombo()
 {
-	if (ComboMax < ComboAdd) {
-		ComboMax = ComboAdd;
-	}
 	ComboAdd = 0;
 	ComboMagNum = 0;
 	ComboMagUp();
