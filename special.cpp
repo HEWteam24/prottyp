@@ -4,30 +4,10 @@
 														 Author :　柴田 祐希
 														 Date   :　11/19
 --------------------------------------------------------------------------------
-とりあえず、HP全回復、5sダメージ5倍、5s被ダメージ1/5になってます。
-30goodで一回発動。ゲージが溜まって黄色くなったら「Yボタン」または「Lキー」で発動します。
-
-回復・・・緑色
-ダメージ増加・・・赤色
-被ダメージ低下・・・青色
-
-
-回復量は [special.cpp] の UpdateSpecial 内にある switch(sp.type) Case::HEAL内の数値を変更してください]
-
-与ダメージ増加は [bullet.cpp]　内にある int Damage(){} 内の数値を変更してください。
-
-被ダメージ低減はプレイヤーのHPが減少するところの数値を変えてください。
-
 */
-
-//==============================================================================
 
 #include "special.h""
 #include "combo.h"
-//#include "effect.h"
-
-
-
 
 //スペシャルのテクスチャ
 static int g_SpecialIconTexture;
@@ -94,18 +74,15 @@ void InitSpecial()
 	IconcolorG	= 1.0f;
 	IconcolorB	= 1.0f;
 
-	chargeUv = 0;
-	
-
+	chargeUv	= 0;
 	//sp.type = 0;  //0回復、1与ダメ増加、２被ダメ低減
 
-	sp.charge = 0;		//スペシャルの初期値。提出時には0にしてください。
-	sp.UseOk = false;
+	sp.charge	 = 0;		//スペシャルの初期値。提出時には0にしてください。
+	sp.UseOk 	 = false;
 	sp.damage_up = false;
+	start_timer  = false;
 	sp.get_damage_down = false;
-	start_timer = false;
-
-	SpButtonAdd = 2;
+	SpButtonAdd  = 2;
 	SpButtonSize = 100.0f;
 
 	switch (sp.type) {
@@ -139,7 +116,6 @@ void UpdateSpecial()
 		Calpha = 1.0f;
 		colorRGB = 1.0f;
 	}
-
 	//Yボタンでスペシャル発動
 	if ((((IsButtonTriggered(0, XINPUT_GAMEPAD_RIGHT_SHOULDER)) || (Keyboard_IsKeyDown(KK_S))) && sp.UseOk == true)&&(!start_timer))
 	{
@@ -176,10 +152,7 @@ void UpdateSpecial()
 	if (start_timer == true)
 	{
 		if (timer == 1)
-		{
-			AdRingrot = 8.0f;
-		}
-
+		{	AdRingrot = 8.0f;	}
 		timer++;
 		colorB = 1.0f;
 		colorG = 0.4f;
@@ -194,7 +167,6 @@ void UpdateSpecial()
 		//スペシャルを追加する場合はここにそのスペシャルの終了処理を追加
 		sp.get_damage_down = false;
 		sp.damage_up = false;
-
 
 		//タイマーとスペシャルのリセット
 		start_timer = false;
@@ -212,14 +184,10 @@ void UpdateSpecial()
 	{
 		GoRingrot += AdRingrot;
 		if (!start_timer)
-		{
-			SpButtonSize += SpButtonAdd;
-		}
+		{		SpButtonSize += SpButtonAdd;	}
 	}
 	else
-	{
-		SpButtonSize = 100.0f;
-	}
+		{		SpButtonSize = 100.0f;			}
 
 	if ((SpButtonSize <= 90.0f) || (SpButtonSize >= 110.0f))
 	{
@@ -228,89 +196,56 @@ void UpdateSpecial()
 
 
 	if ((sp.charge >= 15) && (start_timer == false))
-	{
-		chargeUv = 1;
-	}
+	{	chargeUv = 1;	}
 	else
-	{
-		if (!start_timer)
-		{
-			chargeUv = 0;
-		}	
+	{	if (!start_timer)
+	{	chargeUv = 0;	}	
 	}
 
 	if ((start_timer))
-	{
+	{	
 		sp.charge = (300 - timer)/10;
-		if (timer > 150)
-		{
-			chargeUv = 0;
-		}
+	if (timer > 150)
+	{	chargeUv = 0;	}
 	}
 }
 
 void DrawSpecial()
 {
-
 	//アイコン チャージ
-
-		DrawSpriteColor(g_TextureCharge,
-			SKILL_ICON_POS_X,
-			SKILL_ICON_POS_Y,
-			SKILL_ICON_SIZE * 0.85,
-			SKILL_ICON_SIZE * 0.85,
-			1.0f / 15 * sp.charge,
-			0.5f * chargeUv,
-			1.0f / 15,
-			0.5f,
-			D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
-
-	//else
+	DrawSpriteColor(g_TextureCharge,
+		SKILL_ICON_POS_X, SKILL_ICON_POS_Y,
+		SKILL_ICON_SIZE * 0.85, SKILL_ICON_SIZE * 0.85,
+		1.0f / 15 * sp.charge, 0.5f * chargeUv,
+		1.0f / 15, 0.5f,
+		D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	//アイコン
 	DrawSpriteColor(g_SpecialIconTexture,
-		SKILL_ICON_POS_X,
-		SKILL_ICON_POS_Y,
-		SKILL_ICON_SIZE,
-		SKILL_ICON_SIZE,
-		0.0f,
-		0.0f,
-		1.0f,
-		1.0f,
+		SKILL_ICON_POS_X, SKILL_ICON_POS_Y,
+		SKILL_ICON_SIZE, SKILL_ICON_SIZE,
+		0.0f, 0.0f,
+		1.0f, 1.0f,
 		D3DXCOLOR(1.0f, 1.0f, 1.0f, Calpha));
-
 
 	//リング
 		GetDeviceContext()->PSSetShaderResources(0, 1,
 			GetTexture(g_TextureGoRing));
 		DrawSpriteColorRotation(
-			SKILL_ICON_POS_X,
-			SKILL_ICON_POS_Y,
-			SKILL_ICON_SIZE*1.1,
-			SKILL_ICON_SIZE*1.1,
-			GoRingrot,
-			D3DXCOLOR(colorR, colorG, colorB, 1.0f),
-			0.0f,
-			1.0f,
-			1.0f,
-			1
+			SKILL_ICON_POS_X, SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE * 1.1, SKILL_ICON_SIZE * 1.1,
+			GoRingrot, D3DXCOLOR(colorR, colorG, colorB, 1.0f),
+			0.0f, 1.0f, 1.0f, 1
 		);
 
 		//リング
 		GetDeviceContext()->PSSetShaderResources(0, 1,
 			GetTexture(g_TextureGoRing));
 		DrawSpriteColorRotation(
-			SKILL_ICON_POS_X,
-			SKILL_ICON_POS_Y,
-			SKILL_ICON_SIZE * 0.95,
-			SKILL_ICON_SIZE * 0.95,
-			GoRingrot*0.8,
-			D3DXCOLOR(colorR*0.8, colorG*0.8, colorB*0.8, 1.0f),
-			0.0f,
-			1.0f,
-			1.0f,
-			1
+			SKILL_ICON_POS_X, SKILL_ICON_POS_Y,
+			SKILL_ICON_SIZE * 0.95, SKILL_ICON_SIZE * 0.95,
+			GoRingrot * 0.8, D3DXCOLOR(colorR * 0.8, colorG * 0.8, colorB * 0.8, 1.0f),
+			0.0f, 1.0f, 1.0f, 1
 		);
 
 		DrawSpriteColor(g_TextureSpButton, SKILL_ICON_POS_X+100.0f,SKILL_ICON_POS_Y+100.0f, SpButtonSize,SpButtonSize,
@@ -321,10 +256,7 @@ void DrawSpecial()
 void SpecialPlus()
 {
 	if ((sp.charge < SPECIAL_MAX)&&(start_timer==false))
-	{
-		sp.charge += 1 + (GetComboScoreUp() / 2);
-		//SetEffect(EFFECT_1, D3DXVECTOR2(SKILL_ICON_POS_X, SKILL_ICON_POS_Y), D3DXVECTOR2(SKILL_ICON_SIZE*3.0f, SKILL_ICON_SIZE*3.0f));
-	}
+	{	sp.charge += 1 + (GetComboScoreUp() / 2);	}
 }
 
 //ゲッター
@@ -332,6 +264,3 @@ SPECIAL* GetSpecial(void)
 {
 	return &sp;
 }
-
-
-
