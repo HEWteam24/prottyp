@@ -1,6 +1,6 @@
 /*==============================================================================
 
-   ゲーム本編処理 [game.cpp]
+   チュートリアル処理 [tuto.cpp]
 														 Author :
 														 Date   :
 --------------------------------------------------------------------------------
@@ -26,7 +26,6 @@
 #include "lane.h"
 #include "keyboard.h"
 #include "special.h"
-
 #include "effect.h"
 
 #include "pause.h"
@@ -150,9 +149,6 @@ void UpdateTuto(void)
 		UpdateRhythm();
 
 		if ((GetFreame() > 120)) {
-
-
-
 			if (Tutostart)
 			{
 				PauseSound(BGM_RE());
@@ -176,38 +172,23 @@ void UpdateTuto(void)
 				UpdateSpecial();
 			}
 			if (Tutostart)
-			{
-				Tutostart = false;
-			}
-
-
-
-
-
-
+			{		Tutostart = false;		}
 		}
-
 	}
-	else {
-		//StopSoundAll();
+	else 
+	{
 		if (!g_Tuto.use)
-		{
-			SceneTransition(SCENE_RESULT);
-		}
+		{	SceneTransition(SCENE_RESULT);	}
 	}
 
 	if (!pPause->restart)
-	{
-		pPause->alpha = 0.7f;
-	}
+	{		pPause->alpha = 0.7f;	}
 
 	UpdateEffect();
-
 
 	if (g_Tuto.use)
 	{
 		PauseSound(BGM_RE());
-
 		if (Keyboard_IsKeyDown(KK_N))
 		{
 			g_Tuto.use = false;
@@ -215,19 +196,13 @@ void UpdateTuto(void)
 		}
 	}
 
-	if (TutoFrame <= 1597)
-	{
-		pSkill->charge = 0;
-	}
-	if (TutoFrame == 1598)
-	{
-		pSkill->charge = 30;
-	}
-
-	if (pPlayer->hp <=40)
-	{
-		pPlayer->hp = 40;
-	}
+	
+	if (TutoFrame <= 1597)	//スキルゲージを0
+	{	pSkill->charge = 0;		}
+	if (TutoFrame == 1598)	//スキルゲージをMAX
+	{	pSkill->charge = 30;	}
+	if (pPlayer->hp <=40)	//体力が40下回らない
+	{	pPlayer->hp = 40;		}
 
 
 	//ようこそ
@@ -472,9 +447,7 @@ void UpdateTuto(void)
 
 	//チュートリアルの長押し遷移を防ぐ
 	if ((!IsButtonTriggered(0, XINPUT_GAMEPAD_B))&& (!Keyboard_IsKeyDown(KK_ENTER)))
-	{
-		B_Pushed = false;
-	}
+	{	B_Pushed = false;		}
 
 	ArroFrame++;
 	if (ArroFrame >= 10)
@@ -486,9 +459,7 @@ void UpdateTuto(void)
 
 	//ボタン
 	if ((g_Tuto.ButtonSize <= 70.0f)|| (g_Tuto.ButtonSize >= 90.0f))
-	{
-		g_Tuto.ButtonAdd *= -1.0f;
-	}
+	{		g_Tuto.ButtonAdd *= -1.0f;		}
 	g_Tuto.ButtonSize += g_Tuto.ButtonAdd;
 }
 
@@ -553,6 +524,13 @@ void DrawTuto(void)
 			0.0f, 0.0f,
 			1.0f, 1.0f,
 			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		//左下サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x - g_Tuto.size.x, g_Tuto.pos.y + g_Tuto.size.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
 
 
 		//テキスト
@@ -597,18 +575,11 @@ void DrawTuto(void)
 		//矢印
 		GetDeviceContext()->PSSetShaderResources(0, 1,
 			GetTexture(g_TextureTutoArrow));
-
 		DrawSpriteColorRotation(
-			g_Tuto.ArPos.x,
-			g_Tuto.ArPos.y,
-			100.0f,
-			100.0f,
-			g_Tuto.ArRot,
-			D3DXCOLOR(1.0f,0.5f,0.5f, 1.0f),
-			0.0f,
-			1.0f,
-			1.0f,
-			1
+			g_Tuto.ArPos.x,g_Tuto.ArPos.y,
+			100.0f,100.0f,
+			g_Tuto.ArRot,D3DXCOLOR(1.0f,0.5f,0.5f, 1.0f),
+			0.0f,1.0f,1.0f,1
 		);
 	}
 
