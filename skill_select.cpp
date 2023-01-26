@@ -40,6 +40,7 @@
 
 static int g_TextureBgStageSelect;//背景用テクスチャの識別子
 static int g_TextureRing;
+static int g_TextureBPM;
 static int g_TextureSkillPlate;
 static int g_TextureTextArrow;
 
@@ -52,6 +53,8 @@ float RingRot;	//リング角度
 float RingPosY;	//リング位置
 float TextPosX; //説明文位置
 float TextAlpha;
+float BPMSize;
+float BPMAdd;
 float BackRingrot;
 
 int changeN;	//移動猶予
@@ -76,6 +79,7 @@ HRESULT InitSkillSelect(void)
 	g_TextureTextArrow = LoadTexture((char*)"data/TEXTURE/arrow.png");
 
 	g_TextureRing = LoadTexture((char*)"data/TEXTURE/icon_ring.png");
+	g_TextureBPM = LoadTexture((char*)"data/TEXTURE/UI_BPM_B.png");
 
 	char	file_SE_SpSelect[] = "data\\SE\\SE_MenuMove.wav";
 	g_SE_SpSelect = LoadSound(file_SE_SpSelect);
@@ -92,11 +96,13 @@ HRESULT InitSkillSelect(void)
 
 	changeN = 60;
 
-	RingRot = 0.0f;
-	RingPosY = 0.0f;
+	RingRot		= 0.0f;
+	RingPosY	= 0.0f;
+	BPMSize		= 300.0f;
+	BPMAdd		= 1.5f;
 	BackRingrot = 0.0f;
-	TextPosX = PLATE_POS;
-	TextAlpha = 0.0f;
+	TextPosX	= PLATE_POS;
+	TextAlpha	= 0.0f;
 
 	movingSp = false;
 	//音声ファイルを読み込んで識別子を受け取る
@@ -215,6 +221,12 @@ void UpdateSkillSelect(void)
 	RingRot += 0.5f;
 	BackRingrot += 0.5f;
 	RingPosY = (CENTER_Y - ICON_SPACE) + NowSSelect * ICON_SPACE;
+
+	BPMSize += BPMAdd;
+	if ((BPMSize >= 310.0f)|| (BPMSize <= 290.0f))
+	{
+		BPMAdd *= -1;
+	}
 }
 
 //=============================================================================
@@ -225,12 +237,17 @@ void DrawSkillSelect(void)
 	int sStageNum = GetGemeStageNum();
 	if (sStageNum>=5)
 	{
+		BPMSize += BPMAdd;
 		BackRingCol = D3DXCOLOR(0.5f, 0.1f, 0.1f, 1.0f);
 		BackRingrot += 3.5f;
+		DrawSpriteColor(g_TextureBPM, CENTER_X, CENTER_Y, BPMSize, BPMSize / 6.0f * 5.0f,
+			0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(1.0f, 0.1f, 0.1f, 1.0f));
 	}
 	else
 	{
 		BackRingCol = D3DXCOLOR(0.1f, 0.5f, 0.1f, 1.0f);
+		DrawSpriteColor(g_TextureBPM, CENTER_X, CENTER_Y, BPMSize, BPMSize / 6.0f * 5.0f,
+			0.0f, 0.0f, 0.5f, 1.0f,D3DXCOLOR(0.2f, 0.9f, 0.2f, 1.0f));
 	}
 	//リング
 	GetDeviceContext()->PSSetShaderResources(0, 1,
@@ -264,7 +281,7 @@ void DrawSkillSelect(void)
 
 	//説明
 	DrawSpriteColor(g_TextureSkillPlate,TextPosX, RingPosY, PLATE_SIZE * 2, PLATE_SIZE,
-		0.0f, 1.0f / 3 * NowSSelect - 1, 1.0f, 1.0 / 3, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
+		0.0f, 1.0f / 3 * NowSSelect - 1, 1.0f, 1.0f / 3.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, TextAlpha));
 
 	if (NowSSelect < 2)
 	{
