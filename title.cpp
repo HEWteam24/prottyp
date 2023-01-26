@@ -34,6 +34,7 @@ static int g_TextureBgTitle;//タイトル画面用テクスチャの識別子
 static int g_TextureFFF;
 static int g_TextureLine;
 static int g_TextureCommand;
+static int g_TextureCommand_Y;
 static int g_TextureTitle;
 static int g_TextureUIText;
 static int g_TextureUIButton;
@@ -51,11 +52,9 @@ int TitleFrame;
 
 static int g_BGMNo;//タイトル用BGMの識別子
 static int g_SE;		//弾サウンド
-static int g_SE_0;
 static int g_SE_S;
 static int g_VFFF;
 
-int count = 0;
 bool kakusicommand[11] = { false,false,false,false,false,false,false,false,false,false,false};
 
 //=============================================================================
@@ -68,6 +67,7 @@ HRESULT InitTitle(void)
 	g_TextureFFF	 = LoadTexture((char*)"data/TEXTURE/fff.png");
 	g_TextureLine	 = LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_TextureCommand = LoadTexture((char*)"data/TEXTURE/command.png");
+	g_TextureCommand_Y = LoadTexture((char*)"data/TEXTURE/command_y.png");
 	g_TextureTitle	 = LoadTexture((char*)"data/TEXTURE/title_A.png");
 	g_TextureUIText	 = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
 	g_TextureUIButton= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
@@ -76,11 +76,9 @@ HRESULT InitTitle(void)
 	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
 
 	char	file_SE[] = "data\\SE\\SE_bullet.wav";
-	char	file_SE_0[] = "data\\SE\\command0.wav";
 	char	file_SE_S[] = "data\\SE\\success.wav";
 	char	file_VF[] = "data\\SE\\SE_FFF.wav";
 	g_SE	= LoadSound(file_SE);
-	g_SE_0	= LoadSound(file_SE_0);
 	g_SE_S	= LoadSound(file_SE_S);
 	g_VFFF	= LoadSound(file_VF);
 
@@ -293,8 +291,16 @@ void DrawTitle(void)
 	DrawSpriteLeftTop(g_TextureBgTitle, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
 		0.0f, 0.0f, 1.0f, 1.0f );
 
-	DrawSpriteColor(g_TextureCommand, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 50, 200.0f, 50.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.7f, 0.7f, 1.0f, 0.5f));
+	if (kakusicommand[9])
+	{
+		DrawSpriteColor(g_TextureCommand_Y, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 50, 210.0f, 50.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.7f));
+	}
+	else
+	{
+		DrawSpriteColor(g_TextureCommand, SCREEN_WIDTH - 150, SCREEN_HEIGHT - 50, 210.0f, 50.0f,
+			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.7f, 0.7f, 1.0f, 0.4f));
+	}
 
 	//Line
 	for (int i = 0; i < 5; i++)
