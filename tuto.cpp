@@ -48,6 +48,7 @@ static int g_TextureCircle;
 static int g_TextureText;
 static int g_TextureTutoButton;
 static int g_TextureTutoArrow;
+static int g_SE_Tuto;
 int	TutoFrame;
 int ArroFrame;
 bool TutoNext;
@@ -88,6 +89,9 @@ HRESULT InitTuto(int StageNum)
 	g_Tuto.ButtonAdd	= 0.5f;
 	g_Tuto.Phase		= 0;
 	g_Tuto.use			= false;
+
+	char	file_SE_Tuto[] = "data\\SE\\SE_MenuPush.wav";
+	g_SE_Tuto = LoadSound(file_SE_Tuto);
 
 	TutoFrame = 0;
 	ArroFrame = 0;
@@ -180,7 +184,7 @@ void UpdateTuto(void)
 
 	}
 	else {
-		StopSoundAll();
+		//StopSoundAll();
 		if (!g_Tuto.use)
 		{
 			SceneTransition(SCENE_RESULT);
@@ -264,6 +268,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 2;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//紹介
@@ -273,6 +278,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 3;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//攻撃1
 			if ((g_Tuto.Phase == 3) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -282,6 +288,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 4;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//攻撃2
 			if ((g_Tuto.Phase == 4) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -290,6 +297,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 5;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//攻撃3
 			if ((g_Tuto.Phase == 5) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -300,6 +308,7 @@ void UpdateTuto(void)
 				B_Pushed	= true;
 				TutoNext	= true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//攻撃4
 			if ((g_Tuto.Phase == 6) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -311,6 +320,7 @@ void UpdateTuto(void)
 				TutoNext	= false;
 				RePlaySound(BGM_RE());
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//移動1
@@ -321,6 +331,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 9;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//移動2
 			if ((g_Tuto.Phase == 9) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -330,6 +341,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 10;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//移動3
 			if ((g_Tuto.Phase == 10) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -339,6 +351,7 @@ void UpdateTuto(void)
 				B_Pushed = true;
 				TutoNext = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//移動4
 			if ((g_Tuto.Phase == 11) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -350,6 +363,7 @@ void UpdateTuto(void)
 				g_Tuto.use = false;
 				RePlaySound(BGM_RE());
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//スキル1
@@ -360,6 +374,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 14;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//スキル2
 			if ((g_Tuto.Phase == 14) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -368,6 +383,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 15;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//スキル3
 			if ((g_Tuto.Phase == 15) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -377,6 +393,7 @@ void UpdateTuto(void)
 				B_Pushed = true;
 				TutoNext = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 			//スキル4
 			if ((g_Tuto.Phase == 16) && (!B_Pushed) && ((IsButtonTriggered(0, XINPUT_GAMEPAD_B)) || (Keyboard_IsKeyDown(KK_ENTER))))
@@ -389,6 +406,7 @@ void UpdateTuto(void)
 				TutoNext = false;
 				RePlaySound(BGM_RE());
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//スコア1
@@ -398,6 +416,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 19;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//スコア2
@@ -408,6 +427,7 @@ void UpdateTuto(void)
 				g_Tuto.Phase = 20;
 				B_Pushed = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//スコア3
@@ -418,6 +438,7 @@ void UpdateTuto(void)
 				B_Pushed = true;
 				TutoNext = true;
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 
 			//スコア4
@@ -430,6 +451,7 @@ void UpdateTuto(void)
 				g_Tuto.use = false;
 				RePlaySound(BGM_RE());
 				g_Tuto.TextFrame = 0;
+				PlaySound(g_SE_Tuto, 0);
 			}
 		}
 	}
