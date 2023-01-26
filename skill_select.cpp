@@ -299,8 +299,8 @@ void DrawSkillSelect(void)
 	DrawSpriteColorRotation(
 		CENTER_X,
 		CENTER_Y,
-		RING_SIZE * 2.7f,
-		RING_SIZE * 2.7f,
+		RING_SIZE * 2.65f,
+		RING_SIZE * 2.65f,
 		BackRingrot * -1.5f,
 		BackRingCol,
 		0.0f,
