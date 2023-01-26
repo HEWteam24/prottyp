@@ -36,13 +36,13 @@ D3DXCOLOR COL[3];
 
 void InitPause()
 {
-	PauseTexture = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
-	PauseTextTexture = LoadTexture((char*)"data/TEXTURE/text_pause.png");
-	PauseCntTexture = LoadTexture((char*)"data/TEXTURE/number.png");
-	RetryTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
-	BackTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
-	ContinueTexture = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
-	ArrowTexture = LoadTexture((char*)"data/TEXTURE/arrow.png");
+	PauseTexture		= LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
+	PauseTextTexture	= LoadTexture((char*)"data/TEXTURE/text_pause.png");
+	PauseCntTexture		= LoadTexture((char*)"data/TEXTURE/number.png");
+	RetryTexture		= LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	BackTexture			= LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	ContinueTexture		= LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
+	ArrowTexture		= LoadTexture((char*)"data/TEXTURE/arrow.png");
 
 	hoge.pause = false;		//PAUSE中かどうかの判定
 	hoge.restart = false;	//コンティニュー判定
