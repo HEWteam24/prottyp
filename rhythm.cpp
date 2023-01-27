@@ -28,9 +28,13 @@ int			Frame;
 int			sp;
 float		NotesT = 0.0f;
 int			errors = 0;
+int			BGMError;
+bool		Rhythmflg = false;
+float		Gradationalf;
+int			alfnum;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
-int			BGMError;
+
 
 //テクスチャ情報の保存変数
 static	ID3D11ShaderResourceView	*g_TextureNotes;
@@ -42,6 +46,7 @@ static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
 static	int		g_TextureNameStageProg;
 static	int		g_TextureNameProgFlag;
 static	int		g_TextureNameRunPlayer;
+static	int		g_TextureNameGradation;
 
 int Notestipindex1, Notestipindex2,indexNum;
 int Notestip[10][10]
@@ -279,7 +284,14 @@ HRESULT InitRhythm(int stagenum)
 	{
 		exit(999);
 	}
+	g_TextureNameGradation = LoadTexture((char*)"data/TEXTURE/gradation.jpg");
+	if (g_TextureNameGradation == -1)
+	{
+		exit(999);
+	}
 	
+	alfnum = 1;
+	Gradationalf = 0.0f;
 	Frame = 0;
 	
 	Notestipindex2 = 0;
@@ -299,11 +311,11 @@ void UpdateRhythm()
 	{
 		if (((Frame - errors) % (int)NotesT) == 0.0f)
 		{
-			if (Frame >= 7535) {
-				int x = 0;
-			}
 			if (Notestip[Notestipindex1][Notestipindex2 % indexNum] == 1)
 			{
+				Rhythmflg = true;
+				Gradationalf = 0.0f;
+				alfnum = 1;
 				SetNotes();
 			}
 			if ((Frame - errors) % ((int)NotesT * 4)  == 0.0f) {
@@ -333,7 +345,18 @@ void UpdateRhythm()
 			}
 		}
 	}
-
+	if (Rhythmflg) 
+	{
+		if (Gradationalf > 15.0f) 
+		{
+			alfnum *= -1;
+		}
+		Gradationalf += 1.5f * alfnum;
+		if (Gradationalf < 0.0f) 
+		{
+			Rhythmflg = false;
+		}
+	}
 }
 
 void UninitRhythm()
@@ -354,12 +377,13 @@ void UninitRhythm()
 
 void DrawRhythm()
 {
+	//DrawSpriteColor(g_TextureNameGradation, CENTER_X, CENTER_Y, SCREEN_WIDTH, SCREEN_HEIGHT,
+	//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, Gradationalf));
 	//ノーツレーンの表示
 	DrawSpriteColor(NotesLane.texno, NotesLane.pos.x, NotesLane.pos.y, NotesLane.size.x, NotesLane.size.y,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
-	
 	//ノーツ 中心
-	DrawSpriteColor(NotesLane.texcent, NotesLane.pos.x, NotesLane.pos.y, NOTES_SIZE_X * 3 * 1.01f, NOTES_SIZE_Y*1.01f,
+	DrawSpriteColor(NotesLane.texcent, NotesLane.pos.x, NotesLane.pos.y, NOTES_SIZE_X * 3 * 1.01f, NOTES_SIZE_Y * 1.01f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 0.4, 1.0));
 	for (int i = 0; i < NOTES_MAX; i++)
 	{
@@ -368,16 +392,11 @@ void DrawRhythm()
 		DrawSpriteColor(Notes[i].texno, Notes[i].pos.x, Notes[i].pos.y, Notes[i].size.x, Notes[i].size.y,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0 - Notes[i].alpha));
 	}
-
-
 	DrawSpriteColor(g_TextureNameStageProg, 1700.0f, 470.0f, 40.0f, 440.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-
 	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 90.0f, 90.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.3f, 0.9f, 0.3f, 1.0f));
-
-
-	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f-((float)BGMError/120000))), 20.0f,60.0f,
+	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f - ((float)BGMError / 120000))), 20.0f, 60.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
@@ -458,4 +477,8 @@ bool	MusicEnd()
 int BGM_RE()
 {
 	return GameSoundNo;
+}
+float GetGradation()
+{
+	return Gradationalf;
 }

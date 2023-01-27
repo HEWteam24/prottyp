@@ -47,6 +47,7 @@ void	ReleaseNotes();
 bool	MusicEnd();
 
 int  BGM_RE();
+float GetGradation();
 
 #endif // RHYTHM_H_
 

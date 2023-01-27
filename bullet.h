@@ -6,7 +6,7 @@
 //マクロ定義
 //==================================
 #define	BULLET_MAX		12		//弾の最大数
-#define	BULLET_SPEED	13.0f	//弾のスピード
+#define	BULLET_SPEED	20.0f	//弾のスピード
 #define	BULLET_SIZE_W	50		//弾の横サイズ
 #define	BULLET_SIZE_H	50		//弾の縦サイズ
 
