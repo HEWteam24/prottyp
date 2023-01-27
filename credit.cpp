@@ -45,7 +45,7 @@ HRESULT InitCredit(void)
 	thankyou = false;
 
 	//テクスチャを読み込んで識別子を受け取る
-	g_TextureCredit = LoadTexture((char*)"data/TEXTURE/credit.png");
+	g_TextureCredit = LoadTexture((char*)"data/TEXTURE/credit_B.png");
 	g_TextureThankyou = LoadTexture((char*)"data/TEXTURE/thankyou.png");
 	//音声ファイルを読み込んで識別子を受け取る
 	char	file_BGM_CREDIT[] = "data\\BGM\\credit_B.wav";
