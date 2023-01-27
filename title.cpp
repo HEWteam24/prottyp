@@ -150,67 +150,67 @@ void UpdateTitle(void)
 		SceneTransition(SCENE_STAGESELECT);
 	}
 
-	if (kakusicommand[9] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_START))
+	if (kakusicommand[9] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_START) || Keyboard_IsKeyDown(KK_SPACE)))
 	{
 		kakusicommand[9] = false;
 		kakusicommand[10] = true;
 		PlaySound(g_SE_S, 0);
 	}
-	else if (kakusicommand[8] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_A))
+	else if (kakusicommand[8] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_A) || Keyboard_IsKeyDown(KK_A)))
 	{
 		kakusicommand[8] = false;
 		kakusicommand[9] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[7] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_B))
+	else if (kakusicommand[7] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_B) || Keyboard_IsKeyDown(KK_B)))
 	{
 		kakusicommand[7] = false;
 		kakusicommand[8] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[6] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT))
+	else if (kakusicommand[6] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT) || Keyboard_IsKeyDown(KK_RIGHT)))
 	{
 		kakusicommand[6] = false;
 		kakusicommand[7] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[5] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT))
+	else if (kakusicommand[5] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT) || Keyboard_IsKeyDown(KK_LEFT)))
 	{
 		kakusicommand[5] = false;
 		kakusicommand[6] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[4] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT))
+	else if (kakusicommand[4] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_RIGHT) || Keyboard_IsKeyDown(KK_RIGHT)))
 	{
 		kakusicommand[4] = false;
 		kakusicommand[5] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[3] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT))
+	else if (kakusicommand[3] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_LEFT) || Keyboard_IsKeyDown(KK_LEFT)))
 	{
 		kakusicommand[3] = false;
 		kakusicommand[4] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[2] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
+	else if (kakusicommand[2] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN) || Keyboard_IsKeyDown(KK_DOWN)))
 	{
 		kakusicommand[2] = false;
 		kakusicommand[3] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[1] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN))
+	else if (kakusicommand[1] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_DOWN) || Keyboard_IsKeyDown(KK_DOWN)))
 	{
 		kakusicommand[1] = false;
 		kakusicommand[2] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[0] == true && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
+	else if (kakusicommand[0] == true && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP) || Keyboard_IsKeyDown(KK_UP)))
 	{
 		kakusicommand[0] = false;
 		kakusicommand[1] = true;
 		PlaySound(g_SE, 0);
 	}
-	else if (kakusicommand[0] == false && IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP))
+	else if (kakusicommand[0] == false && (IsButtonTriggered(0, XINPUT_GAMEPAD_DPAD_UP) || Keyboard_IsKeyDown(KK_UP)))
 	{
 		for (int i = 0; i < 11; i++)
 		{
