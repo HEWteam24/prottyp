@@ -274,7 +274,7 @@ HRESULT InitRhythm(int stagenum)
 	{
 		exit(999);
 	}
-	g_TextureNameProgFlag = LoadTexture((char*)"data/TEXTURE/UI_ProgFlag.png");
+	g_TextureNameProgFlag = LoadTexture((char*)"data/TEXTURE/UI_ProgFlag_B.png");
 	if (g_TextureNameProgFlag == -1)
 	{
 		exit(999);
@@ -371,14 +371,14 @@ void DrawRhythm()
 
 
 	DrawSpriteColor(g_TextureNameStageProg, 1700.0f, 470.0f, 40.0f, 440.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 50.0f, 50.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 90.0f, 90.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.3f, 0.9f, 0.3f, 1.0f));
 
 
 	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f-((float)BGMError/120000))), 20.0f,60.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 
 void SetNotes()
