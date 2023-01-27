@@ -251,6 +251,10 @@ void DrawMaxCombo()
 void ComboPlus(int combo)
 {
 	ComboAdd += combo;
+	if (ComboAdd % 10 == 0) {
+		ComboMagNum = ComboAdd * 2 / 10;
+		ComboMagUp();
+	}
 	if (ComboMax < ComboAdd) {
 		ComboMax = ComboAdd;
 	}
@@ -273,15 +277,20 @@ void GetComboDizit()
 
 void ComboMagUp()
 {
-	g_ComboMag[0].combonum = ComboMagNum % 10;
-	if (ComboMagNum == 0)
-	{
-		g_ComboMag[2].combonum = 1;
+	if (ComboMagNum <= 30) {
+		g_ComboMag[0].combonum = ComboMagNum % 10;
+		if (ComboMagNum < 10)
+		{
+			g_ComboMag[2].combonum = 1;
+		}
+		else if (ComboMagNum % 10 == 0)
+		{
+			g_ComboMag[2].combonum++;
+			g_ComboMag[0].combonum = 0;
+		}
 	}
-	else if (ComboMagNum % 10 == 0)
-	{
-		g_ComboMag[2].combonum++;
-		g_ComboMag[0].combonum = 0;
+	else {
+		ComboMagNum = 30;
 	}
 }
 void ResetCombo()
@@ -296,15 +305,6 @@ float GetComboScoreUp()
 	float Up = 1.0f;
 	if (ComboAdd >= 10)
 	{
-		if (ComboAdd % 10 == 0) {
-			ComboMagNum = ComboAdd*2 / 10;
-			if (ComboMagNum <= 30) {
-				ComboMagUp();
-			}
-			else {
- 				ComboMagNum = 30;
-			}
-		}
 		Up += ComboMagNum / 10.0f;
 	}
 	return Up;
