@@ -71,7 +71,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 
 	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back.JPG");
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
-	g_TextureReButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureReButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 
 	char	file_SE_CLEAR[]  = "data\\SE\\SE_RESULT_CLEAR.wav";
 	char	file_SE_FAILED[] = "data\\SE\\SE_RESULT_FAILED.wav";
@@ -265,7 +265,7 @@ void DrawResult(void)
 	if (ResultFrame >= 150)
 	{
 		DrawSpriteColor(g_TextureReButton, 1700.0f, 950.0f, ReButton_size, ReButton_size,
-			0.25f, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
+			0.167f * 2.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
 	}
 
 	DrawScore();

@@ -78,7 +78,7 @@ HRESULT InitTuto(int StageNum)
 	g_TextureCircle		= LoadTexture((char*)"data/TEXTURE/Tuto.png");
 	g_TextureText		= LoadTexture((char*)"data/TEXTURE/UI_TutoText.png");
 	g_TextureTutoArrow	= LoadTexture((char*)"data/TEXTURE/UI_TutoArrow.png");
-	g_TextureTutoButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureTutoButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 	g_Tuto.col			= D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.5f);
 	g_Tuto.pos			= D3DXVECTOR2(CENTER_X, CENTER_Y);
 	g_Tuto.size			= D3DXVECTOR2(CENTER_X*4, CENTER_Y*4);
@@ -567,8 +567,7 @@ void DrawTuto(void)
 			DrawSpriteColor(g_TextureTutoButton,
 				CENTER_X + 145.0f, CENTER_Y - 174.0f,
 				g_Tuto.ButtonSize, g_Tuto.ButtonSize,
-				(1.0f / 4.0f) * 1.0f, (1.0f / 2.0f) * 0.0f,
-				1.0f / 4.0f, 1.0f / 2.0f,
+				0.167f * 2.0f, 0.249f, 0.167f, 0.249f,
 				D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
