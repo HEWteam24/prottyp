@@ -49,7 +49,7 @@ void InitSpecial()
 	g_SpecialIconTexture= LoadTexture((char*)"data/TEXTURE/fade_white.png");
 	g_TextureGoRing		= LoadTexture((char*)"data/TEXTURE/icon_ring.png");
 	g_TextureCharge		= LoadTexture((char*)"data/TEXTURE/skill_charge.png");
-	g_TextureSpButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureSpButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 
 	//SEのロード
 	char	file_SE_Special[] = "data\\SE\\SE_Special.wav";
@@ -247,9 +247,9 @@ void DrawSpecial()
 			GoRingrot * 0.8, D3DXCOLOR(colorR * 0.8, colorG * 0.8, colorB * 0.8, 1.0f),
 			0.0f, 1.0f, 1.0f, 1
 		);
-
+		//ボタン
 		DrawSpriteColor(g_TextureSpButton, SKILL_ICON_POS_X+100.0f,SKILL_ICON_POS_Y+100.0f, SpButtonSize,SpButtonSize,
-			0.25 * 1, 0.5f, 0.25f, 0.5f, D3DXCOLOR(Calpha, Calpha, Calpha, 1.0f));
+			0.167f * 2.0f, 0.25f*2.0f, 0.167f, 0.249f, D3DXCOLOR(Calpha, Calpha, Calpha, 1.0f));
 }
 
 //スペシャルの増加
