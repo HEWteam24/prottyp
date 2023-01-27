@@ -47,8 +47,10 @@ static int g_TextureUIHard;
 static int g_TextureUIFrame;
 static int g_TextureUIPlay;
 
+static int g_SE_Start;
 static int g_SE_Select;
 static int g_SE_Stage;
+static int g_SE_Change;
 static int g_SE_Back;
 
 static int g_BGMNo[11];//タイトル用BGMの識別子
@@ -166,11 +168,14 @@ HRESULT InitStageSelect(void)
 
 	char	file_SE_Select	[] = "data\\SE\\SE_MenuMove.wav";
 	char	file_SE_Stage	[] = "data\\SE\\SE_MenuPush.wav";
+	char	file_SE_Change	[] = "data\\SE\\SE_Change.wav";
 	char	file_SE_Back	[] = "data\\SE\\SE_MenuBack.wav";
+	char	file_SE_Start	[] = "data\\SE\\SE_Don.wav";
 	g_SE_Select = LoadSound(file_SE_Select);
 	g_SE_Stage	= LoadSound(file_SE_Stage);
+	g_SE_Change	= LoadSound(file_SE_Change);
 	g_SE_Back	= LoadSound(file_SE_Back);
-
+	g_SE_Start	= LoadSound(file_SE_Start);
 
 	change		= false;
 	key_enter	= false;
@@ -268,6 +273,7 @@ void UpdateStageSelect(void)
 
 		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_X))) && (change == false)&&(!key_ws))
 		{
+			PlaySound(g_SE_Change, 0);
 			change = true;
 			key_ws = true;
 		}
@@ -517,6 +523,7 @@ void UpdateStageSelect(void)
 		//シーン遷移
 		if (((Keyboard_IsKeyDown(KK_ENTER)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_B)))&&(!key_enter))
 		{
+			PlaySound(g_SE_Start, 0);
 			if (NowSelect == 0)
 			{
 				SceneTransition(SCENE_TUTO);

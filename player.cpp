@@ -63,6 +63,7 @@ enum CHECK		//タイミング評価
 static int g_TexturePlayer;	//テクスチャのやつ
 static int g_TextureHpA;	//テクスチャのやつ
 static int g_TextureHpB;	//テクスチャのやつ
+static int g_TextureHpIcon; //テクスチャのやつ
 static int g_TextureShield;
 
 static int g_TextureCText;	//テクスチャのやつ
@@ -74,12 +75,13 @@ static int g_SE_Damage;		//ダメージサウンド
 static PLAYER g_Player;
 
 
-int fire_dist;
-int good;
-int checkFrame;
-float goodAlpha;
-float goodPosY;
-float ShieldAlpha;
+int		fire_dist;
+int		good;
+int		checkFrame;
+float	goodAlpha;
+float	goodPosY;
+float	ShieldAlpha;
+bool	STICK;
 
 float  effectPos[10] = {0.0f,0.0f,0.0f,0.0f,0.0f,
 						0.0f,0.0f,0.0f,0.0f,0.0f };
@@ -98,7 +100,8 @@ void InitPlayer(void)
 {
 	g_TexturePlayer = LoadTexture((char*)"data/TEXTURE/player.png");
 	g_TextureHpA	= LoadTexture((char*)"data/TEXTURE/HP_player_A.png");
-	g_TextureHpB	= LoadTexture((char*)"data/TEXTURE/HP_player_B.png");
+	g_TextureHpB	= LoadTexture((char*)"data/TEXTURE/HP_player_C.png");
+	g_TextureHpIcon = LoadTexture((char*)"data/TEXTURE/HP_Icon.png");
 	g_TextureCText	= LoadTexture((char*)"data/TEXTURE/good_bad.png");
 	g_TextureShield = LoadTexture((char*)"data/TEXTURE/Shield.png");
 
@@ -133,6 +136,7 @@ void InitPlayer(void)
 	goodAlpha	=1.0f;
 	goodPosY	= 0.0f;
 	fire_dist	= 0;
+	STICK		= false;
 
 	ShieldAlpha = 1.0f;
 }
@@ -187,12 +191,19 @@ void UpdatePlayer(void)
 				PlaySound(g_SE_Bullet, 0);
 				//g_Player.hp -= 30.0f;
 			}
+		
 		}
 
+		//スティックでの長押し移動を回避
+		if ((GetThumbLeftX(0) > -0.2f) && (GetThumbLeftX(0) < 0.2f) && (STICK))
+		{
+			STICK = false;
+		}
 
 		//スティックで移動
-		if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false))
+		if ((GetThumbLeftX(0) < -0.3f) && (g_Player.NowLane >= LANE_2) && (g_Player.moving == false) && (!STICK))
 		{
+			STICK = true;
 			g_Player.moving		= true;				//移動中
 			g_Player.oldpos.x	= g_Player.pos.x;	//現在位置保存
 
@@ -202,8 +213,9 @@ void UpdatePlayer(void)
 			PlayerCheck();
 		}
 		//左
-		if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false))
+		if ((GetThumbLeftX(0) > 0.3f) && (g_Player.NowLane <= LANE_4) && (g_Player.moving == false) && (!STICK))
 		{
+			STICK = true;
 			g_Player.moving		= true;				//移動中
 			g_Player.oldpos.x	= g_Player.pos.x;	//現在位置保存
 
@@ -327,12 +339,15 @@ void DrawPlayer(void)
 void DrawHp(void)
 {
 
-	//HP下地
-	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	//HPバー
 	DrawSpriteColor(g_TextureHpA, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + ((PLAYER_HP_DEFAULT - g_Player.hp) / 0.665), PLAYER_HP_SIZE_X, PLAYER_HP_SIZE_Y - (PLAYER_HP_DEFAULT - g_Player.hp) * 3.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.5f, 1.0f, 0.4f, 1.0f));
+	//HP下地
+	DrawSpriteColor(g_TextureHpB, PLAYER_HP_POS_X, PLAYER_HP_POS_Y, PLAYER_HPB_SIZE_X, PLAYER_HPB_SIZE_Y,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+	//HPアイコン
+	DrawSpriteColor(g_TextureHpIcon, PLAYER_HP_POS_X, PLAYER_HP_POS_Y + 490.0f, PLAYER_HP_SIZE_X+20.0f, PLAYER_HP_SIZE_X + 20.0f,
+		0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 	
 	//評価 Good Bad

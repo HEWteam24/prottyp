@@ -1,6 +1,6 @@
 /*==============================================================================
 
-   ゲーム本編処理 [game.cpp]
+   チュートリアル処理 [tuto.cpp]
 														 Author :
 														 Date   :
 --------------------------------------------------------------------------------
@@ -26,7 +26,6 @@
 #include "lane.h"
 #include "keyboard.h"
 #include "special.h"
-
 #include "effect.h"
 
 #include "pause.h"
@@ -49,8 +48,10 @@ static int g_TextureText;
 static int g_TextureTutoButton;
 static int g_TextureTutoArrow;
 static int g_SE_Tuto;
-int	TutoFrame;
-int ArroFrame;
+static int g_SE_TutoDon;
+
+int	 TutoFrame;
+int  ArroFrame;
 bool TutoNext;
 bool Tutostart;
 bool B_Pushed;
@@ -90,8 +91,10 @@ HRESULT InitTuto(int StageNum)
 	g_Tuto.Phase		= 0;
 	g_Tuto.use			= false;
 
-	char	file_SE_Tuto[] = "data\\SE\\SE_MenuPush.wav";
-	g_SE_Tuto = LoadSound(file_SE_Tuto);
+	char	file_SE_Tuto	[] = "data\\SE\\SE_MenuPush.wav";
+	char	file_SE_TutoDon [] = "data\\SE\\SE_Don.wav";
+	g_SE_Tuto	 = LoadSound(file_SE_Tuto);
+	g_SE_TutoDon = LoadSound(file_SE_TutoDon);
 
 	TutoFrame = 0;
 	ArroFrame = 0;
@@ -146,9 +149,6 @@ void UpdateTuto(void)
 		UpdateRhythm();
 
 		if ((GetFreame() > 120)) {
-
-
-
 			if (Tutostart)
 			{
 				PauseSound(BGM_RE());
@@ -172,38 +172,23 @@ void UpdateTuto(void)
 				UpdateSpecial();
 			}
 			if (Tutostart)
-			{
-				Tutostart = false;
-			}
-
-
-
-
-
-
+			{		Tutostart = false;		}
 		}
-
 	}
-	else {
-		//StopSoundAll();
+	else 
+	{
 		if (!g_Tuto.use)
-		{
-			SceneTransition(SCENE_RESULT);
-		}
+		{	SceneTransition(SCENE_RESULT);	}
 	}
 
 	if (!pPause->restart)
-	{
-		pPause->alpha = 0.7f;
-	}
+	{		pPause->alpha = 0.7f;	}
 
 	UpdateEffect();
-
 
 	if (g_Tuto.use)
 	{
 		PauseSound(BGM_RE());
-
 		if (Keyboard_IsKeyDown(KK_N))
 		{
 			g_Tuto.use = false;
@@ -211,24 +196,19 @@ void UpdateTuto(void)
 		}
 	}
 
-	if (TutoFrame <= 1597)
-	{
-		pSkill->charge = 0;
-	}
-	if (TutoFrame == 1598)
-	{
-		pSkill->charge = 30;
-	}
-
-	if (pPlayer->hp <=40)
-	{
-		pPlayer->hp = 40;
-	}
+	
+	if (TutoFrame <= 1597)	//スキルゲージを0
+	{	pSkill->charge = 0;		}
+	if (TutoFrame == 1598)	//スキルゲージをMAX
+	{	pSkill->charge = 30;	}
+	if (pPlayer->hp <=40)	//体力が40下回らない
+	{	pPlayer->hp = 40;		}
 
 
 	//ようこそ
 	if ((TutoFrame==110)&&(g_Tuto.Phase == 0))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y*2.5f), D3DXVECTOR2(0.0f, 0.0f));
 		g_Tuto.Phase = 1;
 		g_Tuto.TextFrame = 0;
@@ -236,6 +216,7 @@ void UpdateTuto(void)
 	//移動
 	if ((TutoFrame == 780) && (g_Tuto.Phase == 7))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 0.7f, 1920.0f * 0.7f), D3DXVECTOR2(CENTER_X, CENTER_Y * 0.9f), D3DXVECTOR2(0.0f, 2.0f));
 		SetArrow(D3DXVECTOR2(CENTER_X, CENTER_Y + 100.0f), 90.0f);
 		g_Tuto.Phase = 8;
@@ -244,6 +225,7 @@ void UpdateTuto(void)
 	//スキル
 	if ((TutoFrame == 1600) && (g_Tuto.Phase == 12))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 3.0f, 1920.0f * 3.0f), D3DXVECTOR2(CENTER_X*2.5f, CENTER_Y * 2.5f), D3DXVECTOR2(0.0f, 3.0f));
 		g_Tuto.Phase = 13;
 		g_Tuto.TextFrame = 0;
@@ -251,6 +233,7 @@ void UpdateTuto(void)
 	//スコア
 	if ((TutoFrame == 2800) && (g_Tuto.Phase == 17))
 	{
+		PlaySound(g_SE_TutoDon, 0);
 		SetCircle(D3DXVECTOR2(1920.0f * 1.5f, 1920.0f * 0.6f), D3DXVECTOR2(1860.0f-135.0f, SCORE_POS_Y), D3DXVECTOR2(0.0f, 4.0f));
 		SetArrow(D3DXVECTOR2(1860.0f - 135.0f, SCORE_POS_Y+150.0f), 90.0f);
 		g_Tuto.Phase = 18;
@@ -464,9 +447,7 @@ void UpdateTuto(void)
 
 	//チュートリアルの長押し遷移を防ぐ
 	if ((!IsButtonTriggered(0, XINPUT_GAMEPAD_B))&& (!Keyboard_IsKeyDown(KK_ENTER)))
-	{
-		B_Pushed = false;
-	}
+	{	B_Pushed = false;		}
 
 	ArroFrame++;
 	if (ArroFrame >= 10)
@@ -478,9 +459,7 @@ void UpdateTuto(void)
 
 	//ボタン
 	if ((g_Tuto.ButtonSize <= 70.0f)|| (g_Tuto.ButtonSize >= 90.0f))
-	{
-		g_Tuto.ButtonAdd *= -1.0f;
-	}
+	{		g_Tuto.ButtonAdd *= -1.0f;		}
 	g_Tuto.ButtonSize += g_Tuto.ButtonAdd;
 }
 
@@ -545,6 +524,13 @@ void DrawTuto(void)
 			0.0f, 0.0f,
 			1.0f, 1.0f,
 			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
+		//左下サークル
+		DrawSpriteColor(g_TextureCircle,
+			g_Tuto.pos.x - g_Tuto.size.x, g_Tuto.pos.y + g_Tuto.size.y,
+			g_Tuto.size.x, g_Tuto.size.y,
+			0.0f, 0.0f,
+			1.0f, 1.0f,
+			D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.6f));
 
 
 		//テキスト
@@ -589,18 +575,11 @@ void DrawTuto(void)
 		//矢印
 		GetDeviceContext()->PSSetShaderResources(0, 1,
 			GetTexture(g_TextureTutoArrow));
-
 		DrawSpriteColorRotation(
-			g_Tuto.ArPos.x,
-			g_Tuto.ArPos.y,
-			100.0f,
-			100.0f,
-			g_Tuto.ArRot,
-			D3DXCOLOR(1.0f,0.5f,0.5f, 1.0f),
-			0.0f,
-			1.0f,
-			1.0f,
-			1
+			g_Tuto.ArPos.x,g_Tuto.ArPos.y,
+			100.0f,100.0f,
+			g_Tuto.ArRot,D3DXCOLOR(1.0f,0.5f,0.5f, 1.0f),
+			0.0f,1.0f,1.0f,1
 		);
 	}
 

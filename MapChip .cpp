@@ -2,7 +2,7 @@
 
 int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 {
-	//Stage 1
+	//Stage 1チュートリアル
 	{
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
@@ -127,7 +127,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 0, 0, 0
 	},
 	
-	//Stage 2
+	//Stage 2ザリガニ
 	{
 	   0, 0, 1, 0, 0,
 		0, 0, 1, 0, 0,
@@ -246,13 +246,13 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 1, 0, 1,
 		1, 0, 0, 1, 0,
 		0, 0, 1, 0, 1,
-		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0
 	},
 	
-	//Stage 3
+	//Stage 3ウナギ
 	{
 		 2, 2, 0, 2, 2,
 		0, 0, 0, 2, 0,
@@ -371,12 +371,12 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 1, 2, 2,
 		2, 0, 0, 0, 0,
 		2, 2, 1, 0, 0,
-		0, 0, 0, 0, 0,
+		0, 0, 0, 1, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0
 	},
 
-	//Stage 4
+	//Stage 4タコ
 	{
 		2, 3, 0, 3, 2,
 		1, 0, 1, 0, 1,
@@ -502,7 +502,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 
 	},
 
-	//Stage 5
+	//Stage 5サメ
 	{
 		2, 0, 4, 0, 2,//1
 		1, 4, 0, 4, 1,//2 1
@@ -626,7 +626,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 0, 0, 0
 	},
 	
-	//Stage 6
+	//Stage 6シシャモ
 	{
 		1, 0, 0, 0, 1,
 		3, 1, 0, 1, 3,
@@ -782,7 +782,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 0, 0, 0
 	},
 
-	//Stage 7
+	//Stage 7ザリガニ裏
 	{
 	    0, 0, 1, 0, 0,
 		0, 1, 1, 1, 0,
@@ -938,7 +938,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 0, 0, 0
 	},
 	
-	//Stage 8
+	//Stage 8ウナギ裏
 	{
 		2, 2, 0, 2, 2,
 		2, 0, 0, 0, 2,
@@ -1094,7 +1094,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		0, 0, 0, 0, 0
 	},
 
-	//Stage 9
+	//Stage 9タコ裏
 	{
 		4, 0, 0, 1, 4,
 		1, 0, 0, 1, 0,
@@ -1239,18 +1239,18 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		3, 0, 3, 0, 3,
 		0, 0, 0, 0, 0,
 		3, 3, 0, 4, 0,
-		0, 0, 4, 3, 1,
-		0, 4, 3, 0, 0,
-		4, 0, 0, 0, 0,
-		0, 0, 1, 0, 1,
-		0, 1, 0, 1, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0,
 		0, 0, 0, 0, 0
 	},
 
-	//Stage 10
+	//Stage 10サメ裏
 	{
 		3, 0, 0, 4, 2,
 		0, 0, 2, 0, 0,
@@ -1407,7 +1407,7 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 	},
 
 
-	//Stage 11
+	//Stage 11シシャモ裏
 	{
 		2, 2, 4, 2, 2,
 		2, 2, 4, 2, 2,
@@ -1556,9 +1556,9 @@ int StageBullet[STAGE_NUM][MAP_HEIGHT][MAP_WIDTH] =
 		1, 0, 0, 1, 0,
 		0, 0, 1, 0, 1,
 		0, 1, 0, 1, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0,
-		0, 0, 0, 0, 0
+		1, 1, 0, 1, 1,
+		1, 0, 1, 0, 1,
+		0, 1, 0, 1, 0
 	}
 };
 

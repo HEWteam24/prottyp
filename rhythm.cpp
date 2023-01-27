@@ -39,6 +39,8 @@ static	char	*g_TextureNameNotesLeft  = NOTES_TEX_LEFT;//テクスチャ名
 static	char	*g_TextureNameNotesCenter= NOTES_TEX_CENTER;//テクスチャ名
 static	ID3D11ShaderResourceView	*g_TextureNotesLane;
 static	char	*g_TextureNameNotesLane = NOTESLANE_TEX;//テクスチャ名
+static	int		g_TextureNameStageProg;
+static	int		g_TextureNameProgFlag;
 static	int		g_TextureNameRunPlayer;
 
 int Notestipindex1, Notestipindex2,indexNum;
@@ -88,7 +90,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -60;
 		break;
 	case 2://ウナギ
 
@@ -112,7 +114,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = 430;
 		break;
 	case 4://サメ
 
@@ -138,7 +140,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -20;
 		break;
 	case 6://ザリガニ裏	//抜け殻
 
@@ -150,7 +152,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = 10;
 		break;
 	case 7://ウナギ裏	//うな重
 
@@ -162,7 +164,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -10;
 		break;
 	case 8://タコ裏		//シオカラ武者
 
@@ -174,7 +176,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -150;
 		break;
 	case 9://サメ裏		//ジョージ
 
@@ -186,7 +188,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = -150;
+		BGMError = -170;
 		break;
 	case 10://シシャモ裏 //フルアーマーザリガニ
 
@@ -198,7 +200,7 @@ HRESULT InitRhythm(int stagenum)
 		sp = 12.0f;
 		NowBPM = BPM1;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 330;
+		BGMError = 250;
 		break;
 	default:
 		break;
@@ -267,8 +269,19 @@ HRESULT InitRhythm(int stagenum)
 	{
 		exit(999);
 	}
+	g_TextureNameStageProg = LoadTexture((char*)"data/TEXTURE/UI_StageProg.png");
+	if (g_TextureNameStageProg == -1)
+	{
+		exit(999);
+	}
+	g_TextureNameProgFlag = LoadTexture((char*)"data/TEXTURE/UI_ProgFlag.png");
+	if (g_TextureNameProgFlag == -1)
+	{
+		exit(999);
+	}
+	
 	Frame = 0;
-
+	
 	Notestipindex2 = 0;
 	return	S_OK;
 }
@@ -286,6 +299,9 @@ void UpdateRhythm()
 	{
 		if (((Frame - errors) % (int)NotesT) == 0.0f)
 		{
+			if (Frame >= 7535) {
+				int x = 0;
+			}
 			if (Notestip[Notestipindex1][Notestipindex2 % indexNum] == 1)
 			{
 				SetNotes();
@@ -354,7 +370,14 @@ void DrawRhythm()
 	}
 
 
-	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * 0.05f), 20.0f, 60.0f,
+	DrawSpriteColor(g_TextureNameStageProg, 1700.0f, 470.0f, 40.0f, 440.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 50.0f, 50.0f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
+
+	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f-((float)BGMError/120000))), 20.0f,60.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 }
 

@@ -32,14 +32,9 @@ enum CHECK		//タイミング評価
 
 
 //*****************************************************************************
-// プロトタイプ宣言
-//*****************************************************************************
-
-//*****************************************************************************
 // グローバル変数
 //*****************************************************************************
 static int g_TextureLane;			//テクスチャのやつ
-
 static LANE g_Lane[5];
 
 //=============================================================================
@@ -47,16 +42,15 @@ static LANE g_Lane[5];
 //=============================================================================
 void InitLane(void)
 {
-	g_TextureLane = LoadTexture((char*)"data/TEXTURE/lane_new.png");
 
-	
+	g_TextureLane = LoadTexture((char*)"data/TEXTURE/lane_new.png");
 	//初期化
 	for (int i = 0; i < LANE_MAX; i++)
 	{
 		g_Lane[i].LaneNumber = -3 + i + 1;	//初期レーン
-		g_Lane[i].pos = D3DXVECTOR2(CENTER_X+(g_Lane[i].LaneNumber*LANE_SIZE_X), CENTER_Y);	//位置
-		g_Lane[i].size = D3DXVECTOR2(LANE_DRAW_SIZE_X, LANE_DRAW_SIZE_Y);	//サイズ
-		g_Lane[i].uv = D3DXVECTOR2(0.0f, 0.0f);					//uv
+		g_Lane[i].pos	= D3DXVECTOR2(CENTER_X+(g_Lane[i].LaneNumber*LANE_SIZE_X), CENTER_Y);	//位置
+		g_Lane[i].size	= D3DXVECTOR2(LANE_DRAW_SIZE_X, LANE_DRAW_SIZE_Y);	//サイズ
+		g_Lane[i].uv	= D3DXVECTOR2(0.0f, 0.0f);					//uv
 		g_Lane[i].alpha = 0.3f;
 	}
 }
@@ -78,13 +72,9 @@ void UpdateLane(void)
 	for (int i = 0; i < LANE_MAX; i++)
 	{
 		if (pPlayer->NowLane == g_Lane[i].LaneNumber)
-		{
-			g_Lane[i].alpha = 0.9f;
-		}
+		{	g_Lane[i].alpha = 0.9f;		}
 		else
-		{
-			g_Lane[i].alpha = 0.5f;
-		}
+		{	g_Lane[i].alpha = 0.5f;		}
 	}
 }
 
@@ -101,7 +91,6 @@ void DrawLane(void)
 	}
 }
 
-
 //=============================================================================
 // ゲッター
 //=============================================================================
@@ -109,5 +98,3 @@ LANE* GetLane(void)
 {
 	return &g_Lane[0];
 }
-
-

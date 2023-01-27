@@ -34,7 +34,8 @@ static int g_TextureShishamo;
 static int g_TextureClear;
 static int g_TextureRankCoin;
 static int g_TextureReButton;
-static int g_BGMNo;//タイトル用BGMの識別子
+static int g_SE_CLEAR;//タイトル用BGMの識別子
+static int g_SE_FAILED;
 
 PLAYER* pPlayerOne = GetPlayer();
 SCORE* pScore = GetScore();
@@ -72,6 +73,10 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
 	g_TextureReButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
 
+	char	file_SE_CLEAR[]  = "data\\SE\\SE_RESULT_CLEAR.wav";
+	char	file_SE_FAILED[] = "data\\SE\\SE_RESULT_FAILED.wav";
+	g_SE_CLEAR  = LoadSound(file_SE_CLEAR);
+	g_SE_FAILED = LoadSound(file_SE_FAILED);
 
 	if (pScore->ToResult >= 0)
 	{
@@ -103,6 +108,11 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 		g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_failed.png");
 		g_Coin.TextCol = D3DXCOLOR(0.8f, 0.5f, 1.0f, 1.0f);
 		g_Coin.rank = 5;
+		PlaySound(g_SE_FAILED, 0);
+	}
+	else
+	{
+		PlaySound(g_SE_CLEAR, 0);
 	}
 
 	g_Coin.alpha = 0.3f;
@@ -119,8 +129,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	ResultFrame = 0;
 	moving = true;
 
-	//g_BGMNo = LoadSound((char*)"data/BGM/BGM_Result.wav");
-	//PlaySound(g_BGMNo, -1);
+
 
 	return S_OK;
 }
@@ -133,7 +142,8 @@ void UninitResult(void)
 	UninitPlayer();
 	UninitScore();
 	UninitCombo();
-	StopSound(g_BGMNo);
+	StopSound(g_SE_CLEAR);
+	StopSound(g_SE_FAILED);
 }
 
 //=============================================================================
