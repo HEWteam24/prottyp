@@ -316,7 +316,7 @@ void DrawPlayer(void)
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 0.3));
 
 	//プレイヤー描画
-	DrawSpriteColor(g_TexturePlayer, g_Player.pos.x, g_Player.pos.y, g_Player.size.x, g_Player.size.y,
+	DrawSpriteColor(g_TexturePlayer, g_Player.pos.x, g_Player.pos.y, g_Player.size.x+GetGradation(), g_Player.size.y+ GetGradation(),
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 
 	//スキル:シールドの表示

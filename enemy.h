@@ -48,7 +48,7 @@
 #define			ENEMY_HP_TEX_A		((char*)"data\\texture\\HP_player_A.png")		//エネミーテクスチャ
 #define			ENEMY_HP_TEX_B		((char*)"data\\texture\\HP_player_C.png")		//エネミーテクスチャ
 #define			ENEMY_SPAWN_POS_X	(SCREEN_WIDTH/2)
-#define			ENEMY_SPAWN_POS_Y	(20.0f)
+#define			ENEMY_SPAWN_POS_Y	(-20.0f)
 
 
 //*****************************************************************************

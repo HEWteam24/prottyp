@@ -59,7 +59,8 @@ HRESULT InitEnemy(int StageNum)
 			break;
 		case 3:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_octopus.png");
-			Enemy.size = D3DXVECTOR2(ENEMY03_SIZE_X, ENEMY03_SIZE_Y);
+			Enemy.size = D3DXVECTOR2(ENEMY03_SIZE_X, ENEMY03_SIZE_Y-300.0f);
+			UnagiPosY = -80.0f;
 			break;
 		case 4:
 			g_TextureEnemyID = LoadTexture((char*)"data/TEXTURE/chara_shark.png");

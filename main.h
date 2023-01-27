@@ -43,8 +43,8 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define SCREEN_WIDTH	(1920)						// ウインドウの幅
-#define SCREEN_HEIGHT	(1080)						// ウインドウの高さ
+#define SCREEN_WIDTH	(1920.0f)						// ウインドウの幅
+#define SCREEN_HEIGHT	(1080.0f)						// ウインドウの高さ
 
 #define CENTER_X		(SCREEN_WIDTH/2)					//中心X
 #define CENTER_Y		(SCREEN_HEIGHT/2)					//中心Y
