@@ -171,6 +171,10 @@ void UpdateSkillSelect(void)
 		}	
 
 	//‘I‘ðˆÚ“®—P—\
+		if (GetSceneChange())
+		{
+			movingSp = true;
+		}
 		if (movingSp==true)
 		{
 			changeN -= 1;

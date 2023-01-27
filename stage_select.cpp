@@ -80,7 +80,8 @@ bool skillSlc	= false;
 bool key_enter	= false;
 bool key_ws		= false;
 bool key_space  = false;
-int  playFst		= 0;
+bool SceneChange= false;
+int  playFst	= 0;
 int  whiteCnt	= 0;
 
 //=============================================================================
@@ -212,6 +213,8 @@ HRESULT InitStageSelect(void)
 
 	//スキルセレクト
 	skillSlc = false;
+	
+	SceneChange = false;
 
 	//BGMの再生（2つ目の引数はループ回数）
 	PlaySound(g_BGMNo[NowSelect], -1);
@@ -271,15 +274,16 @@ void UpdateStageSelect(void)
 	if (!skillSlc)
 	{
 
-		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_X))) && (change == false)&&(!key_ws))
+		if (((Keyboard_IsKeyDown(KK_W)) || (Keyboard_IsKeyDown(KK_S))|| (IsButtonTriggered(0, XINPUT_GAMEPAD_X))) && (change == false)&&(!key_ws) && (!SceneChange))
 		{
 			PlaySound(g_SE_Change, 0);
 			change = true;
 			key_ws = true;
 		}
 
-		if (((Keyboard_IsKeyDown(KK_SPACE)) || IsButtonTriggered(0, XINPUT_GAMEPAD_A)) && (change == false) && (!key_space))
+		if (((Keyboard_IsKeyDown(KK_SPACE)) || IsButtonTriggered(0, XINPUT_GAMEPAD_A)) && (change == false) && (!key_space)&&(!SceneChange))
 		{
+			SceneChange = true;
 			PlaySound(g_SE_Back, 0);
 			SceneTransition(SCENE_TITLE);
 			key_space = true;
@@ -288,7 +292,7 @@ void UpdateStageSelect(void)
 		for (int i = 0; i < STAGE_MAX; i++)
 		{
 			//右に移動
-			if (((Keyboard_IsKeyDown(KK_A)) || (GetThumbLeftX(0) < -0.3f)|| (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_LEFT))) && (g_StagePanel[i].moving == false))
+			if (((Keyboard_IsKeyDown(KK_A)) || (GetThumbLeftX(0) < -0.3f)|| (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_LEFT))) && (g_StagePanel[i].moving == false) && (!SceneChange))
 			{
 				g_StagePanel[i].moving = true;				//移動中
 				g_StagePanel[i].NowLane++;
@@ -300,7 +304,7 @@ void UpdateStageSelect(void)
 				PlaySound(g_SE_Select, 0);
 			}
 			//左に移動
-			if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f) || (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_RIGHT))) && (g_StagePanel[i].moving == false))
+			if (((Keyboard_IsKeyDown(KK_D)) || (GetThumbLeftX(0) > 0.3f) || (IsButtonPressed(0, XINPUT_GAMEPAD_DPAD_RIGHT))) && (g_StagePanel[i].moving == false) && (!SceneChange))
 			{
 				g_StagePanel[i].moving = true;				//移動中
 				g_StagePanel[i].NowLane--;
@@ -500,7 +504,7 @@ void UpdateStageSelect(void)
 	}
 
 	//スキルセレクト画面に切り替え
-	if (((Keyboard_IsKeyDown(KK_ENTER)) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (!skillSlc)&&(!change) && (!g_StagePanel[0].moving)&&(color >= 1.0f))
+	if (((Keyboard_IsKeyDown(KK_ENTER)) || IsButtonTriggered(0, XINPUT_GAMEPAD_B)) && (!skillSlc)&&(!change) && (!g_StagePanel[0].moving)&&(color >= 1.0f) && (!SceneChange))
 	{
 		skillSlc = true;
 		key_enter = true;
@@ -523,6 +527,7 @@ void UpdateStageSelect(void)
 		//シーン遷移
 		if (((Keyboard_IsKeyDown(KK_ENTER)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_B)))&&(!key_enter))
 		{
+			SceneChange = true;
 			PlaySound(g_SE_Start, 0);
 			if (NowSelect == 0)
 			{
@@ -551,7 +556,7 @@ void UpdateStageSelect(void)
 		}
 
 		//スキル選択を閉じる
-		if ((Keyboard_IsKeyDown(KK_SPACE)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_A)))
+		if (((Keyboard_IsKeyDown(KK_SPACE)) || (IsButtonTriggered(0, XINPUT_GAMEPAD_A)))&&(!SceneChange))
 		{
 			PlaySound(g_SE_Back, 0);
 			skillSlc = false;
@@ -595,13 +600,6 @@ void DrawStageSelect(void)
 				0.0f, 0.0f, 0.25f, 1.0f, ARROW_COL[1]);
 			DrawSpriteColor(g_TextureArrow, CENTER_X + 300.0f, STAGE_POS_Y + 270.0f, arrowSize[0], arrowSize[0],
 				0.25f, 0.0f, 0.25f, 1.0f, ARROW_COL[0]);
-			////バック矢印
-			//DrawSpriteColor(g_TextureUIFrame, BACK_POS_X*3.05f, 100.0f, 260.0f, 130.0f,
-			//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
-			//DrawSpriteColor(g_TextureArrowBack, BACK_POS_X+(buttonSize/5.0f), 100.0f, BUTTON_SIZE, BUTTON_SIZE,
-			//	0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f,1.0f,1.0f,1.0f));
-			//DrawSpriteColor(g_TextureUIButton, BACK_POS_X+BUTTON_SIZE*1.1f, 100.0f,buttonSize*0.7,buttonSize*0.7f,
-			//	0.25 * 0, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//難易度パネル
 			DrawSpriteColor(g_TextureUIHard, CENTER_X - HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[0] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.0f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[0], HardCol[0], HardCol[0], 1.0f));
@@ -774,6 +772,18 @@ void SetWhite(int x,int sz,int rt)
 bool GetUra()
 {
 	if (ura)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool GetSceneChange()
+{
+	if (SceneChange)
 	{
 		return true;
 	}
