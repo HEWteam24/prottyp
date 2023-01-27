@@ -36,7 +36,7 @@ HRESULT InitBG(int StageNum)
 
 	g_TextureBg = LoadTexture((char*)"data/TEXTURE/BG_River.png");
 	g_TextureUIBack = LoadTexture((char*)"data/TEXTURE/UI_Back_B.png");
-	g_TextureUICtrl = LoadTexture((char*)"data/TEXTURE/UI_ctrl.png");
+	g_TextureUICtrl = LoadTexture((char*)"data/TEXTURE/UI_Ctrl_C.png");
 	
 	switch (StageNum)
 	{
@@ -116,26 +116,28 @@ void DrawBG(void)
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 0.4));
 	if (tutoFlag)
 	{
+		DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y + 25.0f - ((350.0f * 0.8f) / 3.0f), 500.0f * 0.8f, (350.0f * 0.8f) / 3.0f,
+			0.0f, (1.0f / 4.0f) * 3.0f, 1.0f, (1.0f / 4.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+
 		if (pTuto->Phase >= 7)
 		{
 			DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f, 500.0f * 0.8f, (350.0f * 0.8f) / 3.0f,
-				0.0f, (1.0f / 3.0f) * 1.0f, 1.0f, (1.0f / 3.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+				0.0f, (1.0f / 4.0f) * 1.0f, 1.0f, (1.0f / 4.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 		if (pTuto->Phase >= 12)
 		{
-			DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f - ((350.0f * 0.8f) / 2.0f), 500.0f * 0.8f, (350.0f * 0.8f)/3.0f,
-				0.0f, (1.0f / 3.0f) * 0.0f, 1.0f, (1.0f / 3.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+			DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f - ((350.0f * 0.8f) / 3.0f), 500.0f * 0.8f, (350.0f * 0.8f)/3.0f,
+				0.0f, (1.0f / 4.0f) * 0.0f, 1.0f, (1.0f / 4.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
 		if (pTuto->Phase >= 17)
 		{
-			DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f + ((350.0f * 0.8f) / 2.0f), 500.0f * 0.8f, (350.0f * 0.8f)/3.0f,
-				0.0f, (1.0f / 3.0f) * 2.0f, 1.0f, (1.0f / 3.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+			DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f + ((350.0f * 0.8f) / 3.0f), 500.0f * 0.8f, (350.0f * 0.8f)/3.0f,
+				0.0f, (1.0f / 4.0f) * 2.0f, 1.0f, (1.0f / 4.0f), D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 		}
-
 	}
 	else
 	{
-		DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f, 500.0f * 0.8f, 350.0f * 0.8f,
+		DrawSpriteColor(g_TextureUICtrl, 0.0f + 200.0f, CENTER_Y - 250.0f, 500.0f * 0.8f, 350.0f * 1.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 	}
 }
