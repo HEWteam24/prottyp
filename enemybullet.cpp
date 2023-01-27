@@ -247,7 +247,6 @@ void UpdateEnemyBullet()
 					pPlayer->hp -= 50.0f;
 				}
 
-				g_EnemyBulletNomal[i].pos -= g_EnemyBulletNomal[i].mov;
 				PlaySound(g_SE_Damage, 0);
 			}
 		}
@@ -307,7 +306,6 @@ void UpdateEnemyBullet()
 					{
 						pPlayer->hp -= 50.0f;
 					}
-					g_EnemyBulletTrans[k].pos -= g_EnemyBulletTrans[k].mov;
 					PlaySound(g_SE_Damage, 0);
 				}
 			}
@@ -349,7 +347,7 @@ void UpdateEnemyBullet()
 				}
 			}
 
-			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
+			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 4.0f), D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
 			{
 				g_EnemyBulletHp[j].use = false;
 				if (sp->get_damage_down == true)
@@ -360,7 +358,6 @@ void UpdateEnemyBullet()
 				{
 					pPlayer->hp -= 70.0f;
 				}
-				g_EnemyBulletHp[j].pos -= g_EnemyBulletHp[j].mov;
 				PlaySound(g_SE_Damage, 0);
 			}
 
