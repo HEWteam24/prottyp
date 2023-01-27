@@ -349,7 +349,7 @@ void UpdateEnemyBullet()
 				}
 			}
 
-			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos - D3DXVECTOR2(0.0f, pPlayer->size.y / 2.5), D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
+			if (CollisionBB(g_EnemyBulletHp[j].pos, pPlayer->pos, D3DXVECTOR2(g_EnemyBulletHp[j].w, g_EnemyBulletHp[j].h), pPlayer->size / 2))
 			{
 				g_EnemyBulletHp[j].use = false;
 				if (sp->get_damage_down == true)
