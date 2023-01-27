@@ -29,7 +29,8 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-static int g_TextureBgTitle;//タイトル画面用テクスチャの識別子
+static int g_TextureBand;//タイトル画面用テクスチャの識別子
+static int g_TextureBgResult;
 static int g_TextureShishamo;
 static int g_TextureClear;
 static int g_TextureRankCoin;
@@ -37,6 +38,7 @@ static int g_TextureReButton;
 static int g_SE_CLEAR;//タイトル用BGMの識別子
 static int g_SE_FAILED;
 
+D3DXCOLOR g_BandCol;
 PLAYER* pPlayerOne = GetPlayer();
 SCORE* pScore = GetScore();
 
@@ -61,6 +63,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 
 	EnemyScore = enemynum;
 	g_Coin.col = D3DXCOLOR(0.0f,0.0f,0.0f,1.0f);
+	g_BandCol  = D3DXCOLOR(1.0f,1.0f,1.0f,1.0f);
 	g_Coin.TextCol = D3DXCOLOR(1.0f, 0.6f, 0.4f, 1.0f);
 	g_Coin.rad = 0.0f;
 	g_Coin.u = 0.0f;
@@ -69,7 +72,7 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	g_TextureRankCoin= LoadTexture((char*)"data/TEXTURE/rank_coins_1200x200_B.png");
 	g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_clear.png");
 
-	g_TextureBgTitle = LoadTexture((char*)"data/TEXTURE/Back.JPG");
+	g_TextureBand	  = LoadTexture((char*)"data/TEXTURE/UI_Result_Band.png");
 	g_TextureShishamo = LoadTexture((char*)"data/TEXTURE/Shishamo_end_1.png");
 	g_TextureReButton = LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 
@@ -81,33 +84,41 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	if (pScore->ToResult >= 0)
 	{
 		g_Coin.rank = 5;
+		g_BandCol	= D3DXCOLOR(0.5f, 0.2f, 0.5f, 1.0f);
 	}
 	if (pScore->ToResult >= 4000 * criteria)
 	{
 		g_Coin.rank = 4;
+		g_BandCol = D3DXCOLOR(0.6f, 0.6f, 0.7f, 1.0f);
 	}
 	if (pScore->ToResult >= 8000 * criteria)
 	{
 		g_Coin.rank = 3;
+		g_BandCol = D3DXCOLOR(0.9f, 0.3f, 0.1f, 1.0f);
 	}
 	if (pScore->ToResult >= 17000 * criteria)
 	{
 		g_Coin.rank = 2;
+		g_BandCol = D3DXCOLOR(0.9f, 0.9f, 0.95f, 1.0f);
 	}
 	if (pScore->ToResult >= 27000 * criteria)
 	{
 		g_Coin.rank = 1;
+		g_BandCol = D3DXCOLOR(0.9f, 0.8f, 0.3f, 1.0f);
 	}
 	if (pScore->ToResult >= 38000 * criteria)
 	{
 		g_Coin.rank = 0;
+		g_BandCol = D3DXCOLOR(0.7f, 0.7f, 1.0f, 1.0f);
 	}
 
+	//死亡時
 	if (pPlayerOne->dead)
 	{
 		g_TextureClear = LoadTexture((char*)"data/TEXTURE/text_failed.png");
 		g_Coin.TextCol = D3DXCOLOR(0.8f, 0.5f, 1.0f, 1.0f);
-		g_Coin.rank = 5;
+		g_Coin.rank	   = 5;
+		g_BandCol	   = D3DXCOLOR(0.5f, 0.2f, 0.5f, 1.0f);
 		PlaySound(g_SE_FAILED, 0);
 	}
 	else
@@ -129,6 +140,46 @@ HRESULT InitResult(int stagenum,int enemynum,int texnums)
 	ResultFrame = 0;
 	moving = true;
 
+	switch (stagenum)
+	{
+	default:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel0.png");
+		break;
+
+	case 0:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel0.png");
+		break;
+	case 1:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel1.png");
+		break;
+	case 2:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel2.png");
+		break;
+	case 3:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel3.png");
+		break;
+	case 4:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel4.png");
+		break;
+	case 5:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel5.png");
+		break;
+	case 6:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel6.png");
+		break;
+	case 7:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel7.png");
+		break;
+	case 8:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel8.png");
+		break;
+	case 9:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel9.png");
+		break;
+	case 10:
+		g_TextureBgResult = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
+		break;
+	}
 
 
 	return S_OK;
@@ -217,13 +268,17 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
-	DrawSpriteLeftTop(g_TextureBgTitle, 0.0f, 0.0f, SCREEN_WIDTH, SCREEN_HEIGHT,
-		0.0f, 0.0f, 1.0f, 1.0f);
-
+	//背景
+	DrawSpriteColor(g_TextureBgResult, CENTER_X, CENTER_Y, SCREEN_WIDTH*1.1f, SCREEN_WIDTH*1.1f,
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f));
+	//リザルト
+	DrawSpriteColor(g_TextureBand, CENTER_X, CENTER_Y-30.0f, SCREEN_WIDTH, 600.0f,
+		0.0f, 0.0f, 1.0f, 1.0f,g_BandCol);
+	//シシャモ
 	DrawSpriteColor(g_TextureShishamo, Shishamo_pos, CENTER_Y, 800.0f, 800.0f,
-		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
+		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
-	DrawSpriteColor(g_TextureClear, CENTER_X, CENTER_Y - 300.0f, 600.0f, 100.0f,
+	DrawSpriteColor(g_TextureClear, CENTER_X, CENTER_Y - 300.0f+50.0f, 600.0f, 100.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, g_Coin.TextCol);
 
 
@@ -232,7 +287,7 @@ void DrawResult(void)
 
 	DrawSpriteColorRotation(
 		CENTER_X,
-		CENTER_Y,
+		CENTER_Y+25.0f,
 		300.0f,
 		300.0f,
 		g_Coin.rad,
@@ -249,7 +304,7 @@ void DrawResult(void)
 			GetTexture(g_TextureRankCoin));
 		DrawSpriteColorRotation(
 			CENTER_X,
-			CENTER_Y,
+			CENTER_Y+25.0f,
 			g_Coin.size.x,
 			g_Coin.size.y,
 			g_Coin.rad,
