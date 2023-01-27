@@ -71,7 +71,7 @@ HRESULT InitTitle(void)
 	g_TextureCommand_Y = LoadTexture((char*)"data/TEXTURE/command_y.png");
 	g_TextureTitle	 = LoadTexture((char*)"data/TEXTURE/title_A.png");
 	g_TextureUIText	 = LoadTexture((char*)"data/TEXTURE/text_pause_Set.png");
-	g_TextureUIButton= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureUIButton= LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 
 	//音声ファイルを読み込んで識別子を受け取る
 	g_BGMNo = LoadSound((char*)"data/BGM/BGM_Title.wav");
@@ -377,13 +377,12 @@ void DrawTitle(void)
 		CENTER_X-100.0f, LOGO_POS_Y + 550.0f,
 		500.0f+(TitleAlpha*8.0f), 100.0f+(TitleAlpha*8.0f),
 		0.0f, 0.0f,
-		1.0f, 1.0f/3.0f,
+		0.999f, 0.99f/3.0f,
 		D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 	//START_Button
 	DrawSpriteColor(g_TextureUIButton,
 		CENTER_X+225.0f, LOGO_POS_Y + 550.0f,
 		120.0f+(TitleAlpha * 8.0f), 120.0f+(TitleAlpha * 8.0f),
-		0.25f, 0.0f,
-		0.25f, 0.5f,
+		0.167f * 2.0f, 0.249f, 0.167f, 0.249f,
 		D3DXCOLOR(1.0, 1.0, 1.0, 1.0));
 }

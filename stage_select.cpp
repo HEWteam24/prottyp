@@ -114,7 +114,7 @@ HRESULT InitStageSelect(void)
 	g_StagePanel[STAGE_5].texnoB = LoadTexture((char*)"data/TEXTURE/Stage_Panel10.png");
 
 	g_TextureWhite		= LoadTexture((char*)"data/TEXTURE/fade_white.png");
-	g_TextureUIButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons.png");
+	g_TextureUIButton	= LoadTexture((char*)"data/TEXTURE/UI_Buttons_B.png");
 	g_TextureUIHard		= LoadTexture((char*)"data/TEXTURE/UI_Hard.png");
 	g_TextureUIFrame	= LoadTexture((char*)"data/TEXTURE/UI_frame.png");
 	g_TextureUIPlay		= LoadTexture((char*)"data/TEXTURE/UI_play.png");
@@ -606,12 +606,12 @@ void DrawStageSelect(void)
 			DrawSpriteColor(g_TextureUIHard, CENTER_X + HARD_SIZE / 2, CENTER_Y - 400.0f - HardCol[1] * 10, HARD_SIZE, HARD_SIZE / 3,
 				0.5f, 0.0f, 0.5f, 1.0f, D3DXCOLOR(HardCol[1], HardCol[1], HardCol[1], 1.0f));
 			DrawSpriteColor(g_TextureUIButton, CENTER_X, CENTER_Y - 400.0f, buttonSize/1.5f, buttonSize / 1.5f,
-				0.25 * 2, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.167f * 3.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			//PLAYパネル
 			DrawSpriteColor(g_TextureUIPlay, CENTER_X, CENTER_Y * 1.6f, 480.0f, 160.0f,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			DrawSpriteColor(g_TextureUIButton, CENTER_X+180.0f, CENTER_Y * 1.6f, buttonSize * 0.7, buttonSize * 0.7f,
-				0.25 * 1, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.167f * 2.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 
 		//ステージパネルの表示
@@ -690,7 +690,7 @@ void DrawStageSelect(void)
 		DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 2.0f) - 20.0f, 100.0f, BUTTON_SIZE*1.0f, BUTTON_SIZE*1.0f,
 			0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.8f - 60.0f, 100.0f, buttonSize * 0.8f, buttonSize * 0.8f,
-			0.25 * 0, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+			0.167f * 1.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 		//選択中ステージパネル
@@ -704,7 +704,7 @@ void DrawStageSelect(void)
 				DrawSpriteColor(g_TextureUIPlay, g_StagePanel[i].pos.x, CENTER_Y * 1.69f, (g_StagePanel[i].size.x * 1.5f)+(PlayAlpha*30.0f), ((g_StagePanel[i].size.x / 3.0f) * 1.5f)+(PlayAlpha * 30.0f),
 					0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(PlayAlpha+0.5f, PlayAlpha+0.5f, PlayAlpha, 1.0f - PlayAlpha));
 				DrawSpriteColor(g_TextureUIButton, g_StagePanel[i].pos.x + 240.0f, CENTER_Y * 1.69f, buttonSize * 0.7 * 1.5f, buttonSize * 0.7f * 1.5f,
-					0.25 * 1, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+					0.167f * 2.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 
 
 				if (ura)
@@ -741,7 +741,7 @@ void DrawStageSelect(void)
 			DrawSpriteColor(g_TextureArrowBack, BACK_POS_X + (buttonSize / 5.0f), 100.0f, BUTTON_SIZE, BUTTON_SIZE,
 				0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 			DrawSpriteColor(g_TextureUIButton, BACK_POS_X + BUTTON_SIZE * 1.1f, 100.0f, buttonSize * 0.7, buttonSize * 0.7f,
-				0.25 * 0, 0.0f, 0.25f, 0.5f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
+				0.167f * 1.0f, 0.249f, 0.167f, 0.249f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 		}
 	}
 }
