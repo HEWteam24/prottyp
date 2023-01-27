@@ -32,6 +32,7 @@ int			BGMError;
 bool		Rhythmflg = false;
 float		Gradationalf;
 int			alfnum;
+float		tutorialerror;
 NOTES		Notes[NOTES_MAX];
 NOTESLANE	NotesLane;
 
@@ -70,7 +71,7 @@ HRESULT InitRhythm(int stagenum)
 	char	filename9[] = "data\\BGM\\09_Jawge_150.wav";
 	char	filename10[]= "data\\BGM\\10_FullArmor_150.wav";
 
-
+	tutorialerror = 0;
 	switch (stagenum)
 	{
 	case 0://チュートリアル
@@ -83,7 +84,8 @@ HRESULT InitRhythm(int stagenum)
 		sp = 10.8f;
 		NowBPM = BPM2;
 		NotesT = (60.0f / (NowBPM / 60.0f)) / 2.0f;
-		BGMError = 0;
+		BGMError = -2400;
+		tutorialerror = 0.01f;
 		break;
 	case 1://ザリガニ
 
@@ -396,7 +398,7 @@ void DrawRhythm()
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 	DrawSpriteColor(g_TextureNameProgFlag, 1710.0f, 240.0f, 90.0f, 90.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(0.3f, 0.9f, 0.3f, 1.0f));
-	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f - ((float)BGMError / 120000))), 20.0f, 60.0f,
+	DrawSpriteColor(g_TextureNameRunPlayer, 1700.0f, 700.0f - ((Frame - 120) * (0.06f - ((float)BGMError / 120000)+ tutorialerror)), 20.0f, 60.0f,
 		0.0f, 0.0f, 1.0f, 1.0f, D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f));
 }
 

@@ -410,7 +410,6 @@ void SETBULLET()
 	int atk = 0;	//“G‚ÌUŒ‚—p
 	bool IsAtk = true;
 
-
 	if (nowY < MAP_SIZE_Y)
 	{
 		for (int j = 0; j < MAP_SIZE_X; j++)
